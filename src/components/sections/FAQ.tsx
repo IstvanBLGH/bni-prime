@@ -1,0 +1,73 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+import { Container } from "@/components/shared/Container";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { fadeInUp } from "@/lib/motion";
+
+const FAQS = [
+  {
+    question: "Trebuie să fiu membru BNI ca să particip la evenimentul organizat de BNI Prime?",
+    answer:
+      "Nu. Evenimentul este deschis tuturor antreprenorilor, fie că sunt deja membri BNI, fie că vor să descopere pentru prima dată cum funcționează networking-ul de business structurat.",
+  },
+  {
+    question: "Ce diferență este între pachetele Standard, Plus și Sponsor?",
+    answer:
+      "Standard oferă acces complet la eveniment. Plus adaugă locuri preferențiale, sesiuni 1:1 de networking și recap personalizat. Sponsor include vizibilitate de brand și un stand dedicat în zona de networking.",
+  },
+  {
+    question: "Pot transfera biletul către altă persoană?",
+    answer:
+      "Da. Trimite-ne un email la inscrieri@bniprime.ro cu datele noii persoane înregistrate și actualizăm biletul fără costuri suplimentare.",
+  },
+  {
+    question: "Există loc de parcare la locația evenimentului?",
+    answer:
+      "Da, Hotel Codrișor din Bistrița, locul de desfășurare al evenimentului organizat de BNI Prime, oferă parcare privată pentru toți participanții, inclusă în prețul biletului.",
+  },
+  {
+    question: "Voi primi materiale după eveniment?",
+    answer:
+      "Toți participanții primesc pe email un recap cu principalele concluzii ale sesiunilor și contactele echipei de conducere a grupului.",
+  },
+  {
+    question: "Cum mă pregătesc pentru o sesiune de networking BNI eficientă?",
+    answer:
+      "Recomandăm să vii cu cărți de vizită, un mesaj clar despre ce oferi și ce cauți, și deschidere către conversații autentice — exact spiritul pe care îl promovează fiecare membru BNI.",
+  },
+];
+
+export function FAQ() {
+  return (
+    <section id="faq" className="py-16 md:py-24 lg:py-32">
+      <Container>
+        <SectionHeading
+          kicker="Întrebări frecvente"
+          title="Tot ce trebuie să știi despre eveniment"
+          description="Nu ai găsit răspunsul aici? Scrie-ne la inscrieri@bniprime.ro și revenim cu detalii despre evenimentul BNI."
+        />
+
+        <motion.div {...fadeInUp} className="mx-auto mt-12 max-w-3xl md:mt-16">
+          <Accordion type="single" collapsible className="rounded-2xl border border-border bg-background px-6 shadow-sm md:px-8">
+            {FAQS.map((faq) => (
+              <AccordionItem key={faq.question} value={faq.question}>
+                <AccordionTrigger className="text-base md:text-lg">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </Container>
+    </section>
+  );
+}

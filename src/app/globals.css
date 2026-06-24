@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@config "../../tailwind.config.ts";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Raw BNI Prime brand tokens (single source of truth, literal values only) */
+  --bni-primary: #c8102e;
+  --bni-primary-dark: #8b0a1f;
+  --bni-foreground: #1d1d1f;
+  --bni-background: #ffffff;
+  --bni-surface: #f5f5f7;
+  --bni-border: #d2d2d7;
+  --bni-muted: #86868b;
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-primary: var(--bni-primary);
+  --color-primary-dark: var(--bni-primary-dark);
+  --color-foreground: var(--bni-foreground);
+  --color-background: var(--bni-background);
+  --color-surface: var(--bni-surface);
+  --color-border: var(--bni-border);
+  --color-muted: var(--bni-muted);
+  --font-sans: var(--font-inter);
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    overflow-x: hidden;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--bni-primary);
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
