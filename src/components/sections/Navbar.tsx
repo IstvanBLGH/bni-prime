@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
-  { href: "#about", label: "Despre BNI Prime", shortLabel: "Despre" },
-  { href: "#leadership", label: "Echipa de conducere", shortLabel: "Echipa" },
+  { href: "#about", label: "Despre", shortLabel: "Despre" },
+  { href: "#membrii", label: "Membrii", shortLabel: "Membrii" },
   { href: "#agenda", label: "Agendă", shortLabel: "Agendă" },
   { href: "#tickets", label: "Bilete", shortLabel: "Bilete" },
-  { href: "#location", label: "Locație", shortLabel: "Locație" },
-  { href: "#faq", label: "Întrebări frecvente", shortLabel: "FAQ" },
+  { href: "#location", label: "Locația", shortLabel: "Locația" },
+  { href: "#faq", label: "FAQ", shortLabel: "FAQ" },
 ];
 
 export function Navbar() {

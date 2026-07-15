@@ -16,32 +16,32 @@ const FAQS = [
   {
     question: "Trebuie să fiu membru BNI ca să particip la evenimentul organizat de BNI Prime?",
     answer:
-      "Nu. Evenimentul este deschis tuturor antreprenorilor, fie că sunt deja membri BNI, fie că vor să descopere pentru prima dată cum funcționează networking-ul de business structurat.",
+      "Nu. Evenimentul este deschis tuturor celor interesați de networking dedicat afacerilor, fie că sunt deja membri BNI, fie că vor să descopere pentru prima dată cum funcționează networking-ul de business structurat.",
   },
   {
     question: "Ce diferență este între pachetele Standard, Plus și Sponsor?",
     answer:
-      "Standard oferă acces complet la eveniment. Plus adaugă locuri preferențiale, sesiuni 1:1 de networking și recap personalizat. Sponsor include vizibilitate de brand și un stand dedicat în zona de networking.",
+      "Biletul Standard oferă acces complet la eveniment și catering. Biletul Plus adaugă stand pentru prezentarea serviciilor și produselor tale. Biletul Sponsor include, pe lângă cele de mai sus, mențiune specială în deschiderea oficială a evenimentului și logo vizibil pe toate materialele evenimentului.",
   },
   {
     question: "Pot transfera biletul către altă persoană?",
     answer:
-      "Da. Trimite-ne un email la inscrieri@bniprime.ro cu datele noii persoane înregistrate și actualizăm biletul fără costuri suplimentare.",
+      "Da. Trimite-ne un email la bigdesigntm@gmail.com cu datele persoanei ce va participa în locul tău și actualizăm biletul fără costuri suplimentare.",
   },
   {
     question: "Există loc de parcare la locația evenimentului?",
     answer:
-      "Da, Hotel Codrișor din Bistrița, locul de desfășurare al evenimentului organizat de BNI Prime, oferă parcare privată pentru toți participanții, inclusă în prețul biletului.",
+      "Da, Hotel Codrișor din Bistrița, locul de desfășurare al evenimentului organizat de BNI Prime, oferă parcare privată pentru toți participanții.",
   },
   {
     question: "Voi primi materiale după eveniment?",
     answer:
-      "Toți participanții primesc pe email un recap cu principalele concluzii ale sesiunilor și contactele echipei de conducere a grupului.",
+      "Toți participanții vor primi un email cu principalele concluzii ale evenimentului și contactele echipei de conducere a grupului.",
   },
   {
-    question: "Cum mă pregătesc pentru o sesiune de networking BNI eficientă?",
+    question: "Cum mă pregătesc pentru eveniment?",
     answer:
-      "Recomandăm să vii cu cărți de vizită, un mesaj clar despre ce oferi și ce cauți, și deschidere către conversații autentice — exact spiritul pe care îl promovează fiecare membru BNI.",
+      "Recomandăm să vii cu cărți de vizită, un mesaj clar despre ce oferi și ce cauți și deschidere către conversații autentice — exact spiritul pe care îl promovează fiecare membru BNI.",
   },
 ];
 
@@ -52,7 +52,7 @@ export function FAQ() {
         <SectionHeading
           kicker="Întrebări frecvente"
           title="Tot ce trebuie să știi despre eveniment"
-          description="Nu ai găsit răspunsul aici? Scrie-ne la inscrieri@bniprime.ro și revenim cu detalii despre evenimentul BNI."
+          description="Nu ai găsit răspunsul aici? Scrie-ne la bigdesigntm@gmail.com și revenim cu detalii."
         />
 
         <motion.div {...fadeInUp} className="mx-auto mt-12 max-w-3xl md:mt-16">

@@ -17,29 +17,28 @@ interface Stat {
 
 const STATS: Stat[] = [
   {
-    value: 41,
-    suffix: "+",
-    label: "Ani de la fondarea BNI (1985)",
-    description: "BNI a fost fondat de Dr. Ivan Misner și este cea mai mare organizație de networking business din lume.",
+    value: 76,
+    suffix: "",
+    label: "Țări în care activează BNI",
+    description: "BNI este prezentă pe toate continentele, cu grupuri active în 76 de țări.",
   },
   {
-    value: 355,
-    suffix: "K+",
-    label: "Membri BNI la nivel global",
-    description: "Cifră publicată oficial de BNI Global — organizația internațională din care face parte și grupul BNI Prime.",
-  },
-  {
-    value: 11600,
+    value: 11500,
     suffix: "+",
     label: "Grupuri BNI în lume",
-    description: "Grupuri locale de networking business, active pe toate continentele — printre care și grupul BNI Prime din Bistrița.",
+    description: "Grupuri locale de networking business activ, printre care și grupul BNI Prime din Bistrița.",
   },
   {
-    value: 26.9,
-    decimals: 1,
-    suffix: " Mld $",
-    label: "Afaceri generate de membrii BNI",
-    description: "Valoarea afacerilor generate prin recomandări între membrii BNI, raportată oficial de organizație.",
+    value: 350000,
+    suffix: "+",
+    label: "Membri BNI la nivel global",
+    description: "Antreprenori și profesioniști care construiesc afaceri prin recomandări în rețeaua BNI.",
+  },
+  {
+    value: 30,
+    suffix: " mld $",
+    label: "Cifră de afaceri generată",
+    description: "Valoarea afacerilor generate prin recomandări între membrii BNI, raportată de organizație.",
   },
 ];
 
@@ -50,7 +49,7 @@ export function Stats() {
         <SectionHeading
           kicker="BNI la nivel global"
           title="BNI Prime face parte dintr-o rețea globală"
-          description="BNI Prime este grupul local din Bistrița al organizației internaționale BNI. La nivel global, rețeaua BNI înregistrează:"
+          description="BNI (Business Network International) este cea mai mare rețea de business networking la nivel global, fondată în anul 1985. BNI Prime este grupul local din Bistrița al acestei organizații."
         />
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-16 md:grid-cols-4">

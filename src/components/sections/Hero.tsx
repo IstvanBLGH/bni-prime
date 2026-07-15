@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/shared/Container";
 
-const HEADLINE = "Networking de business care îți schimbă afacerea.";
+const HEADLINE = "Evenimentul de business networking al verii din Bistrița.";
 
 const easeApple = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -40,7 +40,7 @@ export function Hero() {
         >
           <Badge variant="secondary" className="mb-6 gap-1.5 px-4 py-1.5">
             <CalendarDays className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-            9 Iulie 2026 · Bistrița
+            29 Iulie 2026 · Bistrița
           </Badge>
         </motion.div>
 
@@ -63,10 +63,9 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.6, ease: easeApple }}
           className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg"
         >
-          Grupul BNI Prime organizează într-o singură zi cea mai concentrată sesiune de
-          networking business din Bistrița, reunind antreprenori și membri BNI din regiune,
-          ghidați de echipa de conducere a grupului. Un eveniment construit pentru relații
-          reale și oportunități reale.
+          BNI Prime te invită la evenimentul de business networking al verii — un eveniment
+          ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune, la care
+          participanții pot identifica oportunități concrete pentru afacerile lor.
         </motion.p>
 
         <motion.div
@@ -84,7 +83,7 @@ export function Hero() {
           <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
             <a href="#agenda">
               <MapPin className="h-4 w-4" aria-hidden="true" />
-              Vezi agenda evenimentului
+              Agenda evenimentului
             </a>
           </Button>
         </motion.div>
@@ -128,10 +127,10 @@ export function Hero() {
                   />
                   <div className="flex flex-col gap-1 lg:motion-safe:animate-soft-pulse">
                     <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-white/70 lg:text-sm">
-                      Următorul eveniment al grupului BNI Prime
+                      Organizat de grupul BNI Prime · Bistrița
                     </span>
                     <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
-                      9 Iulie 2026 — Hotel Codrișor, Bistrița
+                      Prime Summer · 29 Iulie 2026
                     </p>
                   </div>
                   <Button

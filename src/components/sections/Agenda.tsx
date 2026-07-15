@@ -8,44 +8,79 @@ import { staggerItem } from "@/lib/motion";
 
 const AGENDA = [
   {
-    time: "09:00",
-    title: "Înregistrare & welcome coffee",
-    description: "Acces în locație, badge de participant și primele conexiuni informale înainte de start.",
+    time: "17:00 – 17:45",
+    title: "Primirea participanților",
+    description: "Acces în locație, primirea ecusonului de participant și primele conexiuni informale.",
   },
   {
-    time: "09:30",
-    title: "Deschidere oficială a evenimentului",
-    description: "Bun venit din partea organizatorilor și prezentarea agendei complete a evenimentului BNI.",
+    time: "17:45 – 17:50",
+    title: "Deschiderea oficială a evenimentului",
+    description: "Bun venit din partea organizatorilor și prezentarea agendei complete.",
   },
   {
-    time: "10:00",
-    title: "Keynote: Puterea networking-ului BNI",
-    description: "De ce filozofia „Givers Gain” a făcut din BNI cea mai mare rețea de recomandări din lume.",
+    time: "17:50 – 17:55",
+    title: "Scop și privire de ansamblu BNI",
+    description: "Ce este networking-ul structurat? Ce este BNI?",
   },
   {
-    time: "11:00",
-    title: "Panel: Cum cresc afacerile membrilor BNI",
-    description: "Antreprenori membri BNI discută deschis despre rezultatele concrete obținute prin networking.",
+    time: "17:55 – 18:00",
+    title: "Prezentarea valorilor BNI",
+    description: "Dăruind vei dobândi — filozofia care stă la baza fiecărui grup BNI.",
   },
   {
-    time: "12:30",
-    title: "Pauză de networking & prânz",
-    description: "Conversații informale, schimb de contacte și prima rundă de recomandări de business.",
+    time: "18:00 – 18:15",
+    title: "Speaker: Importanța comunităților de afaceri",
+    description: "Prezentare despre cum comunitățile de business creează oportunități reale.",
   },
   {
-    time: "14:00",
-    title: "Workshop: Tehnici de recomandare eficiente",
-    description: "Sesiune practică despre cum să transformi o conversație într-o recomandare de calitate.",
+    time: "18:15 – 18:25",
+    title: "Prezentarea membrilor BNI Prime (4 membri)",
+    description: "Patru membri ai grupului BNI Prime își prezintă afacerile și domeniile de activitate.",
   },
   {
-    time: "15:30",
-    title: "Sesiuni 1:1 de networking structurat",
-    description: "Întâlniri scurte, ghidate, între participanți, exact ca în întâlnirile săptămânale BNI.",
+    time: "18:25 – 18:35",
+    title: "Sesiune de speed networking (1)",
+    description: "Prima rundă de networking structurat — conexiuni rapide și eficiente.",
   },
   {
-    time: "17:00",
-    title: "Closing keynote & premii",
-    description: "Recapitulare a zilei și recunoașterea celor mai active grupuri și membri BNI prezenți.",
+    time: "18:35 – 18:50",
+    title: "Moment artistic",
+    description: "Moment cultural pentru participanți.",
+  },
+  {
+    time: "18:50 – 19:00",
+    title: "Prezentarea membrilor BNI Prime (3 membri)",
+    description: "Trei membri ai grupului BNI Prime în prezentări scurte de afaceri.",
+  },
+  {
+    time: "19:00 – 19:10",
+    title: "Sesiune de speed networking (2)",
+    description: "A doua rundă de networking structurat.",
+  },
+  {
+    time: "19:10 – 19:25",
+    title: "Speaker: Prezentare invitat",
+    description: "A doua prezentare susținută de un invitat special al evenimentului.",
+  },
+  {
+    time: "19:25 – 19:35",
+    title: "Prezentarea membrilor BNI Prime (3 membri)",
+    description: "Ultimii trei membri prezintă afacerile și oportunitățile lor de colaborare.",
+  },
+  {
+    time: "19:35 – 19:45",
+    title: "Sesiune de speed networking (3)",
+    description: "A treia și ultima rundă de networking structurat al serii.",
+  },
+  {
+    time: "19:45 – 20:00",
+    title: "Orientarea invitaților",
+    description: "Cum devin membru BNI? — informații pentru cei interesați să se alăture grupului.",
+  },
+  {
+    time: "20:00 – 21:00",
+    title: "Networking deschis",
+    description: "O oră de conversații libere, schimb de contacte și conexiuni informale.",
   },
 ];
 
@@ -55,8 +90,8 @@ export function Agenda() {
       <Container>
         <SectionHeading
           kicker="Agendă"
-          title="Programul zilei evenimentului"
-          description="O singură zi, structurată pas cu pas, pentru a maximiza fiecare oportunitate de networking business."
+          title="Programul evenimentului"
+          description="O după-masă, câteva ore, multe oportunități."
         />
 
         <ol className="mx-auto mt-12 max-w-3xl md:mt-16">
@@ -64,9 +99,9 @@ export function Agenda() {
             <motion.li
               key={item.time}
               {...staggerItem(i)}
-              className="grid grid-cols-[auto_1fr] gap-x-6 md:grid-cols-[5rem_auto_1fr]"
+              className="grid grid-cols-[auto_1fr] gap-x-6 md:grid-cols-[9rem_auto_1fr]"
             >
-              <span className="hidden pt-0.5 text-sm font-semibold text-primary md:block">
+              <span className="hidden pt-0.5 text-sm font-semibold tabular-nums text-primary md:block">
                 {item.time}
               </span>
 

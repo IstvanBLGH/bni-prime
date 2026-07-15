@@ -19,7 +19,7 @@ export function CTAFinal() {
             Rezervă-ți locul la eveniment
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
-            Locurile pentru evenimentul organizat de BNI Prime din 9 iulie 2026 sunt limitate.
+            Locurile pentru Prime Summer — evenimentul organizat de BNI Prime pe 29 iulie 2026 — sunt limitate.
             Alătură-te comunității de antreprenori și membri BNI care construiesc afaceri prin networking real.
           </p>
           <div className="mt-10 flex justify-center">
