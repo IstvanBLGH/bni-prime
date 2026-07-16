@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
   kicker?: string;
-  title: string;
+  title?: string;
   description?: string;
   align?: "left" | "center";
   className?: string;
@@ -14,7 +14,6 @@ interface SectionHeadingProps {
 
 export function SectionHeading({
   kicker,
-  title,
   description,
   align = "center",
   className,

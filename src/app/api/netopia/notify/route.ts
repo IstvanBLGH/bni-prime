@@ -25,12 +25,14 @@ export async function POST(req: NextRequest) {
 
     // status 3 = autorizat, 5 = confirmat
     if (payment.status === 3 || payment.status === 5) {
+      // descrierea conține: "Nume | email | telefon | Bilet X xN — Prime Summer 2026"
+      const parts = (order.description ?? "").split("|").map((s: string) => s.trim());
       await logToSheets({
         orderID: order.orderID,
-        name: order.data?.name ?? "",
-        email: order.data?.email ?? "",
-        phone: order.data?.phone ?? "",
-        ticket: order.data?.ticket ?? "",
+        name: parts[0] ?? "",
+        email: parts[1] ?? "",
+        phone: parts[2] ?? "",
+        ticket: parts[3] ?? "",
         amount: payment.amount,
         status: payment.status === 5 ? "Confirmat" : "Autorizat",
       });
