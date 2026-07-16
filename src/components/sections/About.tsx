@@ -35,7 +35,7 @@ const VALUES = [
 
 export function About() {
   return (
-    <section id="about" className="py-16 md:py-24 lg:py-32">
+    <section id="about" className="py-12 md:py-24 lg:py-32">
       <Container>
 
         {/* BNI România */}

@@ -43,7 +43,7 @@ const STATS: Stat[] = [
 
 export function Stats() {
   return (
-    <section id="stats" className="border-y border-border bg-surface py-16 md:py-24 lg:py-32">
+    <section id="stats" className="border-y border-border bg-surface py-12 md:py-24 lg:py-32">
       <Container>
         <motion.div {...staggerItem(0)} className="mx-auto max-w-3xl text-center">
           <h2 className="text-4xl font-bold tracking-tight text-primary md:text-5xl lg:text-6xl">

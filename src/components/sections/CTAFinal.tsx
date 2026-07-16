@@ -9,7 +9,7 @@ import { fadeInUp } from "@/lib/motion";
 
 export function CTAFinal() {
   return (
-    <section id="cta-final" className="py-16 md:py-24 lg:py-32">
+    <section id="cta-final" className="py-12 md:py-24 lg:py-32">
       <Container>
         <motion.div
           {...fadeInUp}

@@ -102,7 +102,7 @@ export function Leadership() {
   }, [paused, next]);
 
   return (
-    <section id="membrii" className="bg-surface py-16 md:py-24 lg:py-32">
+    <section id="membrii" className="bg-surface py-12 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Membrii"
@@ -112,7 +112,7 @@ export function Leadership() {
 
         <div
           ref={trackRef}
-          className="mt-12 flex gap-5 overflow-x-auto pb-4 md:mt-16"
+          className="mt-8 flex gap-3 overflow-x-auto pb-4 md:mt-16 md:gap-5"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
@@ -124,9 +124,9 @@ export function Leadership() {
               key={member.name}
               onClick={() => goTo(i)}
               className={cn(
-                "w-56 shrink-0 cursor-pointer overflow-hidden rounded-2xl border bg-background shadow-sm transition-all duration-500",
+                "w-40 shrink-0 cursor-pointer overflow-hidden rounded-2xl border bg-background shadow-sm transition-all duration-500",
                 "hover:-translate-y-1 hover:shadow-xl",
-                "sm:w-64 lg:w-72",
+                "sm:w-56 lg:w-72",
                 i === current
                   ? "border-primary ring-2 ring-primary/40"
                   : "border-border"
@@ -149,11 +149,11 @@ export function Leadership() {
                   </svg>
                 </div>
               )}
-              <div className="flex flex-col gap-1.5 p-4">
-                <h3 className="text-sm font-bold leading-tight text-foreground sm:text-base">
+              <div className="flex flex-col gap-1 p-3 sm:gap-1.5 sm:p-4">
+                <h3 className="text-xs font-bold leading-tight text-foreground sm:text-sm">
                   {member.name}
                 </h3>
-                <p className="text-xs font-semibold text-primary sm:text-sm">
+                <p className="text-xs font-semibold text-primary">
                   {member.role}
                 </p>
                 <p className="text-xs text-muted">{member.company}</p>

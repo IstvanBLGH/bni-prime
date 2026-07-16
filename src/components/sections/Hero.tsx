@@ -30,7 +30,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-28 pb-16 md:pt-32"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-32 md:pb-16"
     >
       <Container className="flex flex-col items-center text-center">
         <motion.div
@@ -48,7 +48,7 @@ export function Hero() {
           variants={headlineContainer}
           initial="hidden"
           animate="visible"
-          className="max-w-4xl text-4xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl"
+          className="max-w-4xl text-3xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl"
         >
           {HEADLINE.split(" ").map((w, i) => (
             <motion.span key={i} variants={headlineWord} className="inline-block">

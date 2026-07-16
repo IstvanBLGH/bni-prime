@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     url: "https://bniprime.ro",
     title: "Eveniment de Networking Business — Grupul BNI Prime",
     description:
-      "Eveniment de networking business organizat de grupul BNI Prime din Bistrița. 9 iulie 2026.",
+      "Eveniment de networking business organizat de grupul BNI Prime din Bistrița. 29 iulie 2026.",
     siteName: "BNI Prime",
     images: [
       {

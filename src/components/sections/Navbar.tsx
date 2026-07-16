@@ -40,8 +40,8 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,padding,border-color] duration-500 ease-out",
         scrolled
-          ? "border-b border-border bg-white/80 py-3 backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent py-5"
+          ? "border-b border-border bg-white/80 py-1.5 backdrop-blur-xl md:py-3"
+          : "border-b border-transparent bg-transparent py-2 md:py-5"
       )}
     >
       <Container className="flex items-center justify-between">
@@ -51,7 +51,7 @@ export function Navbar() {
             alt="BNI Prime"
             width={300}
             height={100}
-            className="h-16 w-auto object-contain"
+            className="h-10 w-auto object-contain md:h-16"
             priority
           />
         </a>

@@ -124,7 +124,7 @@ export function Testimonials() {
   }, [paused, next]);
 
   return (
-    <section id="testimonials" className="bg-surface py-16 md:py-24 lg:py-32">
+    <section id="testimonials" className="bg-surface py-12 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Testimoniale"

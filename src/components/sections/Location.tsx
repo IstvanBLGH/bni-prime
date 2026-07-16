@@ -31,7 +31,7 @@ const INFO = [
 
 export function Location() {
   return (
-    <section id="location" className="py-16 md:py-24 lg:py-32">
+    <section id="location" className="py-12 md:py-24 lg:py-32">
       <Container>
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-16">
           <motion.div {...fadeInUp}>

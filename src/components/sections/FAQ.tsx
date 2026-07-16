@@ -47,7 +47,7 @@ const FAQS = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-16 md:py-24 lg:py-32">
+    <section id="faq" className="py-12 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Întrebări frecvente"

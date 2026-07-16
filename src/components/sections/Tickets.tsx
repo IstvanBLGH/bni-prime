@@ -291,7 +291,7 @@ export function Tickets() {
   };
 
   return (
-    <section id="tickets" className="bg-surface py-16 md:py-24 lg:py-32">
+    <section id="tickets" className="bg-surface py-12 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Bilete"
