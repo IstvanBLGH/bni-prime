@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -44,12 +45,15 @@ export function Navbar() {
       )}
     >
       <Container className="flex items-center justify-between">
-        <a
-          href="#hero"
-          className="text-lg font-bold tracking-tight text-foreground"
-          aria-label="BNI Prime — pagina principală"
-        >
-          BNI <span className="text-primary">Prime</span>
+        <a href="#hero" aria-label="BNI Prime — pagina principală">
+          <Image
+            src="/HEADER.png"
+            alt="BNI Prime"
+            width={300}
+            height={100}
+            className="h-16 w-auto object-contain"
+            priority
+          />
         </a>
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Navigare principală">
@@ -83,7 +87,13 @@ export function Navbar() {
           <SheetContent side="right">
             <SheetHeader>
               <SheetTitle>
-                BNI <span className="text-primary">Prime</span>
+                <Image
+                  src="/HEADER.png"
+                  alt="BNI Prime"
+                  width={200}
+                  height={80}
+                  className="h-10 w-auto object-contain"
+                />
               </SheetTitle>
             </SheetHeader>
             <nav

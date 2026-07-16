@@ -8,79 +8,79 @@ import { staggerItem } from "@/lib/motion";
 
 const AGENDA = [
   {
-    time: "17:00 – 17:45",
+    time: "17:00 - 17:45",
     title: "Primirea participanților",
-    description: "Acces în locație, primirea ecusonului de participant și primele conexiuni informale.",
+    description: "Acces în locație, primirea ecusonului de participant și primele conexiuni informale",
   },
   {
-    time: "17:45 – 17:50",
+    time: "17:45 - 17:50",
     title: "Deschiderea oficială a evenimentului",
-    description: "Bun venit din partea organizatorilor și prezentarea agendei complete.",
+    description: "Bun venit din partea organizatorilor și prezentarea agendei complete a evenimentului",
   },
   {
-    time: "17:50 – 17:55",
+    time: "17:50 - 17:55",
     title: "Scop și privire de ansamblu BNI",
-    description: "Ce este networking-ul structurat? Ce este BNI?",
+    description: "Ce este networking-ul? Ce este BNI?",
   },
   {
-    time: "17:55 – 18:00",
+    time: "17:55 - 18:00",
     title: "Prezentarea valorilor BNI",
-    description: "Dăruind vei dobândi — filozofia care stă la baza fiecărui grup BNI.",
+    description: "Dăruind vei dobândi!",
   },
   {
-    time: "18:00 – 18:15",
-    title: "Speaker: Importanța comunităților de afaceri",
-    description: "Prezentare despre cum comunitățile de business creează oportunități reale.",
+    time: "18:00 - 18:15",
+    title: "Speaker",
+    description: "Subiect: importanța comunităților de afaceri",
   },
   {
-    time: "18:15 – 18:25",
-    title: "Prezentarea membrilor BNI Prime (4 membri)",
-    description: "Patru membri ai grupului BNI Prime își prezintă afacerile și domeniile de activitate.",
+    time: "18:15 - 18:25",
+    title: "Prezentarea membrilor BNI PRIME (4 membri)",
+    description: "",
   },
   {
-    time: "18:25 – 18:35",
+    time: "18:25 - 18:35",
     title: "Sesiune de speed networking (1)",
-    description: "Prima rundă de networking structurat — conexiuni rapide și eficiente.",
+    description: "",
   },
   {
-    time: "18:35 – 18:50",
+    time: "18:35 - 18:50",
     title: "Moment artistic",
-    description: "Moment cultural pentru participanți.",
+    description: "Ansamblul…",
   },
   {
-    time: "18:50 – 19:00",
-    title: "Prezentarea membrilor BNI Prime (3 membri)",
-    description: "Trei membri ai grupului BNI Prime în prezentări scurte de afaceri.",
+    time: "18:50 - 19:00",
+    title: "Prezentarea membrilor BNI PRIME (3 membri)",
+    description: "",
   },
   {
-    time: "19:00 – 19:10",
+    time: "19:00 - 19:10",
     title: "Sesiune de speed networking (2)",
-    description: "A doua rundă de networking structurat.",
+    description: "",
   },
   {
-    time: "19:10 – 19:25",
-    title: "Speaker: Prezentare invitat",
-    description: "A doua prezentare susținută de un invitat special al evenimentului.",
+    time: "19:10 - 19:25",
+    title: "Speaker",
+    description: "Subiect",
   },
   {
-    time: "19:25 – 19:35",
-    title: "Prezentarea membrilor BNI Prime (3 membri)",
-    description: "Ultimii trei membri prezintă afacerile și oportunitățile lor de colaborare.",
+    time: "19:25 - 19:35",
+    title: "Prezentarea membrilor BNI PRIME (3 membri)",
+    description: "",
   },
   {
-    time: "19:35 – 19:45",
+    time: "19:35 - 19:45",
     title: "Sesiune de speed networking (3)",
-    description: "A treia și ultima rundă de networking structurat al serii.",
+    description: "",
   },
   {
-    time: "19:45 – 20:00",
+    time: "19:45 - 20:00",
     title: "Orientarea invitaților",
-    description: "Cum devin membru BNI? — informații pentru cei interesați să se alăture grupului.",
+    description: "Cum devin membru BNI?",
   },
   {
-    time: "20:00 – 21:00",
+    time: "20:00 - 21:00",
     title: "Networking deschis",
-    description: "O oră de conversații libere, schimb de contacte și conexiuni informale.",
+    description: "",
   },
 ];
 
@@ -122,9 +122,11 @@ export function Agenda() {
                 <h3 className="text-base font-semibold tracking-tight text-foreground md:text-lg">
                   {item.title}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted md:text-base">
-                  {item.description}
-                </p>
+                {item.description && (
+                  <p className="mt-1 text-sm leading-relaxed text-muted md:text-base">
+                    {item.description}
+                  </p>
+                )}
               </div>
             </motion.li>
           ))}

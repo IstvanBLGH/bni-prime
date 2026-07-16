@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Users, Handshake, TrendingUp } from "lucide-react";
 
@@ -39,6 +40,7 @@ export function About() {
 
         {/* BNI România */}
         <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
+          {/* Stânga: text + cifre */}
           <div>
             <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
               BNI România
@@ -47,19 +49,32 @@ export function About() {
               Astăzi, există grupuri BNI lansate sau în formare în 30 de județe și în București,
               construind o rețea națională de antreprenori care se susțin reciproc prin recomandări.
             </p>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
+              {BNI_RO_STATS.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  {...staggerItem(i)}
+                  className="rounded-2xl border border-border bg-surface p-5 text-center"
+                >
+                  <p className="text-3xl font-bold tracking-tight text-primary">{stat.value}</p>
+                  <p className="mt-2 text-xs font-medium text-muted">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
-            {BNI_RO_STATS.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                {...staggerItem(i)}
-                className="rounded-2xl border border-border bg-surface p-6 text-center"
-              >
-                <p className="text-4xl font-bold tracking-tight text-primary">{stat.value}</p>
-                <p className="mt-2 text-sm font-medium text-muted">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
+
+          {/* Dreapta: harta României */}
+          <motion.div {...staggerItem(1)} className="flex items-center justify-center">
+            <div className="relative w-full max-w-sm md:max-w-none">
+              <Image
+                src="/Harta romania.png"
+                alt="Harta României cu prezența BNI în 30 de județe"
+                width={600}
+                height={500}
+                className="h-auto w-full object-contain drop-shadow-sm"
+              />
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* BNI Prime */}

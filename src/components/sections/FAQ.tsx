@@ -21,17 +21,17 @@ const FAQS = [
   {
     question: "Ce diferență este între pachetele Standard, Plus și Sponsor?",
     answer:
-      "Biletul Standard oferă acces complet la eveniment și catering. Biletul Plus adaugă stand pentru prezentarea serviciilor și produselor tale. Biletul Sponsor include, pe lângă cele de mai sus, mențiune specială în deschiderea oficială a evenimentului și logo vizibil pe toate materialele evenimentului.",
+      "Biletul Standard oferă acces complet la eveniment.\nBiletul Plus adaugă stand pentru prezentarea serviciilor / produselor.\nBiletul Sponsor include vizibilitatea brandului.",
   },
   {
     question: "Pot transfera biletul către altă persoană?",
     answer:
-      "Da. Trimite-ne un email la bigdesigntm@gmail.com cu datele persoanei ce va participa în locul tău și actualizăm biletul fără costuri suplimentare.",
+      "Da. Trimite-ne un email la bigdesigntm@google.com cu datele persoanei ce va participa în locul tău și actualizăm biletul fără costuri suplimentare.",
   },
   {
     question: "Există loc de parcare la locația evenimentului?",
     answer:
-      "Da, Hotel Codrișor din Bistrița, locul de desfășurare al evenimentului organizat de BNI Prime, oferă parcare privată pentru toți participanții.",
+      "Da, Hotel Codrișor din Bistrița, locul de desfășurare al evenimentului organizat de BNI Prime, oferă parcare privată pentru toți participanții, inclusă în prețul biletului.",
   },
   {
     question: "Voi primi materiale după eveniment?",
@@ -62,7 +62,11 @@ export function FAQ() {
                 <AccordionTrigger className="text-base md:text-lg">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent>{faq.answer}</AccordionContent>
+                <AccordionContent>
+                  {faq.answer.split("\n").map((line, i) => (
+                    <span key={i} className="block">{line}</span>
+                  ))}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, Car, TrainFront, Clock } from "lucide-react";
 
 import { Container } from "@/components/shared/Container";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/button";
 import { fadeInUp } from "@/lib/motion";
 
@@ -80,12 +80,28 @@ export function Location() {
           </motion.div>
 
           <motion.div {...fadeInUp}>
-            <ImagePlaceholder
-              width={800}
-              height={600}
-              label="Hartă Google Maps — locația BNI Prime"
-              className="w-full shadow-lg"
-            />
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `${VENUE_NAME}, ${VENUE_ADDRESS}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block overflow-hidden rounded-2xl shadow-lg"
+            >
+              <Image
+                src="/Hotel Codrisor.png"
+                alt="Hotel Codrișor, Bistrița — locația evenimentului BNI Prime Summer"
+                width={800}
+                height={600}
+                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/30">
+                <span className="flex items-center gap-2 rounded-full border border-white/70 bg-white/20 px-6 py-3 text-sm font-semibold text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  Vezi pe Google Maps
+                </span>
+              </div>
+            </a>
           </motion.div>
         </div>
       </Container>

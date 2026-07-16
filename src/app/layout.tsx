@@ -40,10 +40,10 @@ export const metadata: Metadata = {
     siteName: "BNI Prime",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Eveniment de networking business organizat de grupul BNI Prime",
+        url: "/og-image.png",
+        width: 2000,
+        height: 2000,
+        alt: "BNI Prime — Eveniment de networking business",
       },
     ],
   },
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Eveniment de Networking Business — BNI Prime",
     description: "Eveniment de networking business organizat de grupul BNI Prime din Bistrița",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

@@ -74,16 +74,16 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.75, ease: easeApple }}
           className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
         >
-          <Button size="lg" asChild className="w-full sm:w-auto">
-            <a href="#tickets">
-              Înscrie-te acum
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </Button>
           <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
             <a href="#agenda">
               <MapPin className="h-4 w-4" aria-hidden="true" />
               Agenda evenimentului
+            </a>
+          </Button>
+          <Button size="lg" asChild className="w-full sm:w-auto">
+            <a href="#tickets">
+              Înscrie-te acum
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </Button>
         </motion.div>

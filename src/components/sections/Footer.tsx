@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Facebook, Mail, Phone } from "lucide-react";
 import NTPLogo from "ntp-logo-react";
 
@@ -20,8 +21,8 @@ export function Footer() {
       <Container>
         <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <a href="#hero" className="text-lg font-bold tracking-tight text-foreground">
-              BNI <span className="text-primary">Prime</span>
+            <a href="#hero">
+              <Image src="/HEADER.png" alt="BNI Prime" width={200} height={67} className="h-12 w-auto object-contain" />
             </a>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
               BNI Prime este primul grup de business networking din județul Bistrița-Năsăud.
@@ -91,11 +92,13 @@ export function Footer() {
         <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
           <p>© 2026 BNI Prime. Toate drepturile rezervate.</p>
           <div className="flex items-center gap-6">
-            <NTPLogo color="#1d1d1f" version="horizontal" secret="167104" />
-            <a href="#" className="transition-colors duration-300 hover:text-primary">
+            <div className="rounded-lg bg-[#1a2e5a] px-4 py-2">
+              <NTPLogo color="#ffffff" version="horizontal" secret="167104" />
+            </div>
+            <a href="/politica-de-confidentialitate" className="transition-colors duration-300 hover:text-primary">
               Politica de confidențialitate
             </a>
-            <a href="#" className="transition-colors duration-300 hover:text-primary">
+            <a href="/termeni-si-conditii" className="transition-colors duration-300 hover:text-primary">
               Termeni și condiții
             </a>
           </div>

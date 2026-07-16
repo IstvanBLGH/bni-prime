@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Globe } from "lucide-react";
+import Image from "next/image";
+import { Globe, Phone } from "lucide-react";
 
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { cn } from "@/lib/utils";
 
 const MEMBERS = [
@@ -14,37 +14,56 @@ const MEMBERS = [
     role: "Președinte",
     company: "Alliance Imobil Solution SRL",
     website: "https://allianceimobil.ro",
+    phone: "",
+    photo: "/images/leadership/Alin Corcode.png",
   },
   {
     name: "Vasile Neagoș",
     role: "Secretar / Trezorier",
     company: "Cabinet de avocat Vasile Neagoș",
+    website: "",
+    phone: "",
+    photo: "/images/leadership/Vasile Neagoș.png",
   },
   {
     name: "Marius Lazaroi",
     role: "Coordonator educațional",
     company: "FAST DESIGN 2 PRINT SRL",
+    website: "",
+    phone: "",
+    photo: "",
   },
   {
     name: "Alexandru Antal",
     role: "Comitetul de Întâmpinare",
     company: "Panouri Cluj",
+    website: "",
+    phone: "",
+    photo: "/images/leadership/Alexandru Antal.png",
   },
   {
     name: "Monica Mariana Mutu",
     role: "Comitetul de Întâmpinare",
     company: "PFA Mutu Monica Mariana",
+    website: "",
+    phone: "",
+    photo: "",
   },
   {
     name: "Lucica Ana Marta",
     role: "Comitetul de Membri",
     company: "EUROPX BEST SOLUTIONS SRL",
+    website: "",
+    phone: "",
+    photo: "/images/leadership/Lucica Marta.png",
   },
   {
     name: "Mariana-Dacina Silvesan-Gherman",
     role: "Comitetul de Membri",
     company: "SIMAD 2016",
     website: "http://www.izolatiitermice.eu",
+    phone: "",
+    photo: "",
   },
 ];
 
@@ -113,37 +132,53 @@ export function Leadership() {
                   : "border-border"
               )}
             >
-              <ImagePlaceholder
-                width={288}
-                height={360}
-                aspectRatio="4/5"
-                label={`Portret ${member.name}`}
-                className="w-full rounded-none border-x-0 border-t-0"
-              />
-              <div className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <h3 className="text-sm font-semibold leading-tight text-foreground sm:text-base">
-                      {member.name}
-                    </h3>
-                    <p className="mt-0.5 text-xs font-medium text-primary sm:text-sm">
-                      {member.role}
-                    </p>
-                  </div>
-                  {member.website && (
-                    <a
-                      href={member.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      aria-label={`Website ${member.company}`}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface text-muted transition-colors duration-300 hover:bg-primary hover:text-white"
-                    >
-                      <Globe className="h-3.5 w-3.5" aria-hidden="true" />
-                    </a>
-                  )}
+              {member.photo ? (
+                <div className="relative aspect-[4/5] w-full overflow-hidden">
+                  <Image
+                    src={member.photo}
+                    alt={`Portret ${member.name}`}
+                    fill
+                    sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
+                    className="object-cover"
+                  />
                 </div>
-                <p className="mt-1 text-xs text-muted">{member.company}</p>
+              ) : (
+                <div className="relative aspect-[4/5] w-full bg-surface flex items-center justify-center">
+                  <svg className="h-16 w-16 text-border" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                  </svg>
+                </div>
+              )}
+              <div className="flex flex-col gap-1.5 p-4">
+                <h3 className="text-sm font-bold leading-tight text-foreground sm:text-base">
+                  {member.name}
+                </h3>
+                <p className="text-xs font-semibold text-primary sm:text-sm">
+                  {member.role}
+                </p>
+                <p className="text-xs text-muted">{member.company}</p>
+                {member.website && (
+                  <a
+                    href={member.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-primary"
+                  >
+                    <Globe className="h-3 w-3 shrink-0" aria-hidden="true" />
+                    <span className="truncate">{member.website.replace(/^https?:\/\//, "")}</span>
+                  </a>
+                )}
+                {member.phone && (
+                  <a
+                    href={`tel:${member.phone}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-primary"
+                  >
+                    <Phone className="h-3 w-3 shrink-0" aria-hidden="true" />
+                    {member.phone}
+                  </a>
+                )}
               </div>
             </div>
           ))}
