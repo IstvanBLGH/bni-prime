@@ -1,4 +1,7 @@
+"use client";
+
 import { Facebook, Mail, Phone } from "lucide-react";
+import NTPLogo from "ntp-logo-react";
 
 import { Container } from "@/components/shared/Container";
 
@@ -87,7 +90,8 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
           <p>© 2026 BNI Prime. Toate drepturile rezervate.</p>
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
+            <NTPLogo color="#86868b" version="horizontal" secret="167104" />
             <a href="#" className="transition-colors duration-300 hover:text-primary">
               Politica de confidențialitate
             </a>
