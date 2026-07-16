@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, ShieldCheck } from "lucide-react";
+import { Check, ShieldCheck, Loader2 } from "lucide-react";
+import { collectBrowserInfo } from "netopia-card";
 
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -60,7 +61,47 @@ function RegistrationModal({
   defaultTicket: TicketType;
 }) {
   const [selected, setSelected] = useState<TicketType>(defaultTicket);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const ticket = TICKETS.find((t) => t.id === selected)!;
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const browserInfo = collectBrowserInfo(navigator, window);
+      const res = await fetch("/api/netopia/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          cui: data.get("cui"),
+          ticket: selected,
+          bilete: (data.get("bilete") as string)?.replace(/\D/g, "") || "1",
+          browserInfo,
+        }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) throw new Error(json.error || "Eroare la inițierea plății.");
+      if (json.payment?.paymentURL) {
+        window.location.href = json.payment.paymentURL;
+      } else {
+        throw new Error("URL de plată lipsă în răspuns.");
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Eroare necunoscută.");
+      setLoading(false);
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -99,14 +140,7 @@ function RegistrationModal({
           ))}
         </div>
 
-        <form
-          className="mt-5 flex flex-col gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            // TODO: POST /api/netopia/start → redirect to Netopia payment URL
-            alert("Plata cu cardul prin Netopia Payments va fi configurată în curând.");
-          }}
-        >
+        <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="modal-name"
@@ -222,10 +256,19 @@ function RegistrationModal({
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="mt-2 h-12 w-full text-base">
-            {ticket.price
-              ? `Plătește ${ticket.price} lei →`
-              : "Contactează-ne pentru pachetul Sponsor →"}
+          {error && (
+            <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+          )}
+
+          <Button type="submit" size="lg" className="mt-2 h-12 w-full text-base" disabled={loading}>
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Se procesează...
+              </span>
+            ) : (
+              `Plătește ${ticket.price} lei →`
+            )}
           </Button>
 
           <div className="flex items-center justify-center gap-1.5 text-xs text-muted">
