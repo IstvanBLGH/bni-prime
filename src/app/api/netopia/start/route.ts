@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       orderID,
       amount: totalAmount,
       currency: "RON",
-      description: `${name} | ${email} | ${phone} | Bilet ${ticket} x${qty} — Prime Summer 2026`,
+      description: `Bilet ${ticket} x${qty} — Prime Summer 2026`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
@@ -53,8 +53,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Pasăm date extra prin description pentru IPN
-    // (câmpul data nu e în tipurile netopia-card v2)
+    // Adăugăm datele clientului pentru a le primi înapoi în IPN
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (netopia as any).order.data = { name, email, phone, ticket, qty: String(qty) };
 
     netopia.setProductsData([
       {
