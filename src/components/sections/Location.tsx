@@ -35,12 +35,9 @@ export function Location() {
       <Container>
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-16">
           <motion.div {...fadeInUp}>
-            <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wide text-primary">
+            <span className="mb-3 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
               Locație
             </span>
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-              Unde are loc evenimentul
-            </h2>
             <p className="mt-4 flex items-center gap-2 text-base font-medium text-foreground md:text-lg">
               <MapPin className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
               {VENUE_NAME}, {VENUE_ADDRESS}

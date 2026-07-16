@@ -29,13 +29,10 @@ export function SectionHeading({
       )}
     >
       {kicker && (
-        <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wide text-primary">
+        <span className="mb-3 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
           {kicker}
         </span>
       )}
-      <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-        {title}
-      </h2>
       {description && (
         <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
           {description}

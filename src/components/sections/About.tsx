@@ -40,26 +40,23 @@ export function About() {
         {/* BNI România */}
         <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
           <div>
-            <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wide text-primary">
+            <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
               BNI România
             </span>
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              BNI este prezentă în România de peste 15 ani
-            </h2>
             <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
               Astăzi, există grupuri BNI lansate sau în formare în 30 de județe și în București,
               construind o rețea națională de antreprenori care se susțin reciproc prin recomandări.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
             {BNI_RO_STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 {...staggerItem(i)}
-                className="rounded-2xl border border-border bg-surface p-4 text-center"
+                className="rounded-2xl border border-border bg-surface p-6 text-center"
               >
-                <p className="text-2xl font-bold tracking-tight text-primary">{stat.value}</p>
-                <p className="mt-1 text-xs font-medium text-muted">{stat.label}</p>
+                <p className="text-4xl font-bold tracking-tight text-primary">{stat.value}</p>
+                <p className="mt-2 text-sm font-medium text-muted">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -68,15 +65,12 @@ export function About() {
         {/* BNI Prime */}
         <motion.div
           {...fadeInUp}
-          className="mt-16 rounded-3xl border border-border bg-surface p-8 md:mt-20 md:p-12"
+          className="mt-16 rounded-3xl border border-border bg-surface p-12 md:mt-20 md:p-16"
         >
-          <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wide text-primary">
+          <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
             BNI Prime
           </span>
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-            Primul grup BNI din județul Bistrița-Năsăud
-          </h2>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted md:text-lg lg:text-xl">
             BNI Prime s-a lansat în 24 decembrie 2025 și este primul grup BNI de business networking
             din județul Bistrița-Năsăud. BNI Prime își dorește să schimbe modul în care oamenii fac
             afaceri în Bistrița și în județ și este în căutare de profesioniști ce cred în valori
@@ -88,12 +82,9 @@ export function About() {
         {/* Prime Summer — Eveniment */}
         <div className="mt-16 md:mt-20">
           <motion.div {...fadeInUp} className="text-center">
-            <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wide text-primary">
-              Eveniment
+            <span className="mb-3 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
+              Prime Summer
             </span>
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-              <span className="text-primary">Prime Summer</span> · 29 iulie 2026
-            </h2>
             <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
               Prime Summer este un eveniment de business networking organizat de grupul BNI Prime
               pentru mediul de afaceri din județul Bistrița-Năsăud și din regiune. Evenimentul este

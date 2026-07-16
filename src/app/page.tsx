@@ -23,8 +23,9 @@ export default function Home() {
         <Agenda />
         <Tickets />
         <Location />
-        <Testimonials />
+        
         <FAQ />
+        <Testimonials />
         <CTAFinal />
       </main>
       <Footer />

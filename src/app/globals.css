@@ -24,7 +24,7 @@
   --color-surface: var(--bni-surface);
   --color-border: var(--bni-border);
   --color-muted: var(--bni-muted);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-open-sans);
 
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 4px);

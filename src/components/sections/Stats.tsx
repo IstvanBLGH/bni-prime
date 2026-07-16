@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 
 import { Container } from "@/components/shared/Container";
-import { SectionHeading } from "@/components/shared/SectionHeading";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
 import { staggerItem } from "@/lib/motion";
 
@@ -46,11 +45,16 @@ export function Stats() {
   return (
     <section id="stats" className="border-y border-border bg-surface py-16 md:py-24 lg:py-32">
       <Container>
-        <SectionHeading
-          kicker="BNI la nivel global"
-          title="BNI Prime face parte dintr-o rețea globală"
-          description="BNI (Business Network International) este cea mai mare rețea de business networking la nivel global, fondată în anul 1985. BNI Prime este grupul local din Bistrița al acestei organizații."
-        />
+        <motion.div {...staggerItem(0)} className="mx-auto max-w-3xl text-center">
+          <h2 className="text-4xl font-bold tracking-tight text-primary md:text-5xl lg:text-6xl">
+            BNI la nivel global
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
+            BNI (Business Network International) este cea mai mare rețea de business networking
+            la nivel global, fondată în anul 1985. BNI Prime este grupul local din Bistrița
+            al acestei organizații.
+          </p>
+        </motion.div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-16 md:grid-cols-4">
           {STATS.map((stat, i) => (
