@@ -48,6 +48,17 @@ export function Hero() {
           />
         </motion.div>
 
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: easeApple }}
+          className="max-w-2xl text-base leading-relaxed text-muted md:text-lg"
+        >
+          BNI Prime te invită la evenimentul de business networking al verii — un eveniment
+          ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune, la care
+          participanții pot identifica oportunități concrete pentru afacerile lor.
+        </motion.p>
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1,11 +1,63 @@
 "use client";
 
+import { useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Users, Handshake, TrendingUp } from "lucide-react";
 
 import { Container } from "@/components/shared/Container";
 import { fadeInUp, staggerItem } from "@/lib/motion";
+
+const LENS_SIZE = 320;
+const ZOOM = 5;
+
+function MapZoom() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [lens, setLens] = useState<{ x: number; y: number } | null>(null);
+
+  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setLens({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }, []);
+
+  const bgX = lens ? (lens.x / (containerRef.current?.offsetWidth ?? 1)) * 100 : 50;
+  const bgY = lens ? (lens.y / (containerRef.current?.offsetHeight ?? 1)) * 100 : 50;
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full cursor-crosshair select-none"
+      onMouseMove={onMouseMove}
+      onMouseLeave={() => setLens(null)}
+    >
+      <Image
+        src="/Harta romania.png"
+        alt="Harta României cu prezența BNI în 30 de județe"
+        width={800}
+        height={700}
+        className="h-auto w-full object-contain drop-shadow-sm"
+        draggable={false}
+      />
+      {lens && (
+        <div
+          className="pointer-events-none absolute rounded-full border-2 border-white/60 shadow-2xl ring-1 ring-black/10"
+          style={{
+            width: LENS_SIZE,
+            height: LENS_SIZE,
+            left: lens.x - LENS_SIZE / 2,
+            top: lens.y - LENS_SIZE / 2,
+            backgroundImage: "url('/Harta romania.png')",
+            backgroundSize: `${ZOOM * 100}%`,
+            backgroundPosition: `${bgX}% ${bgY}%`,
+            backgroundRepeat: "no-repeat",
+            backdropFilter: "brightness(1.05)",
+          }}
+        />
+      )}
+    </div>
+  );
+}
 
 const BNI_RO_STATS = [
   { value: "30", label: "județe + București" },
@@ -64,14 +116,8 @@ export function About() {
 
           {/* Dreapta: harta României */}
           <motion.div {...staggerItem(1)} className="flex items-center justify-center">
-            <div className="relative w-full max-w-sm md:max-w-none">
-              <Image
-                src="/Harta romania.png"
-                alt="Harta României cu prezența BNI în 30 de județe"
-                width={600}
-                height={500}
-                className="h-auto w-full object-contain drop-shadow-sm"
-              />
+            <div className="w-full max-w-sm md:max-w-2xl lg:max-w-3xl">
+              <MapZoom />
             </div>
           </motion.div>
         </motion.div>
