@@ -86,7 +86,7 @@ const AGENDA = [
 
 export function Agenda() {
   return (
-    <section id="agenda" className="py-12 md:py-24 lg:py-32">
+    <section id="agenda" className="py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Agendă"

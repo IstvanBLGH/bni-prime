@@ -154,7 +154,7 @@ export function Leadership() {
   }, []);
 
   return (
-    <section id="membrii" className="bg-surface py-12 md:py-24 lg:py-32">
+    <section id="membrii" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Membrii"

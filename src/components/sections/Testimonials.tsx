@@ -64,7 +64,7 @@ function TestimonialCard({
       onClick={onClick}
       className={cn(
         "w-72 shrink-0 cursor-pointer rounded-2xl border bg-background p-6 shadow-sm transition-all duration-500",
-        "hover:-translate-y-1 hover:shadow-xl",
+        "md:hover:-translate-y-1 md:hover:shadow-xl",
         "sm:w-80 lg:w-96",
         active ? "border-primary ring-2 ring-primary/40" : "border-border"
       )}
@@ -124,7 +124,7 @@ export function Testimonials() {
   }, [paused, next]);
 
   return (
-    <section id="testimonials" className="bg-surface py-12 md:py-24 lg:py-32">
+    <section id="testimonials" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Testimoniale"

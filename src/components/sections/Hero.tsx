@@ -36,7 +36,7 @@ export function Hero() {
             scale: { duration: 0.6, delay: 0.1, ease: easeApple },
             y: { duration: 4, delay: 0.7, repeat: Infinity, ease: "easeInOut" },
           }}
-          className="-my-4 w-full max-w-3xl md:max-w-4xl lg:max-w-5xl"
+          className="my-6 w-full max-w-3xl md:-my-4 md:max-w-4xl lg:max-w-5xl"
         >
           <Image
             src="/First section thumbnail (1).png"

@@ -43,7 +43,7 @@ const STATS: Stat[] = [
 
 export function Stats() {
   return (
-    <section id="stats" className="border-y border-border bg-surface py-12 md:py-24 lg:py-32">
+    <section id="stats" className="border-y border-border bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <motion.div {...staggerItem(0)}>
           <h2 className="mb-3 text-center text-4xl font-bold uppercase tracking-tight text-primary md:text-5xl lg:text-6xl">
@@ -61,10 +61,9 @@ export function Stats() {
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-16 md:grid-cols-4">
           {STATS.map((stat, i) => (
-            <motion.div
+            <div
               key={stat.label}
-              {...staggerItem(i)}
-              className="rounded-2xl border border-border bg-background p-6 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl md:text-left"
+              className="rounded-2xl border border-border bg-background p-6 text-center shadow-sm md:hover:-translate-y-1 md:hover:shadow-xl md:text-left md:transition-all md:duration-500"
             >
               <div className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
                 <AnimatedCounter
@@ -76,7 +75,7 @@ export function Stats() {
               <h3 className="mt-3 text-base font-semibold text-foreground">
                 {stat.label}
               </h3>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Container>

@@ -27,11 +27,16 @@ export async function POST(req: NextRequest) {
     if (payment.status === 3 || payment.status === 5) {
       const d = order.data ?? {};
       await logToSheets({
+        timestamp: new Date().toISOString(),
         orderID: order.orderID,
         name: d.name ?? "",
         email: d.email ?? "",
         phone: d.phone ?? "",
+        cui: d.cui ?? "",
         ticket: d.ticket ?? "",
+        qty: d.qty ?? "",
+        bilete: d.bilete ?? "",
+        sursa: d.sursa ?? "",
         amount: payment.amount,
         status: payment.status === 5 ? "Confirmat" : "Autorizat",
       });

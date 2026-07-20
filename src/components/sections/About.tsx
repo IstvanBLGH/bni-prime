@@ -86,7 +86,7 @@ const VALUES = [
 
 export function About() {
   return (
-    <section id="about" className="py-12 md:py-24 lg:py-32">
+    <section id="about" className="py-16 md:py-24 lg:py-32">
       <Container>
 
         {/* BNI România */}
@@ -155,13 +155,12 @@ export function About() {
           </motion.div>
 
           <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3">
-            {VALUES.map((item, i) => {
+            {VALUES.map((item) => {
               const Icon = item.icon;
               return (
-                <motion.div
+                <div
                   key={item.title}
-                  {...staggerItem(i)}
-                  className="rounded-2xl border border-border bg-background p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+                  className="rounded-2xl border border-border bg-background p-6 md:hover:-translate-y-1 md:hover:shadow-xl md:transition-all md:duration-500"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                     <Icon className="h-6 w-6 text-primary" aria-hidden="true" />
@@ -172,7 +171,7 @@ export function About() {
                   <p className="mt-2 text-sm leading-relaxed text-muted">
                     {item.description}
                   </p>
-                </motion.div>
+                </div>
               );
             })}
           </div>

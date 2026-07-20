@@ -9,10 +9,10 @@ const PRICES: Record<string, number> = {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, phone, cui, ticket, bilete, browserInfo } = body;
+    const { name, email, phone, cui, ticket, bilete, sursa, browserInfo } = body;
 
     const amount = PRICES[ticket] ?? 175;
-    const qty = parseInt(bilete) || 1;
+    const qty = parseInt((bilete as string).replace(/\D/g, "")) || 1;
     const totalAmount = amount * qty;
     const orderID = `PRIME-${Date.now()}`;
 
@@ -55,7 +55,16 @@ export async function POST(req: NextRequest) {
 
     // Adăugăm datele clientului pentru a le primi înapoi în IPN
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (netopia as any).order.data = { name, email, phone, ticket, qty: String(qty) };
+    (netopia as any).order.data = {
+      name,
+      email,
+      phone,
+      cui: cui ?? "",
+      ticket,
+      qty: String(qty),
+      bilete: bilete ?? "",
+      sursa: sursa ?? "",
+    };
 
     netopia.setProductsData([
       {

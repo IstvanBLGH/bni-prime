@@ -86,7 +86,8 @@ function RegistrationModal({
           phone: data.get("phone"),
           cui: data.get("cui"),
           ticket: selected,
-          bilete: (data.get("bilete") as string)?.replace(/\D/g, "") || "1",
+          bilete: (data.get("bilete") as string) || "1 bilet",
+          sursa: (data.get("sursa") as string) || "",
           browserInfo,
         }),
       });
@@ -307,7 +308,7 @@ export function Tickets() {
   };
 
   return (
-    <section id="tickets" className="bg-surface py-12 md:py-24 lg:py-32">
+    <section id="tickets" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
           kicker="Bilete"
@@ -316,12 +317,11 @@ export function Tickets() {
         />
 
         <div className="mt-12 grid gap-5 md:mt-16 md:mx-auto md:max-w-2xl md:grid-cols-2">
-          {TICKETS.map((ticket, i) => (
-            <motion.div
+          {TICKETS.map((ticket) => (
+            <div
               key={ticket.id}
-              {...staggerItem(i)}
               className={cn(
-                "relative flex flex-col rounded-2xl border bg-background p-7 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl",
+                "relative flex flex-col rounded-2xl border bg-background p-7 shadow-sm md:hover:-translate-y-1 md:hover:shadow-xl md:transition-all md:duration-500",
                 ticket.featured
                   ? "border-primary ring-2 ring-primary"
                   : "border-border"
@@ -414,7 +414,7 @@ export function Tickets() {
                   </Button>
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Container>

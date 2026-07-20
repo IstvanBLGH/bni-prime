@@ -28,12 +28,12 @@ export function SectionHeading({
       )}
     >
       {kicker && (
-        <span className="mb-3 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
+        <span className="mb-4 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
           {kicker}
         </span>
       )}
       {description && (
-        <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
+        <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">
           {description}
         </p>
       )}
