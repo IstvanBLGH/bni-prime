@@ -32,47 +32,43 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-32 md:pb-16"
     >
-      <Container className="flex flex-col items-center text-center">
+      <Container className="flex flex-col items-center gap-0 text-center">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeApple }}
         >
-          <Badge variant="secondary" className="mb-6 gap-1.5 px-4 py-1.5">
+          <Badge variant="secondary" className="gap-1.5 px-4 py-1.5">
             <CalendarDays className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
             29 Iulie 2026 · Bistrița
           </Badge>
         </motion.div>
 
-        <motion.h1
-          variants={headlineContainer}
-          initial="hidden"
-          animate="visible"
-          className="max-w-4xl text-3xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
+          transition={{
+            opacity: { duration: 0.6, delay: 0.1, ease: easeApple },
+            scale: { duration: 0.6, delay: 0.1, ease: easeApple },
+            y: { duration: 4, delay: 0.7, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="-my-4 w-full max-w-3xl md:max-w-4xl lg:max-w-5xl"
         >
-          {HEADLINE.split(" ").map((w, i) => (
-            <motion.span key={i} variants={headlineWord} className="inline-block">
-              {w}&nbsp;
-            </motion.span>
-          ))}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: easeApple }}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg"
-        >
-          BNI Prime te invită la evenimentul de business networking al verii — un eveniment
-          ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune, la care
-          participanții pot identifica oportunități concrete pentru afacerile lor.
-        </motion.p>
+          <Image
+            src="/First section thumbnail (1).png"
+            alt="Prime Summer — Evenimentul de business networking al verii din Bistrița"
+            width={1400}
+            height={500}
+            className="h-auto w-full object-contain drop-shadow-xl"
+            priority
+          />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75, ease: easeApple }}
-          className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+          className="mt-4 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
         >
           <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
             <a href="#agenda">

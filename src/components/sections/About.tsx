@@ -8,7 +8,6 @@ import { Container } from "@/components/shared/Container";
 import { fadeInUp, staggerItem } from "@/lib/motion";
 
 const BNI_RO_STATS = [
-  { value: "15+", label: "ani în România" },
   { value: "30", label: "județe + București" },
   { value: "50+", label: "grupuri active" },
   { value: "1.500+", label: "membri" },
@@ -29,7 +28,7 @@ const VALUES = [
   {
     icon: TrendingUp,
     title: "Recomandări",
-    description: "O ușă deschisă către clientul dorit — filozofia centrală a fiecărui grup BNI.",
+    description: "O ușă deschisă către clientul dorit, filozofia centrală a fiecărui grup BNI.",
   },
 ];
 
@@ -97,7 +96,7 @@ export function About() {
         {/* Prime Summer — Eveniment */}
         <div className="mt-16 md:mt-20">
           <motion.div {...fadeInUp} className="text-center">
-            <span className="mb-3 inline-block text-3xl font-semibold uppercase tracking-tight text-primary md:text-4xl lg:text-5xl">
+            <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
               Prime Summer
             </span>
             <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">

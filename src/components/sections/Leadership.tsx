@@ -67,39 +67,91 @@ const MEMBERS = [
   },
 ];
 
-const AUTOSCROLL_DELAY = 3500;
+const ITEMS = [...MEMBERS, ...MEMBERS, ...MEMBERS];
+const SCROLL_SPEED = 0.6;
 
 export function Leadership() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
+  const autoRafRef = useRef<number>(0);
+  const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0, velX: 0, lastX: 0, lastT: 0 });
+  const momentumRafRef = useRef<number>(0);
 
-  const goTo = useCallback((index: number) => {
-    setCurrent(index);
+  // Init: start at middle set
+  useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const cards = Array.from(track.children) as HTMLElement[];
-    const card = cards[index];
-    if (!card) return;
-    const trackRect = track.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-    const offset =
-      track.scrollLeft +
-      cardRect.left -
-      trackRect.left -
-      (trackRect.width - cardRect.width) / 2;
-    track.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+    const setWidth = track.scrollWidth / 3;
+    track.scrollLeft = setWidth;
   }, []);
 
-  const next = useCallback(() => {
-    goTo((current + 1) % MEMBERS.length);
-  }, [current, goTo]);
+  // Infinite loop detection on scroll
+  const onScroll = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const setWidth = track.scrollWidth / 3;
+    if (track.scrollLeft >= setWidth * 2) {
+      track.scrollLeft -= setWidth;
+    } else if (track.scrollLeft < setWidth) {
+      track.scrollLeft += setWidth;
+    }
+    // Update dot indicator
+    const cardWidth = (track.scrollWidth / ITEMS.length);
+    const idx = Math.round((track.scrollLeft - setWidth) / cardWidth) % MEMBERS.length;
+    setCurrent((idx + MEMBERS.length) % MEMBERS.length);
+  }, []);
 
+  // Auto-scroll via RAF
   useEffect(() => {
     if (paused) return;
-    const timer = setInterval(next, AUTOSCROLL_DELAY);
-    return () => clearInterval(timer);
-  }, [paused, next]);
+    const tick = () => {
+      const track = trackRef.current;
+      if (track) track.scrollLeft += SCROLL_SPEED;
+      autoRafRef.current = requestAnimationFrame(tick);
+    };
+    autoRafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(autoRafRef.current);
+  }, [paused]);
+
+  // Drag handlers
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    const track = trackRef.current;
+    if (!track) return;
+    cancelAnimationFrame(momentumRafRef.current);
+    dragRef.current = { isDragging: true, startX: e.pageX - track.offsetLeft, scrollLeft: track.scrollLeft, velX: 0, lastX: e.pageX, lastT: Date.now() };
+    setPaused(true);
+    track.style.cursor = "grabbing";
+  }, []);
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!dragRef.current.isDragging) return;
+    const track = trackRef.current;
+    if (!track) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = dragRef.current.scrollLeft - (x - dragRef.current.startX);
+    const now = Date.now();
+    const dt = Math.max(now - dragRef.current.lastT, 1);
+    dragRef.current.velX = (e.pageX - dragRef.current.lastX) / dt;
+    dragRef.current.lastX = e.pageX;
+    dragRef.current.lastT = now;
+  }, []);
+
+  const onMouseUp = useCallback(() => {
+    if (!dragRef.current.isDragging) return;
+    dragRef.current.isDragging = false;
+    const track = trackRef.current;
+    if (track) track.style.cursor = "grab";
+    let vel = dragRef.current.velX * 18;
+    const momentum = () => {
+      if (!track || Math.abs(vel) < 0.3) { setPaused(false); return; }
+      track.scrollLeft -= vel;
+      vel *= 0.93;
+      momentumRafRef.current = requestAnimationFrame(momentum);
+    };
+    momentumRafRef.current = requestAnimationFrame(momentum);
+  }, []);
 
   return (
     <section id="membrii" className="bg-surface py-12 md:py-24 lg:py-32">
@@ -110,24 +162,32 @@ export function Leadership() {
           description="Antreprenorii și profesioniștii din Bistrița care alcătuiesc grupul BNI Prime și organizează evenimentul Prime Summer."
         />
 
+        <div className="relative mt-8 md:mt-16">
+          {/* Fade stânga */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-surface to-transparent md:w-24" />
+          {/* Fade dreapta */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent md:w-24" />
+
         <div
           ref={trackRef}
-          className="mt-8 flex gap-3 overflow-x-auto pb-4 md:mt-16 md:gap-5"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          className="flex gap-3 overflow-x-auto pb-4 md:gap-5"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", userSelect: "none" } as React.CSSProperties}
+          onScroll={onScroll}
+          onDragStart={(e) => e.preventDefault()}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={() => { onMouseUp(); }}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}
         >
-          {MEMBERS.map((member, i) => (
+          {ITEMS.map((member, i) => (
             <div
-              key={member.name}
-              onClick={() => goTo(i)}
+              key={`${member.name}-${i}`}
               className={cn(
-                "w-40 shrink-0 cursor-pointer overflow-hidden rounded-2xl border bg-background shadow-sm transition-all duration-500",
-                "hover:-translate-y-1 hover:shadow-xl",
+                "w-40 shrink-0 overflow-hidden rounded-2xl border bg-background shadow-sm transition-colors duration-300",
                 "sm:w-56 lg:w-72",
-                i === current
+                i % MEMBERS.length === current
                   ? "border-primary ring-2 ring-primary/40"
                   : "border-border"
               )}
@@ -140,6 +200,7 @@ export function Leadership() {
                     fill
                     sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
                     className="object-cover"
+                    draggable={false}
                   />
                 </div>
               ) : (
@@ -183,6 +244,7 @@ export function Leadership() {
             </div>
           ))}
         </div>
+        </div>{/* end relative wrapper */}
 
         {/* Dot indicators */}
         <div className="mt-5 flex items-center justify-center gap-2">
@@ -190,11 +252,10 @@ export function Leadership() {
             <button
               key={i}
               type="button"
-              aria-label={`Mergi la membrul ${i + 1}`}
-              onClick={() => goTo(i)}
+              aria-label={`Membrul ${i + 1}`}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",
-                i === current ? "w-6 bg-primary" : "w-2 bg-border hover:bg-primary/40"
+                i === current ? "w-6 bg-primary" : "w-2 bg-border"
               )}
             />
           ))}

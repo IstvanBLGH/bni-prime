@@ -45,11 +45,14 @@ export function Stats() {
   return (
     <section id="stats" className="border-y border-border bg-surface py-12 md:py-24 lg:py-32">
       <Container>
-        <motion.div {...staggerItem(0)} className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-primary md:text-5xl lg:text-6xl">
-            BNI la nivel global
+        <motion.div {...staggerItem(0)}>
+          <h2 className="mb-3 text-center text-4xl font-bold uppercase tracking-tight text-primary md:text-5xl lg:text-6xl">
+            Despre BNI
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
+          <span className="mt-16 mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
+            BNI la nivel global
+          </span>
+          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
             BNI (Business Network International) este cea mai mare rețea de business networking
             la nivel global, fondată în anul 1985. BNI Prime este grupul local din Bistrița
             al acestei organizații.
@@ -73,9 +76,6 @@ export function Stats() {
               <h3 className="mt-3 text-base font-semibold text-foreground">
                 {stat.label}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                {stat.description}
-              </p>
             </motion.div>
           ))}
         </div>

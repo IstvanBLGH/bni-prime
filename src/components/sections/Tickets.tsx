@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Check, ShieldCheck, Loader2 } from "lucide-react";
 import { collectBrowserInfo } from "netopia-card";
@@ -55,10 +55,12 @@ function RegistrationModal({
   open,
   onOpenChange,
   defaultTicket,
+  plusSoldOut = false,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultTicket: TicketType;
+  plusSoldOut?: boolean;
 }) {
   const [selected, setSelected] = useState<TicketType>(defaultTicket);
   const [loading, setLoading] = useState(false);
@@ -119,10 +121,13 @@ function RegistrationModal({
             <button
               key={t.id}
               type="button"
-              onClick={() => setSelected(t.id)}
+              disabled={t.id === "plus" && plusSoldOut}
+              onClick={() => { if (!(t.id === "plus" && plusSoldOut)) setSelected(t.id); }}
               className={cn(
                 "rounded-xl border px-3 py-2.5 text-center text-xs font-semibold transition-all duration-200",
-                selected === t.id
+                t.id === "plus" && plusSoldOut
+                  ? "cursor-not-allowed border-border bg-surface text-muted opacity-50"
+                  : selected === t.id
                   ? "border-primary bg-primary text-white"
                   : "border-border bg-surface text-foreground hover:border-primary/50"
               )}
@@ -284,8 +289,19 @@ function RegistrationModal({
 export function Tickets() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketType>("standard");
+  const [plusRemaining, setPlusRemaining] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/tickets/status")
+      .then((r) => r.json())
+      .then(({ plusSold, plusMax }) => setPlusRemaining(Math.max(0, plusMax - plusSold)))
+      .catch(() => setPlusRemaining(null));
+  }, []);
+
+  const plusSoldOut = plusRemaining === 0;
 
   const openModal = (ticket: TicketType) => {
+    if (ticket === "plus" && plusSoldOut) return;
     setSelectedTicket(ticket);
     setModalOpen(true);
   };
@@ -311,11 +327,16 @@ export function Tickets() {
                   : "border-border"
               )}
             >
-              {ticket.availability && (
+              {ticket.id === "plus" && plusRemaining !== null && (
                 <Badge
-                  variant={ticket.featured ? "default" : "secondary"}
+                  variant={plusSoldOut ? "secondary" : "default"}
                   className="absolute -top-3 left-6"
                 >
+                  {plusSoldOut ? "Sold Out" : `${plusRemaining} pachete disponibile`}
+                </Badge>
+              )}
+              {ticket.id !== "plus" && ticket.availability && (
+                <Badge variant="secondary" className="absolute -top-3 left-6">
                   {ticket.availability}
                 </Badge>
               )}
@@ -379,13 +400,19 @@ export function Tickets() {
 
               {/* Button in its own div so mt-auto applies to spacing, not inside button */}
               <div className="mt-auto pt-6">
-                <Button
-                  variant={ticket.featured ? "default" : "outline"}
-                  className="w-full"
-                  onClick={() => openModal(ticket.id)}
-                >
-                  {`Rezervă pachetul ${ticket.name}`}
-                </Button>
+                {ticket.id === "plus" && plusSoldOut ? (
+                  <Button variant="secondary" className="w-full" disabled>
+                    Sold Out
+                  </Button>
+                ) : (
+                  <Button
+                    variant={ticket.featured ? "default" : "outline"}
+                    className="w-full"
+                    onClick={() => openModal(ticket.id)}
+                  >
+                    {`Rezervă pachetul ${ticket.name}`}
+                  </Button>
+                )}
               </div>
             </motion.div>
           ))}
@@ -397,6 +424,7 @@ export function Tickets() {
         open={modalOpen}
         onOpenChange={setModalOpen}
         defaultTicket={selectedTicket}
+        plusSoldOut={plusSoldOut}
       />
     </section>
   );
