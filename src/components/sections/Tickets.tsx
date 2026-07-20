@@ -401,7 +401,7 @@ export function Tickets() {
               {/* Button in its own div so mt-auto applies to spacing, not inside button */}
               <div className="mt-auto pt-6">
                 {ticket.id === "plus" && plusSoldOut ? (
-                  <Button variant="secondary" className="w-full" disabled>
+                  <Button variant="outline" className="w-full cursor-not-allowed opacity-50" disabled>
                     Sold Out
                   </Button>
                 ) : (

@@ -8,23 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/shared/Container";
 
-const HEADLINE = "Evenimentul de business networking al verii din Bistrița.";
-
 const easeApple = [0.21, 0.47, 0.32, 0.98] as const;
-
-const headlineContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-};
-
-const headlineWord = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: easeApple },
-  },
-};
 
 export function Hero() {
   return (
