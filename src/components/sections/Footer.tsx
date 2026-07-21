@@ -89,8 +89,28 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
-          <p>© 2026 BNI Prime. Toate drepturile rezervate.</p>
+        {/* ANPC logos */}
+        <div className="mt-12 flex flex-wrap items-center gap-2 border-t border-border pt-8">
+          <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="nofollow noopener noreferrer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg" alt="Soluționarea Alternativă a Litigiilor" width={250} style={{ display: "inline-block" }} />
+          </a>
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="nofollow noopener noreferrer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg" alt="Soluționarea Online a Litigiilor" width={250} style={{ display: "inline-block" }} />
+          </a>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-1">
+            <p>© 2026 BNI Prime. Toate drepturile rezervate.</p>
+            <p>
+              Site dezvoltat de{" "}
+              <a href="https://solergo.ro" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-primary">
+                Solergo
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-6">
             <div className="rounded-lg bg-[#1a2e5a] px-4 py-2">
               <NTPLogo color="#ffffff" version="horizontal" secret="167104" />
