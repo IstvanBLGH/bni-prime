@@ -29,8 +29,8 @@ const AGENDA = [
   },
   {
     time: "18:00 - 18:15",
-    title: "Speaker",
-    description: "Subiect: importanța comunităților de afaceri",
+    title: "Importanța comunităților de afaceri",
+    description: "Invitat special",
   },
   {
     time: "18:15 - 18:25",
@@ -59,8 +59,8 @@ const AGENDA = [
   },
   {
     time: "19:10 - 19:25",
-    title: "Speaker",
-    description: "Subiect",
+    title: "Provocări și soluții",
+    description: "Invitat special",
   },
   {
     time: "19:25 - 19:35",
