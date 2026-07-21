@@ -51,7 +51,7 @@ const TESTIMONIALS = [
 ];
 
 const ITEMS = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
-const SCROLL_SPEED = 0.5;
+const SCROLL_SPEED = 0.8;
 const MAX_CHARS = 180;
 
 function TestimonialCard({ testimonial, active }: { testimonial: { name: string; quote: string }; active: boolean }) {
@@ -100,11 +100,14 @@ export function Testimonials() {
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0, velX: 0, lastX: 0, lastT: 0 });
   const momentumRafRef = useRef<number>(0);
 
-  // Init: start at middle set
+  // Init: start at middle set — RAF ensures layout is computed first
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    track.scrollLeft = track.scrollWidth / 3;
+    const raf = requestAnimationFrame(() => {
+      if (trackRef.current) trackRef.current.scrollLeft = trackRef.current.scrollWidth / 3;
+    });
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   // Infinite loop on scroll
