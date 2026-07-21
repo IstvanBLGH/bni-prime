@@ -313,7 +313,7 @@ export function Tickets() {
         <SectionHeading
           kicker="Bilete"
           title="Alege biletul potrivit pentru tine și afacerea ta"
-          description="Ai la dispoziție 3 variante de a participa la eveniment, în funcție de cât de implicat vrei să fii."
+          description="Ai la dispoziție 2 variante de a participa la eveniment, în funcție de cât de implicat vrei să fii."
         />
 
         <div className="mt-12 grid gap-5 md:mt-16 md:mx-auto md:max-w-2xl md:grid-cols-2">

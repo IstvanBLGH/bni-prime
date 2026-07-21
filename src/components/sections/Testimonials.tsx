@@ -19,6 +19,11 @@ const TESTIMONIALS = [
       "Vizibilitatea nu este un detaliu opțional — este diferența dintre a fi remarcat și a fi uitat. În dezvoltarea personală și în business, oamenii recomandă ceea ce cunosc, înțeleg și în care au încredere. Dacă nu știu cine ești și ce faci, șansele să te recomande scad aproape de zero.\nÎn BNI am văzut clar că rezultatele apar atunci când ești prezent constant, implicat și activ în întâlnirile de networking. Nu doar vizibilitatea contează, ci și participarea reală la evenimentele organizate, pentru că acolo se construiesc relațiile care duc la încredere, colaborări și recomandări valoroase.",
   },
   {
+    name: "Bogdan Szilagyi",
+    quote:
+      "BNI reprezintă pentru mine un mijloc ușor de folosit, simplu și rapid pentru a dezvolta un business.",
+  },
+  {
     name: "Dacina Silveșan",
     quote:
       "Pentru mine BNI reprezintă apartenența la un mediu de afaceri prin care să construiesc relații și să promovez produsele din portofoliu, spre a extinde comunitatea de oameni sănătoși în case sănătoase.",

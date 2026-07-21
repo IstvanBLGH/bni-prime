@@ -125,12 +125,12 @@ export function About() {
         {/* BNI Prime */}
         <motion.div
           {...fadeInUp}
-          className="mt-16 rounded-3xl border border-border bg-surface p-12 md:mt-20 md:p-16"
+          className="mt-16 rounded-3xl border border-border bg-surface p-12 text-center md:mt-20 md:p-16"
         >
           <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
             BNI Prime
           </span>
-          <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted md:text-lg lg:text-xl">
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted md:text-lg lg:text-xl">
             BNI Prime s-a lansat în 24 decembrie 2025 și este primul grup BNI de business networking
             din județul Bistrița-Năsăud. BNI Prime își dorește să schimbe modul în care oamenii fac
             afaceri în Bistrița și în județ și este în căutare de profesioniști ce cred în valori
@@ -142,9 +142,13 @@ export function About() {
         {/* Prime Summer — Eveniment */}
         <div className="mt-16 md:mt-20">
           <motion.div {...fadeInUp} className="text-center">
-            <span className="mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
-              Prime Summer
-            </span>
+            <Image
+              src="/First section thumbnail (1).png"
+              alt="Prime Summer"
+              width={600}
+              height={214}
+              className="mx-auto w-full max-w-xs md:max-w-sm"
+            />
             <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
               Prime Summer este un eveniment de business networking organizat de grupul BNI Prime
               pentru mediul de afaceri din județul Bistrița-Năsăud și din regiune. Evenimentul este

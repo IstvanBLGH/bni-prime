@@ -47,7 +47,7 @@ const MEMBERS = [
     company: "PFA Mutu Monica Mariana",
     website: "",
     phone: "",
-    photo: "",
+    photo: "/images/leadership/Monica Mutu.png",
   },
   {
     name: "Lucica Ana Marta",
@@ -63,7 +63,23 @@ const MEMBERS = [
     company: "SIMAD 2016",
     website: "http://www.izolatiitermice.eu",
     phone: "",
-    photo: "",
+    photo: "/images/leadership/Dacina Silveșan.png",
+  },
+  {
+    name: "Bogdan Szilagyi",
+    role: "",
+    company: "",
+    website: "",
+    phone: "",
+    photo: "/images/leadership/Bogdan Szilagyi.png",
+  },
+  {
+    name: "Horia Ștefănescu",
+    role: "",
+    company: "",
+    website: "",
+    phone: "",
+    photo: "/images/leadership/Horia Ștefănescu.png",
   },
 ];
 

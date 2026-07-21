@@ -4,6 +4,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 100px;
+  }
+}
+
 :root {
   /* Raw BNI Prime brand tokens (single source of truth, literal values only) */
   --bni-primary: #c8102e;

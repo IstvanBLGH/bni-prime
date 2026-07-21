@@ -47,12 +47,12 @@ export function Stats() {
       <Container>
         <motion.div {...staggerItem(0)}>
           <h2 className="mb-3 text-center text-4xl font-bold uppercase tracking-tight text-primary md:text-5xl lg:text-6xl">
-            Despre BNI
+            Despre BNI și Eveniment
           </h2>
           <span className="mt-16 mb-3 inline-block text-xl font-bold uppercase tracking-wide text-primary">
             BNI la nivel global
           </span>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted md:max-w-none md:text-lg">
             BNI (Business Network International) este cea mai mare rețea de business networking
             la nivel global, fondată în anul 1985. BNI Prime este grupul local din Bistrița
             al acestei organizații.

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
-  { href: "#about", label: "Despre", shortLabel: "Despre" },
+  { href: "#stats", label: "Despre", shortLabel: "Despre" },
   { href: "#membrii", label: "Membrii", shortLabel: "Membrii" },
   { href: "#agenda", label: "Agendă", shortLabel: "Agendă" },
   { href: "#tickets", label: "Bilete", shortLabel: "Bilete" },

@@ -19,14 +19,14 @@ const FAQS = [
       "Nu. Evenimentul este deschis tuturor celor interesați de networking dedicat afacerilor, fie că sunt deja membri BNI, fie că vor să descopere pentru prima dată cum funcționează networking-ul de business structurat.",
   },
   {
-    question: "Ce diferență este între pachetele Standard, Plus și Sponsor?",
+    question: "Ce diferență este între pachetele Standard și Plus?",
     answer:
-      "Biletul Standard oferă acces complet la eveniment.\nBiletul Plus adaugă stand pentru prezentarea serviciilor / produselor.\nBiletul Sponsor include vizibilitatea brandului.",
+      "Biletul Standard oferă acces complet la eveniment.\nBiletul Plus adaugă stand pentru prezentarea serviciilor / produselor.",
   },
   {
     question: "Pot transfera biletul către altă persoană?",
     answer:
-      "Da. Trimite-ne un email la bigdesigntm@google.com cu datele persoanei ce va participa în locul tău și actualizăm biletul fără costuri suplimentare.",
+      "Da. Trimite-ne un email la bigdesigntm@gmail.com cu datele persoanei ce va participa în locul tău și actualizăm biletul fără costuri suplimentare.",
   },
   {
     question: "Există loc de parcare la locația evenimentului?",

@@ -45,7 +45,7 @@ const AGENDA = [
   {
     time: "18:35 - 18:50",
     title: "Moment artistic",
-    description: "Ansamblul…",
+    description: "Ansamblul folcoric Someșul Beclean",
   },
   {
     time: "18:50 - 19:00",
