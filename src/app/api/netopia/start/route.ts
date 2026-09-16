@@ -1,30 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Netopia } from "netopia-card";
 
-const PRICES: Record<string, number> = {
-  standard: 175,
-  plus: 500,
-};
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, phone, cui, ticket, bilete, sursa, browserInfo } = body;
+    const { name, email, phone, cui, sursa, browserInfo } = body;
 
-    const amount = PRICES[ticket] ?? 175;
-    const qty = parseInt((bilete as string).replace(/\D/g, "")) || 1;
-    const totalAmount = amount * qty;
+    // Fetch ticket price from Supabase if configured, otherwise use default
+    let amount = 150;
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const { createClient } = await import("@supabase/supabase-js");
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+        );
+        const { data } = await supabase
+          .from("tickets")
+          .select("price")
+          .eq("event_slug", "prime")
+          .eq("is_available", true)
+          .order("sort_order")
+          .limit(1)
+          .single();
+        if (data?.price) amount = data.price;
+      } catch { /* use default */ }
+    }
+
     const orderID = `PRIME-${Date.now()}`;
+    const nameParts = String(name ?? "").trim().split(" ");
+    const firstName = nameParts[0] || "Client";
+    const lastName = nameParts.slice(1).join(" ") || firstName;
 
-    const nameParts = (name as string).trim().split(" ");
-    const firstName = nameParts[0];
-    const lastName = nameParts.slice(1).join(" ") || nameParts[0];
+    const base = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
     const netopia = new Netopia({
       apiKey: process.env.NETOPIA_API_KEY!,
       posSignature: process.env.NETOPIA_SIGNATURE!,
-      notifyUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/netopia/notify`,
-      redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+      notifyUrl: `${base}/api/netopia/notify`,
+      redirectUrl: `${base}/`,
       sandbox: process.env.NETOPIA_SANDBOX === "true",
     });
 
@@ -35,16 +49,16 @@ export async function POST(req: NextRequest) {
 
     netopia.setOrderData({
       orderID,
-      amount: totalAmount,
+      amount,
       currency: "RON",
-      description: `Bilet ${ticket} x${qty} — Prime Summer 2026`,
+      description: `Bilet BNI Prime — Ziua Invitatului`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
         phone,
         firstName,
         lastName,
-        city: "Bistrița",
+        city: "Bistrita",
         country: 642,
         countryName: "Romania",
         state: "BN",
@@ -53,23 +67,19 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Adăugăm datele clientului pentru a le primi înapoi în IPN
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (netopia as any).order.data = {
       name,
       email,
       phone,
       cui: cui ?? "",
-      ticket,
-      qty: String(qty),
-      bilete: bilete ?? "",
       sursa: sursa ?? "",
     };
 
     netopia.setProductsData([
       {
-        name: `Bilet ${ticket} — Prime Summer`,
-        code: ticket,
+        name: "Bilet BNI Prime — Ziua Invitatului",
+        code: "prime-standard",
         category: "Eveniment networking",
         price: amount,
         vat: 19,
@@ -79,7 +89,7 @@ export async function POST(req: NextRequest) {
     const response = await netopia.startPayment();
     return NextResponse.json(response);
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Eroare necunoscută";
+    const message = error instanceof Error ? error.message : "Eroare necunoscuta";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
