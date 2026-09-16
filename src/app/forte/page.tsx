@@ -26,8 +26,12 @@ async function getForteData() {
     const { createClient } = await import("@/lib/supabase/server");
     const supabase = await createClient();
 
-    const { data: activeTeam } = await supabase
-      .from("power_teams").select("id").eq("event_slug", "forte").eq("is_active", true).single();
+    let activeTeamId: string | null = null;
+    try {
+      const { data } = await supabase
+        .from("power_teams").select("id").eq("event_slug", "forte").eq("is_active", true).single();
+      activeTeamId = data?.id ?? null;
+    } catch { /* table not yet created */ }
 
     const [
       { data: hero },
@@ -42,8 +46,8 @@ async function getForteData() {
     ] = await Promise.all([
       supabase.from("hero_content").select("*").eq("event_slug", "forte").single(),
       supabase.from("about_content").select("*").eq("event_slug", "forte").single(),
-      activeTeam
-        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeam.id).order("sort_order")
+      activeTeamId
+        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).order("sort_order")
         : supabase.from("team_members").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("agenda_items").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("tickets").select("*").eq("event_slug", "forte").eq("is_available", true).order("sort_order"),
