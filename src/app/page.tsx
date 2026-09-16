@@ -133,7 +133,7 @@ export default async function Home() {
         <ForteFAQ items={faqItems} />
         <ForteTestimonials items={testimonials} />
       </main>
-      <ForteFooter contact={contact} />
+      <ForteFooter contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
     </>
   );
 }

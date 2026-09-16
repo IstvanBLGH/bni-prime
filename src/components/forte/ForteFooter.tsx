@@ -22,8 +22,18 @@ const FALLBACK: Partial<ContactInfo> = {
   address: "Str. Grănicerilor, nr. 3, Bistrița",
 };
 
-export function ForteFooter({ contact, logoUrl }: { contact?: Partial<ContactInfo> | null; logoUrl?: string | null }) {
+export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath }: {
+  contact?: Partial<ContactInfo> | null;
+  logoUrl?: string | null;
+  name?: string;
+  description?: string;
+  privacyPath?: string;
+  termsPath?: string;
+}) {
   const c = { ...FALLBACK, ...contact };
+  const defaultDesc = name === "Prime"
+    ? "BNI PRIME este un grup de business networking activ în Bistrița. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Bistrița-Năsăud."
+    : "BNI FORTE este cel mai vechi grup de business networking din provincie. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Cluj.";
 
   return (
     <footer className="border-t border-border bg-surface py-16 md:py-20">
@@ -32,16 +42,14 @@ export function ForteFooter({ contact, logoUrl }: { contact?: Partial<ContactInf
           <div>
             {logoUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={logoUrl} alt="BNI Forte" className="h-12 w-auto object-contain" />
+              <img src={logoUrl} alt={`BNI ${name}`} className="h-12 w-auto object-contain" />
             ) : (
               <span className="text-xl font-extrabold tracking-tight text-foreground">
-                BNI <span className="text-primary">Forte</span>
+                BNI <span className="text-primary">{name}</span>
               </span>
             )}
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-              BNI FORTE este cel mai vechi grup de business networking din provincie. Grupul
-              funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul
-              în care oamenii fac afaceri în județul Cluj.
+              {description ?? defaultDesc}
             </p>
             {c.facebook_url && (
               <a href={c.facebook_url} target="_blank" rel="noopener noreferrer"
@@ -110,15 +118,15 @@ export function ForteFooter({ contact, logoUrl }: { contact?: Partial<ContactInf
 
         <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-1">
-            <p>© 2026 BNI Forte. Toate drepturile rezervate.</p>
+            <p>© 2026 BNI {name}. Toate drepturile rezervate.</p>
             <p>
               Site dezvoltat de{" "}
               <a href="https://solergo.ro" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">Solergo</a>
             </p>
           </div>
           <div className="flex items-center gap-6">
-            <a href="/forte/politica-de-confidentialitate" className="transition-colors hover:text-primary">Politica de confidențialitate</a>
-            <a href="/forte/termeni-si-conditii" className="transition-colors hover:text-primary">Termeni și condiții</a>
+            <a href={privacyPath ?? "/forte/politica-de-confidentialitate"} className="transition-colors hover:text-primary">Politica de confidențialitate</a>
+            <a href={termsPath ?? "/forte/termeni-si-conditii"} className="transition-colors hover:text-primary">Termeni și condiții</a>
           </div>
         </div>
       </Container>
