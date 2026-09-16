@@ -1,0 +1,47 @@
+import { NextRequest, NextResponse } from "next/server";
+
+async function logToSheets(data: Record<string, unknown>) {
+  const url = process.env.FORTE_GOOGLE_SHEETS_WEBHOOK_URL;
+  if (!url) return;
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).catch((err) => console.error("[Forte Sheets log error]", err));
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const text = await req.text();
+    const { order, payment } = JSON.parse(text);
+
+    if (!order || !payment) throw new Error("Payload invalid");
+
+    console.log("[Forte Netopia IPN]", {
+      orderID: order.orderID,
+      status: payment.status,
+      amount: payment.amount,
+    });
+
+    if (payment.status === 3 || payment.status === 5) {
+      const d = order.data ?? {};
+      await logToSheets({
+        timestamp: new Date().toISOString(),
+        orderID: order.orderID,
+        event: "forte",
+        name: d.name ?? "",
+        email: d.email ?? "",
+        phone: d.phone ?? "",
+        cui: d.cui ?? "",
+        sursa: d.sursa ?? "",
+        amount: payment.amount,
+        status: payment.status === 5 ? "Confirmat" : "Autorizat",
+      });
+    }
+
+    return NextResponse.json({ errorCode: 0 });
+  } catch (error) {
+    console.error("[Forte Netopia IPN error]", error);
+    return NextResponse.json({ errorCode: 1 }, { status: 400 });
+  }
+}

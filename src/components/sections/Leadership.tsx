@@ -86,7 +86,7 @@ const MEMBERS = [
     role: "Servicii de proiectare",
     company: "KLIPS PROIECT",
     website: "",
-    phone: "+40 741 421 580",
+    phone: "+40 747 519 595",
     photo: "",
   },
   {
