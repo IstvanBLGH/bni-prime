@@ -41,15 +41,10 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
         <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
             {logoUrl ? (
-              name === "Prime" ? (
-                <div className="relative h-[62px] w-[180px] overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={logoUrl} alt={`BNI ${name}`} className="absolute inset-0 h-full w-full object-contain scale-[2.2] origin-center" />
-                </div>
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={logoUrl} alt={`BNI ${name}`} className="h-[62px] w-auto object-contain" />
-              )
+              <div className="relative h-[62px] w-[180px] overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={logoUrl} alt={`BNI ${name}`} className="absolute inset-0 h-full w-full object-contain scale-[2.2] origin-center" />
+              </div>
             ) : (
               <span className="text-xl font-extrabold tracking-tight text-foreground">
                 BNI <span className="text-primary">{name}</span>
