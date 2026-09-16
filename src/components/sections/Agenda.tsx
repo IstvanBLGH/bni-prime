@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { staggerItem } from "@/lib/motion";
+import type { AgendaItem } from "@/types/db";
 
 const AGENDA = [
   {
@@ -84,7 +85,11 @@ const AGENDA = [
   },
 ];
 
-export function Agenda() {
+export function Agenda({ items }: { items?: AgendaItem[] }) {
+  const data = items && items.length > 0
+    ? items.map((i) => ({ time: i.time_range, title: i.title, description: i.description ?? "" }))
+    : AGENDA;
+
   return (
     <section id="agenda" className="py-16 md:py-24 lg:py-32">
       <Container>
@@ -95,7 +100,7 @@ export function Agenda() {
         />
 
         <ol className="mx-auto mt-12 max-w-3xl md:mt-16">
-          {AGENDA.map((item, i) => (
+          {data.map((item, i) => (
             <motion.li
               key={item.time}
               {...staggerItem(i)}
@@ -110,7 +115,7 @@ export function Agenda() {
                   className="h-3 w-3 shrink-0 rounded-full border-2 border-primary bg-background"
                   aria-hidden="true"
                 />
-                {i < AGENDA.length - 1 && (
+                {i < data.length - 1 && (
                   <span className="my-1 w-px flex-1 bg-border" aria-hidden="true" />
                 )}
               </div>

@@ -15,6 +15,7 @@ const PRIME_ITEMS = [
   { href: "/admin/prime/tickets", label: "Bilete & Prețuri", icon: Ticket },
   { href: "/admin/prime/faq", label: "FAQ", icon: HelpCircle },
   { href: "/admin/prime/testimonials", label: "Testimoniale", icon: MessageSquare },
+  { href: "/admin/prime/location", label: "Locație", icon: MapPin },
 ];
 
 const FORTE_ITEMS = [

@@ -7,6 +7,7 @@ import { MapPin, Car, TrainFront, Clock } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
 import { fadeInUp } from "@/lib/motion";
+import type { LocationContent } from "@/types/db";
 
 const VENUE_NAME = "Hotel Codrișor";
 const VENUE_ADDRESS = "Str. Codrișor, nr. 28, Bistrița";
@@ -29,7 +30,12 @@ const INFO = [
   },
 ];
 
-export function Location() {
+export function Location({ data }: { data?: Partial<LocationContent> | null }) {
+  const venueName = data?.venue_name || VENUE_NAME;
+  const venueAddress = data?.address || VENUE_ADDRESS;
+  const description = data?.description || `Evenimentul organizat de grupul BNI Prime are loc la ${venueName} din Bistrița, locația unde se reunește săptămânal și grupul BNI Prime, ușor accesibilă atât cu maşina personală, cât și cu transportul public.`;
+  const mapsLink = data?.maps_link || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venueName}, ${venueAddress}`)}`;
+
   return (
     <section id="location" className="py-16 md:py-24 lg:py-32">
       <Container>
@@ -40,12 +46,10 @@ export function Location() {
             </span>
             <p className="mt-4 flex items-center gap-2 text-base font-medium text-foreground md:text-lg">
               <MapPin className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-              {VENUE_NAME}, {VENUE_ADDRESS}
+              {venueName}, {venueAddress}
             </p>
             <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
-              Evenimentul organizat de grupul BNI Prime are loc la {VENUE_NAME} din Bistrița,
-              locația unde se reunește săptămânal și grupul BNI Prime, ușor accesibilă atât cu
-              maşina personală, cât și cu transportul public.
+              {description}
             </p>
 
             <div className="mt-8 flex flex-col gap-5">
@@ -66,13 +70,7 @@ export function Location() {
             </div>
 
             <Button asChild size="lg" variant="outline" className="mt-8">
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${VENUE_NAME}, ${VENUE_ADDRESS}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={mapsLink} target="_blank" rel="noopener noreferrer">
                 <MapPin className="h-4 w-4" aria-hidden="true" />
                 Vezi traseul pe Google Maps
               </a>
@@ -81,9 +79,7 @@ export function Location() {
 
           <motion.div {...fadeInUp}>
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                `${VENUE_NAME}, ${VENUE_ADDRESS}`
-              )}`}
+              href={mapsLink}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative block overflow-hidden rounded-2xl shadow-lg"

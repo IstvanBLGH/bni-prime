@@ -11,6 +11,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { fadeInUp } from "@/lib/motion";
+import type { FaqItem } from "@/types/db";
 
 const FAQS = [
   {
@@ -45,7 +46,11 @@ const FAQS = [
   },
 ];
 
-export function FAQ() {
+export function FAQ({ items }: { items?: FaqItem[] }) {
+  const data = items && items.length > 0
+    ? items.map((i) => ({ question: i.question, answer: i.answer }))
+    : FAQS;
+
   return (
     <section id="faq" className="py-16 md:py-24 lg:py-32">
       <Container>
@@ -57,7 +62,7 @@ export function FAQ() {
 
         <motion.div {...fadeInUp} className="mx-auto mt-12 max-w-3xl md:mt-16">
           <Accordion type="single" collapsible className="rounded-2xl border border-border bg-background px-6 shadow-sm md:px-8">
-            {FAQS.map((faq) => (
+            {data.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
                 <AccordionTrigger className="text-base md:text-lg">
                   {faq.question}

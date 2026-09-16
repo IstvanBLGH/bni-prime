@@ -7,6 +7,7 @@ import { Globe, Phone } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { cn } from "@/lib/utils";
+import type { TeamMember } from "@/types/db";
 
 const MEMBERS = [
   {
@@ -99,10 +100,14 @@ const MEMBERS = [
   },
 ];
 
-const ITEMS = [...MEMBERS, ...MEMBERS, ...MEMBERS];
 const SCROLL_SPEED = 0.6;
 
-export function Leadership() {
+export function Leadership({ members: dbMembers }: { members?: TeamMember[] }) {
+  const members = dbMembers && dbMembers.length > 0
+    ? dbMembers.map((m) => ({ name: m.name, role: m.role ?? "", company: m.company ?? "", website: m.website ?? "", phone: m.phone ?? "", photo: m.photo_url ?? "" }))
+    : MEMBERS;
+  const items = [...members, ...members, ...members];
+
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -129,10 +134,10 @@ export function Leadership() {
       track.scrollLeft += setWidth;
     }
     // Update dot indicator
-    const cardWidth = (track.scrollWidth / ITEMS.length);
-    const idx = Math.round((track.scrollLeft - setWidth) / cardWidth) % MEMBERS.length;
-    setCurrent((idx + MEMBERS.length) % MEMBERS.length);
-  }, []);
+    const cardWidth = (track.scrollWidth / items.length);
+    const idx = Math.round((track.scrollLeft - setWidth) / cardWidth) % members.length;
+    setCurrent((idx + members.length) % members.length);
+  }, [items.length, members.length]);
 
   // Auto-scroll via RAF
   useEffect(() => {
@@ -213,13 +218,13 @@ export function Leadership() {
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}
         >
-          {ITEMS.map((member, i) => (
+          {items.map((member, i) => (
             <div
               key={`${member.name}-${i}`}
               className={cn(
                 "w-40 shrink-0 overflow-hidden rounded-2xl border bg-background shadow-sm transition-colors duration-300",
                 "sm:w-56 lg:w-72",
-                i % MEMBERS.length === current
+                i % members.length === current
                   ? "border-primary ring-2 ring-primary/40"
                   : "border-border"
               )}

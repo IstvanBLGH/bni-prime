@@ -6,6 +6,7 @@ import { Quote } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { cn } from "@/lib/utils";
+import type { Testimonial as DBTestimonial } from "@/types/db";
 
 const TESTIMONIALS = [
   {
@@ -50,7 +51,6 @@ const TESTIMONIALS = [
   }
 ];
 
-const ITEMS = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
 const SCROLL_SPEED = 0.8;
 const MAX_CHARS = 180;
 
@@ -92,7 +92,12 @@ function TestimonialCard({ testimonial, active }: { testimonial: { name: string;
   );
 }
 
-export function Testimonials() {
+export function Testimonials({ items: dbItems }: { items?: DBTestimonial[] }) {
+  const testimonials = dbItems && dbItems.length > 0
+    ? dbItems.map((t) => ({ name: t.name, quote: t.quote }))
+    : TESTIMONIALS;
+  const tripled = [...testimonials, ...testimonials, ...testimonials];
+
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -117,10 +122,10 @@ export function Testimonials() {
     const setWidth = track.scrollWidth / 3;
     if (track.scrollLeft >= setWidth * 2) track.scrollLeft -= setWidth;
     else if (track.scrollLeft < setWidth) track.scrollLeft += setWidth;
-    const cardWidth = track.scrollWidth / ITEMS.length;
-    const idx = Math.round((track.scrollLeft - setWidth) / cardWidth) % TESTIMONIALS.length;
-    setCurrent((idx + TESTIMONIALS.length) % TESTIMONIALS.length);
-  }, []);
+    const cardWidth = track.scrollWidth / tripled.length;
+    const idx = Math.round((track.scrollLeft - setWidth) / cardWidth) % testimonials.length;
+    setCurrent((idx + testimonials.length) % testimonials.length);
+  }, [tripled.length, testimonials.length]);
 
   // Auto-scroll via RAF
   useEffect(() => {
@@ -200,18 +205,18 @@ export function Testimonials() {
             onTouchStart={() => setPaused(true)}
             onTouchEnd={() => setPaused(false)}
           >
-            {ITEMS.map((t, i) => (
+            {tripled.map((t, i) => (
               <TestimonialCard
                 key={`${t.name}-${i}`}
                 testimonial={t}
-                active={i % TESTIMONIALS.length === current}
+                active={i % testimonials.length === current}
               />
             ))}
           </div>
         </div>
 
         <div className="mt-5 flex items-center justify-center gap-2">
-          {TESTIMONIALS.map((_, i) => (
+          {testimonials.map((_, i) => (
             <button
               key={i}
               type="button"
