@@ -104,8 +104,8 @@ export default async function Home() {
         supabase.from("testimonials").select("*").eq("event_slug", "prime").order("sort_order"),
         supabase.from("contact_info").select("*").eq("event_slug", "prime").single(),
       ]);
-      // Objects: merge DB data over Prime defaults
-      if (h.data) hero = { ...PRIME_HERO, ...h.data };
+      // Objects: merge DB data over Prime defaults; skip null DB values so defaults remain
+      if (h.data) hero = { ...PRIME_HERO, ...h.data, image_url: h.data.image_url ?? PRIME_HERO.image_url };
       if (ab.data) about = { ...PRIME_ABOUT, ...ab.data };
       if (l.data) location = { ...PRIME_LOCATION, ...l.data };
       // Arrays: explicit [] = "Supabase checked, no data" → components hide section
