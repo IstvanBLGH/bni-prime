@@ -18,11 +18,13 @@ interface AdminPageShellProps {
   hasPhotoUpload?: boolean;
   photoKey?: string;
   sortable?: boolean;
+  extraFilter?: { key: string; value: string };
+  extraData?: Record<string, unknown>;
 }
 
 export function AdminPageShell({
   title, description, breadcrumb, table, eventSlug, orderBy = "sort_order",
-  columns, hasPhotoUpload, photoKey, sortable,
+  columns, hasPhotoUpload, photoKey, sortable, extraFilter, extraData,
 }: AdminPageShellProps) {
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,14 +32,12 @@ export function AdminPageShell({
   const load = useCallback(async () => {
     setLoading(true);
     const supabase = createClient();
-    const { data } = await supabase
-      .from(table)
-      .select("*")
-      .eq("event_slug", eventSlug)
-      .order(orderBy);
+    let q = supabase.from(table).select("*").eq("event_slug", eventSlug);
+    if (extraFilter) q = q.eq(extraFilter.key, extraFilter.value) as typeof q;
+    const { data } = await q.order(orderBy);
     setItems(data ?? []);
     setLoading(false);
-  }, [table, eventSlug, orderBy]);
+  }, [table, eventSlug, orderBy, extraFilter]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -64,6 +64,7 @@ export function AdminPageShell({
           hasPhotoUpload={hasPhotoUpload}
           photoKey={photoKey}
           sortable={sortable}
+          extraData={extraData}
         />
       )}
     </div>

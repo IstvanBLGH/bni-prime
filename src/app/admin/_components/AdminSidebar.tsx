@@ -12,21 +12,23 @@ import { cn } from "@/lib/utils";
 const PRIME_ITEMS = [
   { href: "/admin/prime/hero", label: "Hero / Titlu", icon: Star },
   { href: "/admin/prime/about", label: "Despre eveniment", icon: Info },
-  { href: "/admin/prime/team", label: "Echipă (Leadership)", icon: Users },
-  { href: "/admin/prime/agenda", label: "Agendă", icon: CalendarDays },
-  { href: "/admin/prime/tickets", label: "Bilete & Prețuri", icon: Ticket },
+  { href: "/admin/prime/team", label: "Power Teams", icon: Users },
+  { href: "/admin/prime/agenda", label: "Agenda", icon: CalendarDays },
+  { href: "/admin/prime/tickets", label: "Bilete & Preturi", icon: Ticket },
   { href: "/admin/prime/faq", label: "FAQ", icon: HelpCircle },
   { href: "/admin/prime/testimonials", label: "Testimoniale", icon: MessageSquare },
-  { href: "/admin/prime/location", label: "Locație", icon: MapPin },
+  { href: "/admin/prime/location", label: "Locatie", icon: MapPin },
 ];
 
 const FORTE_ITEMS = [
-  { href: "/admin/forte/team", label: "Power Team", icon: Users },
-  { href: "/admin/forte/agenda", label: "Agendă", icon: CalendarDays },
-  { href: "/admin/forte/tickets", label: "Bilet & Preț", icon: Ticket },
+  { href: "/admin/forte/hero", label: "Hero / Titlu", icon: Star },
+  { href: "/admin/forte/about", label: "Despre eveniment", icon: Info },
+  { href: "/admin/forte/team", label: "Power Teams", icon: Users },
+  { href: "/admin/forte/agenda", label: "Agenda", icon: CalendarDays },
+  { href: "/admin/forte/tickets", label: "Bilet & Pret", icon: Ticket },
   { href: "/admin/forte/faq", label: "FAQ", icon: HelpCircle },
   { href: "/admin/forte/testimonials", label: "Testimoniale", icon: MessageSquare },
-  { href: "/admin/forte/location", label: "Locație", icon: MapPin },
+  { href: "/admin/forte/location", label: "Locatie", icon: MapPin },
 ];
 
 function NavSection({ title, items, defaultOpen = true }: {
@@ -50,7 +52,7 @@ function NavSection({ title, items, defaultOpen = true }: {
         <ul className="mt-1 flex flex-col gap-0.5">
           {items.map((item) => {
             const Icon = item.icon;
-            const active = pathname === item.href;
+            const active = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <li key={item.href}>
                 <a
@@ -87,12 +89,10 @@ export function AdminSidebar() {
 
   return (
     <aside className="flex h-full w-64 shrink-0 flex-col border-r border-border bg-background">
-      {/* Logo */}
       <div className="flex h-16 items-center border-b border-border px-4">
         <span className="text-sm font-bold text-foreground">BNI Admin</span>
       </div>
 
-      {/* Nav */}
       <nav className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
         <a
           href="/admin"
@@ -111,7 +111,6 @@ export function AdminSidebar() {
         <NavSection title="BNI Forte" items={FORTE_ITEMS} />
       </nav>
 
-      {/* Logout */}
       <div className="border-t border-border p-4">
         <button
           onClick={handleLogout}

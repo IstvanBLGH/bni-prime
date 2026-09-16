@@ -8,7 +8,18 @@
       "Bash(curl -s -X POST https://bni-romania.com/bnicms/v3/frontend/chapterdetail/display -H 'Content-Type: application/x-www-form-urlencoded' -H 'User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0 Safari/537.36' -H 'X-Requested-With: XMLHttpRequest' -H 'Referer: https://bni-romania.com/ro-RO/chapterdetail?chapterId=sTA7kk%2F2mkqMQUuU3AovBA%3D%3D&name=BNI+PRIME' --data-urlencode pageMode=Live_Site --data-urlencode chapterId=sTA7kk/2mkqMQUuU3AovBA== --data-urlencode languageLocaleCode=ro_RO --data-urlencode website_type=1 --data-urlencode website_id=9872 --data-urlencode planyourvisit=y -o /tmp/chapter_detail2.html -w 'HTTP_STATUS:%{http_code} SIZE:%{size_download}\\\\n' --max-time 30)",
       "Bash(command -v identify)",
       "Bash(identify \"/d/Websites/BNI Prime/public/images/hero.jpg\")",
-      "WebFetch(domain:www.bni.com)"
+      "WebFetch(domain:www.bni.com)",
+      "Bash(npm audit *)",
+      "Bash(npm view *)",
+      "Bash(sort -t. -k1,1n -k2,2n -k3,3n -u)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(node -e \"const n = require\\('netopia-card'\\); console.log\\(Object.keys\\(n\\)\\)\")",
+      "Bash(node -e \"const {Netopia} = require\\('netopia-card'\\); const n = new Netopia\\({}\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(n\\)\\)\\)\")",
+      "PowerShell(Copy-Item \"D:\\\\Websites\\\\BNI Prime\\\\public\\\\images\\\\Logo website BNIPRIME.png\" \"D:\\\\Websites\\\\BNI Prime\\\\public\\\\images\\\\logo.png\")",
+      "PowerShell(Copy-Item \"D:\\\\Websites\\\\BNI Prime\\\\public\\\\images\\\\Logo website BNIPRIME.png\" \"D:\\\\Websites\\\\BNI Prime\\\\src\\\\app\\\\icon.png\")",
+      "PowerShell(Copy-Item \"D:\\\\Websites\\\\BNI Prime\\\\public\\\\images\\\\Logo website BNIPRIME.png\" \"D:\\\\Websites\\\\BNI Prime\\\\public\\\\og-image.png\")"
     ]
   }
 }

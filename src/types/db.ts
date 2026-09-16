@@ -1,5 +1,14 @@
 export type EventSlug = "prime" | "forte";
 
+export interface PowerTeam {
+  id: string;
+  event_slug: EventSlug;
+  name: string;
+  date_text: string;
+  is_active: boolean;
+  sort_order: number;
+}
+
 export interface HeroContent {
   id: string;
   event_slug: EventSlug;

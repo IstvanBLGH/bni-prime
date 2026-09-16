@@ -24,6 +24,7 @@ interface ContentEditorProps {
   hasPhotoUpload?: boolean;
   photoKey?: string;
   sortable?: boolean;
+  extraData?: Record<string, unknown>;
 }
 
 function PhotoUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
@@ -160,7 +161,7 @@ function ItemForm({ columns, initial, onSave, onCancel, hasPhotoUpload, photoKey
 }
 
 export function ContentEditor({
-  title, description, table, eventSlug, columns, items, onRefresh, hasPhotoUpload, photoKey, sortable,
+  title, description, table, eventSlug, columns, items, onRefresh, hasPhotoUpload, photoKey, sortable, extraData,
 }: ContentEditorProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
@@ -169,7 +170,7 @@ export function ContentEditor({
   const supabase = createClient();
 
   function emptyItem(): Record<string, unknown> {
-    const obj: Record<string, unknown> = { event_slug: eventSlug };
+    const obj: Record<string, unknown> = { event_slug: eventSlug, ...(extraData ?? {}) };
     columns.forEach((col) => {
       obj[col.key] = col.type === "number" ? 0 : col.type === "checkbox" ? false : "";
     });
@@ -178,7 +179,7 @@ export function ContentEditor({
   }
 
   async function handleCreate(data: Record<string, unknown>) {
-    const { error } = await supabase.from(table).insert({ ...data, event_slug: eventSlug });
+    const { error } = await supabase.from(table).insert({ ...data, event_slug: eventSlug, ...(extraData ?? {}) });
     if (error) throw new Error(error.message);
     setAdding(false);
     onRefresh();

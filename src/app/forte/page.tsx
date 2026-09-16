@@ -26,6 +26,9 @@ async function getForteData() {
     const { createClient } = await import("@/lib/supabase/server");
     const supabase = await createClient();
 
+    const { data: activeTeam } = await supabase
+      .from("power_teams").select("id").eq("event_slug", "forte").eq("is_active", true).single();
+
     const [
       { data: hero },
       { data: about },
@@ -39,7 +42,9 @@ async function getForteData() {
     ] = await Promise.all([
       supabase.from("hero_content").select("*").eq("event_slug", "forte").single(),
       supabase.from("about_content").select("*").eq("event_slug", "forte").single(),
-      supabase.from("team_members").select("*").eq("event_slug", "forte").order("sort_order"),
+      activeTeam
+        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeam.id).order("sort_order")
+        : supabase.from("team_members").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("agenda_items").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("tickets").select("*").eq("event_slug", "forte").eq("is_available", true).order("sort_order"),
       supabase.from("location_content").select("*").eq("event_slug", "forte").single(),
