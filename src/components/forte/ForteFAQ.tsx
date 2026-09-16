@@ -19,6 +19,7 @@ const FALLBACK: FaqItem[] = [
 ];
 
 export function ForteFAQ({ items }: { items?: FaqItem[] }) {
+  if (items !== undefined && items.length === 0) return null;
   const faq = items && items.length > 0 ? items : FALLBACK;
 
   return (

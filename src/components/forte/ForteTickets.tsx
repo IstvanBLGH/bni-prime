@@ -140,9 +140,9 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
 
 export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start" }: { tickets?: Ticket[]; paymentEndpoint?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const ticket = tickets && tickets.length > 0 ? tickets[0] : FALLBACK_TICKET;
+  const ticket = tickets && tickets.length > 0 ? tickets[0] : (tickets === undefined ? FALLBACK_TICKET : null);
 
-  if (!ticket.is_available) return null;
+  if (!ticket || !ticket.is_available) return null;
 
   return (
     <section id="tickets" className="bg-surface py-16 md:py-24 lg:py-32">

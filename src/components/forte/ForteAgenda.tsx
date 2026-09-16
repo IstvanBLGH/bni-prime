@@ -22,6 +22,7 @@ const FALLBACK: AgendaItem[] = [
 ];
 
 export function ForteAgenda({ items }: { items?: AgendaItem[] }) {
+  if (items !== undefined && items.length === 0) return null;
   const agenda = items && items.length > 0 ? items : FALLBACK;
 
   return (

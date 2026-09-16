@@ -15,7 +15,8 @@ const FALLBACK_MEMBERS: TeamMember[] = [
 const SCROLL_SPEED = 0.6;
 
 export function ForteTeam({ members }: { members?: TeamMember[] }) {
-  const list = members && members.length > 0 ? members : FALLBACK_MEMBERS;
+  const isEmpty = members !== undefined && members.length === 0;
+  const list = members && members.length > 0 ? members : (members === undefined ? FALLBACK_MEMBERS : []);
   const ITEMS = [...list, ...list, ...list];
 
   const [current, setCurrent] = useState(0);
@@ -90,6 +91,8 @@ export function ForteTeam({ members }: { members?: TeamMember[] }) {
     };
     momentumRafRef.current = requestAnimationFrame(momentum);
   }, []);
+
+  if (isEmpty) return null;
 
   return (
     <section id="team" className="bg-surface py-16 md:py-24 lg:py-32">
