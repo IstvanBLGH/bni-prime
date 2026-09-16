@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean }) {
+export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2 }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -38,12 +38,12 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false }: { log
         scrolled ? "bg-background/95 shadow-sm backdrop-blur-md" : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-4 md:px-8">
+      <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between px-4 md:px-8">
         <a href="#hero" className="flex items-center gap-2">
           {logoUrl ? (
             zoomLogo ? (
               <div className="relative h-[62px] w-[180px] overflow-hidden">
-                <Image src={logoUrl} alt={`BNI ${name}`} fill className="object-contain scale-[2.2] origin-center" />
+                <Image src={logoUrl} alt={`BNI ${name}`} fill className="object-contain origin-center" style={{ transform: `scale(${logoScale})` }} />
               </div>
             ) : (
               <Image src={logoUrl} alt={`BNI ${name}`} width={200} height={70} className="h-[62px] w-auto object-contain" />
