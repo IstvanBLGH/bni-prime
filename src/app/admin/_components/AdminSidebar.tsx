@@ -5,11 +5,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   LayoutDashboard, Users, CalendarDays, Ticket, HelpCircle, MessageSquare,
-  LogOut, ChevronDown, ChevronRight, MapPin,
+  LogOut, ChevronDown, ChevronRight, MapPin, Star, Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const PRIME_ITEMS = [
+  { href: "/admin/prime/hero", label: "Hero / Titlu", icon: Star },
+  { href: "/admin/prime/about", label: "Despre eveniment", icon: Info },
   { href: "/admin/prime/team", label: "Echipă (Leadership)", icon: Users },
   { href: "/admin/prime/agenda", label: "Agendă", icon: CalendarDays },
   { href: "/admin/prime/tickets", label: "Bilete & Prețuri", icon: Ticket },

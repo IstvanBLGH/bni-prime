@@ -37,7 +37,7 @@ const FALLBACK_TICKET: Ticket = {
 
 const CUM_AI_AFLAT = ["Facebook", "Instagram", "Recomandare", "Email", "Altă sursă"];
 
-function RegistrationModal({ open, onOpenChange, ticket }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket }) {
+function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,7 +49,7 @@ function RegistrationModal({ open, onOpenChange, ticket }: { open: boolean; onOp
     const data = new FormData(form);
     try {
       const browserInfo = collectBrowserInfo(navigator, window);
-      const res = await fetch("/api/forte/netopia/start", {
+      const res = await fetch(paymentEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -138,7 +138,7 @@ function RegistrationModal({ open, onOpenChange, ticket }: { open: boolean; onOp
   );
 }
 
-export function ForteTickets({ tickets }: { tickets?: Ticket[] }) {
+export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start" }: { tickets?: Ticket[]; paymentEndpoint?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
   const ticket = tickets && tickets.length > 0 ? tickets[0] : FALLBACK_TICKET;
 
@@ -181,7 +181,7 @@ export function ForteTickets({ tickets }: { tickets?: Ticket[] }) {
         </div>
       </Container>
 
-      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} />
+      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} paymentEndpoint={paymentEndpoint} />
     </section>
   );
 }
