@@ -19,7 +19,7 @@ export const metadata = {
     description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
     url: "https://bniforte.ro",
     siteName: "BNI Forte",
-    images: [{ url: "/images/logo.png", width: 1080, height: 1080, alt: "BNI Forte" }],
+    images: [{ url: "/images/Logo website BNIFORTE.png.png", width: 1080, height: 1080, alt: "BNI Forte" }],
     locale: "ro_RO",
     type: "website",
   },
@@ -27,7 +27,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
     description: "BNI FORTE te invita la Ziua Invitatului — business networking, Cluj-Napoca.",
-    images: ["/images/logo.png"],
+    images: ["/images/Logo website BNIFORTE.png.png"],
   },
 };
 
@@ -82,7 +82,7 @@ export default async function FortePage() {
 
   return (
     <>
-      <ForteNavbar />
+      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" />
       <main>
         <ForteHero data={data?.hero} />
         <ForteAbout data={data?.about} />
