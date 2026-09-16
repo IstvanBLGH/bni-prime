@@ -20,11 +20,12 @@ interface AdminPageShellProps {
   sortable?: boolean;
   extraFilter?: { key: string; value: string };
   extraData?: Record<string, unknown>;
+  hasActiveToggle?: boolean;
 }
 
 export function AdminPageShell({
   title, description, breadcrumb, table, eventSlug, orderBy = "sort_order",
-  columns, hasPhotoUpload, photoKey, sortable, extraFilter, extraData,
+  columns, hasPhotoUpload, photoKey, sortable, extraFilter, extraData, hasActiveToggle,
 }: AdminPageShellProps) {
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,6 +66,7 @@ export function AdminPageShell({
           photoKey={photoKey}
           sortable={sortable}
           extraData={extraData}
+          hasActiveToggle={hasActiveToggle}
         />
       )}
     </div>

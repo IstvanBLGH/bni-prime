@@ -44,6 +44,7 @@ export interface TeamMember {
   phone: string;
   photo_url: string;
   sort_order: number;
+  is_active?: boolean;
 }
 
 export interface AgendaItem {

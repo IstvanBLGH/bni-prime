@@ -17,6 +17,26 @@ import { ForteFooter } from "@/components/forte/ForteFooter";
 
 export const revalidate = 60;
 
+export const metadata = {
+  title: "Ziua Invitatului — BNI Prime Bistrita",
+  description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
+  openGraph: {
+    title: "Ziua Invitatului — BNI Prime Bistrita",
+    description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
+    url: "https://bniprime.ro",
+    siteName: "BNI Prime",
+    images: [{ url: "/og-image.png", width: 2000, height: 2000, alt: "BNI Prime — Ziua Invitatului" }],
+    locale: "ro_RO",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ziua Invitatului — BNI Prime Bistrita",
+    description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
+    images: ["/og-image.png"],
+  },
+};
+
 // Shown on Prime page when admin hasn't filled in data yet
 const PRIME_HERO: Partial<HeroContent> = {
   badge: "Eveniment de business networking",
@@ -24,7 +44,7 @@ const PRIME_HERO: Partial<HeroContent> = {
   date_text: "",
   city: "Bistrita",
   description: "BNI Prime te invita la Ziua Invitatului - evenimentul de business networking deschis tuturor antreprenorilor si oamenilor de afaceri din regiune.",
-  image_url: null,
+  image_url: "/images/hero.jpg",
 };
 
 const PRIME_ABOUT: Partial<AboutContent> = {
@@ -75,8 +95,8 @@ export default async function Home() {
         supabase.from("hero_content").select("*").eq("event_slug", "prime").single(),
         supabase.from("about_content").select("*").eq("event_slug", "prime").single(),
         activeTeamId
-          ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).order("sort_order")
-          : supabase.from("team_members").select("*").eq("event_slug", "prime").order("sort_order"),
+          ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).eq("is_active", true).order("sort_order")
+          : supabase.from("team_members").select("*").eq("event_slug", "prime").eq("is_active", true).order("sort_order"),
         supabase.from("agenda_items").select("*").eq("event_slug", "prime").order("sort_order"),
         supabase.from("tickets").select("*").eq("event_slug", "prime").order("sort_order"),
         supabase.from("location_content").select("*").eq("event_slug", "prime").single(),
@@ -102,7 +122,7 @@ export default async function Home() {
 
   return (
     <>
-      <ForteNavbar />
+      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" />
       <main>
         <ForteHero data={hero} />
         <ForteAbout data={about} />

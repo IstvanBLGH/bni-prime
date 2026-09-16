@@ -28,6 +28,7 @@ export default function ForteTeamMembersPage() {
         photoKey="photo_url"
         extraFilter={{ key: "power_team_id", value: teamId }}
         extraData={{ power_team_id: teamId }}
+        hasActiveToggle
         columns={[
           { key: "name", label: "Nume complet", placeholder: "Ion Popescu", required: true },
           { key: "role", label: "Serviciu / Produs", placeholder: "Servicii juridice" },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, X, Check, Loader2, Upload, GripVertical } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Check, Loader2, Upload, GripVertical, Eye, EyeOff } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export interface Column {
@@ -25,6 +25,7 @@ interface ContentEditorProps {
   photoKey?: string;
   sortable?: boolean;
   extraData?: Record<string, unknown>;
+  hasActiveToggle?: boolean;
 }
 
 function PhotoUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
@@ -161,13 +162,21 @@ function ItemForm({ columns, initial, onSave, onCancel, hasPhotoUpload, photoKey
 }
 
 export function ContentEditor({
-  title, description, table, eventSlug, columns, items, onRefresh, hasPhotoUpload, photoKey, sortable, extraData,
+  title, description, table, eventSlug, columns, items, onRefresh, hasPhotoUpload, photoKey, sortable, extraData, hasActiveToggle,
 }: ContentEditorProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const supabase = createClient();
+
+  async function handleToggleActive(id: string, currentValue: boolean) {
+    setTogglingId(id);
+    await supabase.from(table).update({ is_active: !currentValue }).eq("id", id);
+    setTogglingId(null);
+    onRefresh();
+  }
 
   function emptyItem(): Record<string, unknown> {
     const obj: Record<string, unknown> = { event_slug: eventSlug, ...(extraData ?? {}) };
@@ -276,6 +285,16 @@ export function ContentEditor({
                     )}
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
+                    {hasActiveToggle && (
+                      <button
+                        onClick={() => handleToggleActive(id, !!(item.is_active ?? true))}
+                        disabled={togglingId === id}
+                        title={(item.is_active ?? true) ? "Dezactivează" : "Activează"}
+                        className={`flex h-8 w-8 items-center justify-center rounded-lg border transition-colors disabled:opacity-50 ${(item.is_active ?? true) ? "border-green-300 text-green-600 hover:border-red-300 hover:text-red-500" : "border-border text-muted hover:border-green-300 hover:text-green-600"}`}
+                      >
+                        {togglingId === id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : (item.is_active ?? true) ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+                      </button>
+                    )}
                     <button onClick={() => setEditingId(id)} className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-muted hover:border-primary hover:text-primary">
                       <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>

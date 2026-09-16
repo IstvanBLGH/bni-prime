@@ -13,8 +13,22 @@ export const revalidate = 60;
 
 export const metadata = {
   title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-  description:
-    "BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
+  description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
+  openGraph: {
+    title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+    description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
+    url: "https://bniforte.ro",
+    siteName: "BNI Forte",
+    images: [{ url: "/og-image.png", width: 2000, height: 2000, alt: "BNI Forte — Ziua Invitatului" }],
+    locale: "ro_RO",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+    description: "BNI FORTE te invita la Ziua Invitatului — business networking, Cluj-Napoca.",
+    images: ["/og-image.png"],
+  },
 };
 
 async function getForteData() {
@@ -47,8 +61,8 @@ async function getForteData() {
       supabase.from("hero_content").select("*").eq("event_slug", "forte").single(),
       supabase.from("about_content").select("*").eq("event_slug", "forte").single(),
       activeTeamId
-        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).order("sort_order")
-        : supabase.from("team_members").select("*").eq("event_slug", "forte").order("sort_order"),
+        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).eq("is_active", true).order("sort_order")
+        : supabase.from("team_members").select("*").eq("event_slug", "forte").eq("is_active", true).order("sort_order"),
       supabase.from("agenda_items").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("tickets").select("*").eq("event_slug", "forte").eq("is_available", true).order("sort_order"),
       supabase.from("location_content").select("*").eq("event_slug", "forte").single(),
