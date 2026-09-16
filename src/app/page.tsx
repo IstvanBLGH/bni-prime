@@ -122,7 +122,7 @@ export default async function Home() {
 
   return (
     <>
-      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" />
+      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo />
       <main>
         <ForteHero data={hero} />
         <ForteAbout data={about} />

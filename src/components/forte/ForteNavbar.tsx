@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function ForteNavbar({ logoUrl, name = "Forte" }: { logoUrl?: string | null; name?: string }) {
+export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -41,9 +41,13 @@ export function ForteNavbar({ logoUrl, name = "Forte" }: { logoUrl?: string | nu
       <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-4 md:px-8">
         <a href="#hero" className="flex items-center gap-2">
           {logoUrl ? (
-            <div className="relative h-[62px] w-[180px] overflow-hidden">
-              <Image src={logoUrl} alt={`BNI ${name}`} fill className="object-contain scale-[2.2] origin-center" />
-            </div>
+            zoomLogo ? (
+              <div className="relative h-[62px] w-[180px] overflow-hidden">
+                <Image src={logoUrl} alt={`BNI ${name}`} fill className="object-contain scale-[2.2] origin-center" />
+              </div>
+            ) : (
+              <Image src={logoUrl} alt={`BNI ${name}`} width={200} height={70} className="h-[62px] w-auto object-contain" />
+            )
           ) : (
             <span className="text-xl font-extrabold tracking-tight text-foreground">
               BNI <span className="text-primary">{name}</span>
