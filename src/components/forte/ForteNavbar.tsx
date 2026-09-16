@@ -38,10 +38,10 @@ export function ForteNavbar({ logoUrl, name = "Forte" }: { logoUrl?: string | nu
         scrolled ? "bg-background/95 shadow-sm backdrop-blur-md" : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8 md:py-5">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1 md:px-8 md:py-1">
         <a href="#hero" className="flex items-center gap-2">
           {logoUrl ? (
-            <Image src={logoUrl} alt={`BNI ${name}`} width={280} height={100} className="h-20 w-auto object-contain" />
+            <Image src={logoUrl} alt={`BNI ${name}`} width={360} height={130} className="h-28 w-auto object-contain" />
           ) : (
             <span className="text-xl font-extrabold tracking-tight text-foreground">
               BNI <span className="text-primary">{name}</span>
