@@ -41,7 +41,7 @@ export function ForteNavbar({ logoUrl, name = "Forte" }: { logoUrl?: string | nu
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8 md:py-5">
         <a href="#hero" className="flex items-center gap-2">
           {logoUrl ? (
-            <Image src={logoUrl} alt={`BNI ${name}`} width={200} height={70} className="h-14 w-auto object-contain" />
+            <Image src={logoUrl} alt={`BNI ${name}`} width={280} height={100} className="h-20 w-auto object-contain" />
           ) : (
             <span className="text-xl font-extrabold tracking-tight text-foreground">
               BNI <span className="text-primary">{name}</span>
