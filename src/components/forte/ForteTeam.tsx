@@ -14,7 +14,7 @@ const FALLBACK_MEMBERS: TeamMember[] = [
 
 const SCROLL_SPEED = 0.6;
 
-export function ForteTeam({ members }: { members?: TeamMember[] }) {
+export function ForteTeam({ members, description = "Profesioniștii din domenii complementare care formează Power Team-ul acestei ediții." }: { members?: TeamMember[]; description?: string }) {
   const isEmpty = members !== undefined && members.length === 0;
   const list = members && members.length > 0 ? members : (members === undefined ? FALLBACK_MEMBERS : []);
   const ITEMS = [...list, ...list, ...list];
@@ -98,9 +98,8 @@ export function ForteTeam({ members }: { members?: TeamMember[] }) {
     <section id="team" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
-          kicker="Power Team"
-          title="Echipa Power Team"
-          description="Profesioniștii din domenii complementare care formează Power Team-ul acestei ediții."
+          kicker="Echipa"
+          description={description}
         />
 
         <div className="relative mt-8 md:mt-16">

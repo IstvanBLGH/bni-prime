@@ -86,7 +86,7 @@ export default async function FortePage() {
       <main>
         <ForteHero data={data?.hero} />
         <ForteAbout data={data?.about} />
-        <ForteTeam members={data?.team ?? []} />
+        <ForteTeam members={data?.team ?? []} description="Power Team Servicii / Power Team Wellness" />
         <ForteAgenda items={data?.agenda ?? []} />
         <ForteTickets tickets={data?.tickets ?? []} />
         <ForteLocation data={data?.location} />
