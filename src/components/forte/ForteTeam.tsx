@@ -124,7 +124,7 @@ export function ForteTeam({ members }: { members?: TeamMember[] }) {
               <div
                 key={`${member.id}-${i}`}
                 className={cn(
-                  "w-40 shrink-0 overflow-hidden rounded-2xl border bg-background shadow-sm transition-colors duration-300 sm:w-56 lg:w-72",
+                  "w-40 shrink-0 overflow-hidden rounded-2xl border bg-background shadow-sm transition-colors duration-300 sm:w-44 lg:w-56",
                   i % list.length === current ? "border-primary ring-2 ring-primary/40" : "border-border"
                 )}
               >
