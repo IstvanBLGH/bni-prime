@@ -17,11 +17,11 @@ const FALLBACK: Partial<HeroContent> = {
   city: "Cluj-Napoca",
   description:
     "BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune.",
-  image_url: null,
+  image_url: "/images/Banner.jpeg",
 };
 
 export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
-  const d = { ...FALLBACK, ...data };
+  const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
 
   return (
     <section
