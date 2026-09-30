@@ -116,6 +116,8 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg" alt="SOL" width={220} style={{ display: "inline-block" }} />
           </a>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/bg-white.png" alt="Netopia Payments — Mastercard, Visa" className="h-10 w-auto object-contain" />
         </div>
 
         <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
