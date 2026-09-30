@@ -150,7 +150,6 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
         <SectionHeading
           kicker="Bilete"
           title="Participă la Ziua Invitatului"
-          description="1 singur tip de bilet — acces complet la evenimentul de networking."
         />
 
         <div className="mx-auto mt-12 max-w-sm md:mt-16">
