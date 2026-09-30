@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Check, ShieldCheck, Loader2 } from "lucide-react";
 import { collectBrowserInfo } from "netopia-card";
 import { Container } from "@/components/shared/Container";
-import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,7 +27,7 @@ const FALLBACK_TICKET: Ticket = {
     "Sesiuni de speed networking",
     "Orientare BNI pentru invitați",
     "Networking deschis",
-    "Email cu concluzii post-eveniment",
+    "E-mail cu concluzii post-eveniment",
   ],
   is_available: true,
   max_quantity: null,
@@ -91,7 +90,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
         <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit}>
           {[
             { id: "name", label: "Nume complet", type: "text", placeholder: "Ion Popescu", required: true },
-            { id: "email", label: "Email", type: "email", placeholder: "ion.popescu@email.com", required: true },
+            { id: "email", label: "E-mail", type: "email", placeholder: "ion.popescu@email.com", required: true },
             { id: "phone", label: "Număr de telefon", type: "tel", placeholder: "+40 7XX XXX XXX", required: true },
           ].map((f) => (
             <div key={f.id} className="flex flex-col gap-1.5">
@@ -147,15 +146,9 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
   return (
     <section id="tickets" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
-        <SectionHeading
-          kicker="Bilete"
-          title="Participă la Ziua Invitatului"
-        />
-
-        <div className="mx-auto mt-12 max-w-sm md:mt-16">
+        <div className="mx-auto max-w-sm">
           <div className="relative flex flex-col rounded-2xl border border-primary bg-background p-7 shadow-sm ring-2 ring-primary">
-            <h3 className="text-2xl font-semibold tracking-tight text-foreground">{ticket.name}</h3>
-            <p className="mt-2 text-sm text-muted">{ticket.description}</p>
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{ticket.description}</p>
 
             <div className="mt-5 flex items-baseline gap-1">
               <span className="text-3xl font-bold tracking-tight text-foreground">{ticket.price} RON</span>
