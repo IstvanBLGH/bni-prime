@@ -122,7 +122,7 @@ export default async function Home() {
 
   return (
     <>
-      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo />
+      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
       <main>
         <ForteHero data={hero} />
         <ForteAbout data={about} />
@@ -133,7 +133,7 @@ export default async function Home() {
         <ForteFAQ items={faqItems} />
         <ForteTestimonials items={testimonials} />
       </main>
-      <ForteFooter contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
+      <ForteFooter contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
     </>
   );
 }

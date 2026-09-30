@@ -22,13 +22,14 @@ const FALLBACK: Partial<ContactInfo> = {
   address: "Str. Grănicerilor, nr. 3, Bistrița",
 };
 
-export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath }: {
+export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0 }: {
   contact?: Partial<ContactInfo> | null;
   logoUrl?: string | null;
   name?: string;
   description?: string;
   privacyPath?: string;
   termsPath?: string;
+  logoOffset?: number;
 }) {
   const c = { ...FALLBACK, ...contact };
   const defaultDesc = name === "Prime"
@@ -41,7 +42,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             {logoUrl ? (
-              <div className="relative -ml-11 h-[62px] w-[180px] overflow-hidden">
+              <div className="relative h-[62px] w-[180px] overflow-hidden" style={{ marginLeft: `-${logoOffset}px` }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={logoUrl} alt={`BNI ${name}`} className="absolute inset-0 h-full w-full object-contain scale-[2.2] origin-center" />
               </div>

@@ -82,7 +82,7 @@ export default async function FortePage() {
 
   return (
     <>
-      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={52} />
+      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={58} />
       <main>
         <ForteHero data={data?.hero} />
         <ForteAbout data={data?.about} />
@@ -93,7 +93,7 @@ export default async function FortePage() {
         <ForteFAQ items={data?.faq ?? []} />
         <ForteTestimonials items={data?.testimonials ?? []} />
       </main>
-      <ForteFooter contact={data?.contact} logoUrl="/images/Logo website BNIFORTE.png.png" />
+      <ForteFooter contact={data?.contact} logoUrl="/images/Logo website BNIFORTE.png.png" logoOffset={43} />
     </>
   );
 }
