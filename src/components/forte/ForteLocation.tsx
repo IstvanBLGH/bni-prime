@@ -7,7 +7,7 @@ import type { LocationContent } from "@/types/db";
 
 const FALLBACK: Partial<LocationContent> = {
   venue_name: "The Office",
-  address: "B-dul 21 Decembrie 1989, nr. 77, mun. Cluj-Napoca",
+  address: "B-dul 21 Decembrie 1989, Nr. 77, Mun. Cluj-Napoca",
   description:
     "Evenimentul organizat de grupul BNI Forte are loc la The Office din Cluj-Napoca, locația unde se desfășoară și întâlnirile săptămânale ale grupului.",
   has_parking: true,
