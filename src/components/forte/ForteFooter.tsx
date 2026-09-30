@@ -95,13 +95,11 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
                 </li>
               )}
             </ul>
-            <div className="mt-6">
-              <p className="text-xs font-semibold text-foreground">Operator</p>
-              <p className="mt-1 text-xs leading-relaxed text-muted">
-                {c.operator_name}<br />
-                CUI {c.cui}<br />
-                {c.address}
-              </p>
+            <div className="mt-3 flex flex-col gap-3">
+              <p className="flex h-6 items-center text-xs font-semibold text-foreground">Operator</p>
+              <p className="flex h-6 items-center text-xs text-muted">{c.operator_name}</p>
+              <p className="flex h-6 items-center text-xs text-muted">CUI {c.cui}</p>
+              <p className="flex h-6 items-center text-xs text-muted">{c.address}</p>
             </div>
           </div>
         </div>
