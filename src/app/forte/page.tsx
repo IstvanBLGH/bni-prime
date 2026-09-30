@@ -82,7 +82,7 @@ export default async function FortePage() {
 
   return (
     <>
-      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} />
+      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={52} />
       <main>
         <ForteHero data={data?.hero} />
         <ForteAbout data={data?.about} />

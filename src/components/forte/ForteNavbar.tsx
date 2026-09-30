@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2 }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number }) {
+export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2, logoOffset = 0 }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number; logoOffset?: number }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -42,7 +42,7 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoSca
         <a href="#hero" className="flex items-center gap-2">
           {logoUrl ? (
             zoomLogo ? (
-              <div className="relative h-[62px] w-[180px] overflow-hidden">
+              <div className="relative h-[62px] w-[180px] overflow-hidden md:[margin-left:var(--logo-offset)]" style={{ "--logo-offset": `-${logoOffset}px` } as React.CSSProperties}>
                 <Image src={logoUrl} alt={`BNI ${name}`} fill className="object-contain origin-center" style={{ transform: `scale(${logoScale})` }} />
               </div>
             ) : (
