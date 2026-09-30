@@ -89,7 +89,7 @@ export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
       >
         <Container>
           <div className="relative">
-            <div className="relative aspect-square overflow-hidden rounded-3xl shadow-2xl ring-2 ring-primary/40 lg:aspect-video lg:rounded-2xl">
+            <div className="relative aspect-square overflow-hidden rounded-3xl shadow-2xl ring-2 ring-primary/40 lg:aspect-[64/27] lg:rounded-2xl">
               {d.image_url ? (
                 <Image
                   src={d.image_url}
