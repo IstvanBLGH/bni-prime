@@ -34,7 +34,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
   const c = { ...FALLBACK, ...contact };
   const defaultDesc = name === "Prime"
     ? "BNI PRIME este un grup de business networking activ în Bistrița. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Bistrița-Năsăud."
-    : "BNI FORTE este cel mai vechi grup de business networking din provincie. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Cluj.";
+    : "BNI FORTE este cea mai veche comunitate de business networking din provincie. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Cluj.";
 
   return (
     <footer className="border-t border-border bg-surface py-16 md:py-20">
