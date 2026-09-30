@@ -19,7 +19,7 @@ const FALLBACK: Partial<ContactInfo> = {
   facebook_url: "https://www.facebook.com/BNI-Cluj",
   operator_name: "BIG DESIGN TM S.R.L.",
   cui: "39578361",
-  address: "Str. Grănicerilor, nr. 3, Bistrița",
+  address: "Str. Grănicerilor, Nr. 3, Mun. Bistrița",
 };
 
 export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0 }: {
