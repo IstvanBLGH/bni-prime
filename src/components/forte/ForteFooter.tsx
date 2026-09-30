@@ -62,17 +62,19 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             )}
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-foreground">Navigare</h3>
-            <ul className="mt-4 flex flex-col gap-3">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="flex h-6 items-center text-sm text-muted transition-colors duration-300 hover:text-primary">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <div className="md:flex md:justify-center">
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">Navigare</h3>
+              <ul className="mt-4 flex flex-col gap-3">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="flex h-6 items-center text-sm text-muted transition-colors duration-300 hover:text-primary">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div>
@@ -125,7 +127,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             </p>
           </div>
           <div className="flex flex-col gap-1 md:items-end">
-            <a href={privacyPath ?? "/forte/politica-de-confidentialitate"} className="transition-colors hover:text-primary">Politica de confidențialitate</a>
+            <a href={privacyPath ?? "/forte/politica-de-confidentialitate"} className="transition-colors hover:text-primary">Politici</a>
             <a href={termsPath ?? "/forte/termeni-si-conditii"} className="transition-colors hover:text-primary">Termeni și condiții</a>
           </div>
         </div>
