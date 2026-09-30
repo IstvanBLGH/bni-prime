@@ -96,7 +96,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
               )}
             </ul>
             <div className="mt-3 flex flex-col gap-3">
-              <p className="flex h-6 items-center text-xs font-semibold text-foreground">Operator</p>
+              <h3 className="flex h-6 items-center text-sm font-semibold text-foreground">Operator</h3>
               <p className="flex h-6 items-center text-xs text-muted">{c.operator_name}</p>
               <p className="flex h-6 items-center text-xs text-muted">CUI {c.cui}</p>
               <p className="flex h-6 items-center text-xs text-muted">{c.address}</p>
