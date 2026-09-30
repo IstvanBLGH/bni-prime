@@ -67,7 +67,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             <ul className="mt-4 flex flex-col gap-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-sm text-muted transition-colors duration-300 hover:text-primary">
+                  <a href={link.href} className="flex h-6 items-center text-sm text-muted transition-colors duration-300 hover:text-primary">
                     {link.label}
                   </a>
                 </li>
@@ -80,16 +80,16 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             <ul className="mt-4 flex flex-col gap-3">
               {c.email && (
                 <li>
-                  <a href={`mailto:${c.email}`} className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-primary">
-                    <Mail className="h-4 w-4" aria-hidden="true" />
+                  <a href={`mailto:${c.email}`} className="flex h-6 items-center gap-2 text-sm text-muted transition-colors hover:text-primary">
+                    <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {c.email}
                   </a>
                 </li>
               )}
               {c.phone && (
                 <li>
-                  <a href={`tel:${c.phone}`} className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-primary">
-                    <Phone className="h-4 w-4" aria-hidden="true" />
+                  <a href={`tel:${c.phone}`} className="flex h-6 items-center gap-2 text-sm text-muted transition-colors hover:text-primary">
+                    <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {c.phone}
                   </a>
                 </li>
@@ -126,7 +126,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
               <a href="https://solergo.ro" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">Solergo</a>
             </p>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col gap-1 md:items-end">
             <a href={privacyPath ?? "/forte/politica-de-confidentialitate"} className="transition-colors hover:text-primary">Politica de confidențialitate</a>
             <a href={termsPath ?? "/forte/termeni-si-conditii"} className="transition-colors hover:text-primary">Termeni și condiții</a>
           </div>
