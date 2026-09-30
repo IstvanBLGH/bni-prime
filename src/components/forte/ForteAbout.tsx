@@ -75,7 +75,7 @@ export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
                 {d.domains.map((dom, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-foreground">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-                    {dom}
+                    <span className="whitespace-pre-line">{dom}</span>
                   </li>
                 ))}
               </ul>
