@@ -38,10 +38,10 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
   return (
     <footer className="border-t border-border bg-surface py-16 md:py-20">
       <Container>
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-3">
           <div>
             {logoUrl ? (
-              <div className="relative h-[62px] w-[180px] overflow-hidden">
+              <div className="relative -ml-11 h-[62px] w-[180px] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={logoUrl} alt={`BNI ${name}`} className="absolute inset-0 h-full w-full object-contain scale-[2.2] origin-center" />
               </div>
@@ -105,7 +105,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
         </div>
 
         {/* ANPC */}
-        <div className="mt-12 flex flex-wrap items-center gap-2 border-t border-border pt-8">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 border-t border-border pt-8">
           <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="nofollow noopener noreferrer">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg" alt="SAL" width={220} style={{ display: "inline-block" }} />
