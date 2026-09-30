@@ -70,7 +70,7 @@ export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
 
           {d.domains && d.domains.length > 0 && (
             <div className="mt-6">
-              <p className="text-lg font-semibold uppercase tracking-wide text-foreground">Domenii vizate</p>
+              <p className="text-lg font-bold tracking-tight text-foreground">Domenii vizate</p>
               <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {d.domains.map((dom, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-foreground">
