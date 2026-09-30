@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Check, ShieldCheck, Loader2 } from "lucide-react";
 import { collectBrowserInfo } from "netopia-card";
 import { Container } from "@/components/shared/Container";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -146,7 +147,9 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
   return (
     <section id="tickets" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
-        <div className="mx-auto max-w-sm">
+        <SectionHeading kicker="Bilete" />
+
+        <div className="mx-auto mt-12 max-w-sm md:mt-16">
           <div className="relative flex flex-col rounded-2xl border border-primary bg-background p-7 shadow-sm ring-2 ring-primary">
             <p className="text-2xl font-semibold tracking-tight text-foreground">{ticket.description}</p>
 
