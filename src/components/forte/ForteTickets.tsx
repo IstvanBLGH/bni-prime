@@ -20,7 +20,7 @@ const FALLBACK_TICKET: Ticket = {
   event_slug: "forte",
   name: "Standard",
   label: "1 bilet",
-  price: 175,
+  price: 100,
   description: "Acces la evenimentul de networking BNI FORTE Ziua Invitatului.",
   features: [
     "Acces la eveniment",

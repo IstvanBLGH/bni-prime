@@ -6,7 +6,26 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, phone, cui, sursa, browserInfo } = body;
 
-    const price = 175;
+    let price = 100;
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const { createClient } = await import("@supabase/supabase-js");
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+        );
+        const { data } = await supabase
+          .from("tickets")
+          .select("price")
+          .eq("event_slug", "forte")
+          .eq("is_available", true)
+          .order("sort_order")
+          .limit(1)
+          .single();
+        if (data?.price) price = data.price;
+      } catch { /* use default */ }
+    }
+
     const orderID = `FORTE-${Date.now()}`;
 
     const nameParts = (name as string).trim().split(" ");
