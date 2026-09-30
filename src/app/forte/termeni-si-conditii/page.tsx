@@ -79,7 +79,7 @@ export default function ForteTermeniSiConditii() {
               ]} />
             </Sub>
             <Sub title="2. Obiectul contractului">
-              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>ZIUA INVITATULUI</strong>, organizat de grupul BNI FORTE, care va avea loc în data de <strong>29 septembrie 2026</strong>, în Cluj-Napoca.</p>
+              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>ZIUA INVITATULUI</strong>, organizat de grupul BNI FORTE, care va avea loc în data de <strong>6 octombrie 2026</strong>, în Cluj-Napoca.</p>
               <p>Biletul reprezintă un serviciu de acces la un eveniment cu dată fixă. Prin completarea formularului de înscriere și efectuarea plății, utilizatorul (denumit în continuare &bdquo;Participantul&rdquo;) acceptă în întregime prezenții Termeni și Condiții.</p>
             </Sub>
             <Sub title="3. Prețuri și modalități de plată">
@@ -213,7 +213,7 @@ export default function ForteTermeniSiConditii() {
           <Section id="anulare" title="Politica de Anulare a Comenzii">
             <Sub title="1. Dreptul legal de retragere">
               <p>Conform art. 16 lit. l) din OUG nr. 34/2014 privind drepturile consumatorilor în cadrul contractelor încheiate cu profesioniștii, dreptul de retragere în termen de 14 zile nu se aplică contractelor de prestări servicii legate de activități de petrecere a timpului liber, dacă contractul prevede o dată sau o perioadă de executare specifică.</p>
-              <p>Întrucât biletul la ZIUA INVITATULUI este un serviciu cu dată fixă (29 septembrie 2026), achiziția este, în principiu, definitivă.</p>
+              <p>Întrucât biletul la ZIUA INVITATULUI este un serviciu cu dată fixă (6 octombrie 2026), achiziția este, în principiu, definitivă.</p>
             </Sub>
             <Sub title="2. Politica comercială de anulare">
               <Ul items={[

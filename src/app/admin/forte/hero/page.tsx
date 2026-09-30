@@ -37,7 +37,7 @@ export default function ForteHeroPage() {
   const fields = [
     { key: "title", label: "Titlu eveniment", placeholder: "ZIUA INVITATULUI" },
     { key: "badge", label: "Badge", placeholder: "Eveniment de business networking" },
-    { key: "date_text", label: "Data", placeholder: "29.09.2026" },
+    { key: "date_text", label: "Data", placeholder: "06.10.2026" },
     { key: "city", label: "Oras", placeholder: "Cluj-Napoca" },
     { key: "description", label: "Descriere", type: "textarea", placeholder: "BNI Forte te invita..." },
     { key: "image_url", label: "URL imagine hero", placeholder: "https://..." },

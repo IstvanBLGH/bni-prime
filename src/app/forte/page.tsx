@@ -13,10 +13,10 @@ export const revalidate = 60;
 
 export const metadata = {
   title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-  description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
+  description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 6 octombrie 2026, Cluj-Napoca.",
   openGraph: {
     title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-    description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 29 septembrie 2026, Cluj-Napoca.",
+    description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 6 octombrie 2026, Cluj-Napoca.",
     url: "https://bniforte.ro",
     siteName: "BNI Forte",
     images: [{ url: "/images/Logo website BNIFORTE.png.png", width: 1080, height: 1080, alt: "BNI Forte" }],

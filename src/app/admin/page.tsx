@@ -16,7 +16,7 @@ const EVENTS = [
   {
     slug: "forte",
     name: "BNI Forte",
-    subtitle: "Ziua Invitatului · 29 Septembrie 2026 · Cluj-Napoca",
+    subtitle: "Ziua Invitatului · 6 Octombrie 2026 · Cluj-Napoca",
     color: "from-red-700 to-rose-900",
     sections: [
       { label: "Power Team", href: "/admin/forte/team", icon: Users },

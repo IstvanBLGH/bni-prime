@@ -137,7 +137,7 @@ INSERT INTO hero_content (event_slug, badge, title, date_text, city, description
   'forte',
   'Eveniment de business networking',
   'ZIUA INVITATULUI',
-  '29.09.2026',
+  '06.10.2026',
   'Cluj-Napoca',
   'BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune, un eveniment la care participanții pot identifica oportunități concrete pentru afacerile lor.'
 ) ON CONFLICT (event_slug) DO NOTHING;

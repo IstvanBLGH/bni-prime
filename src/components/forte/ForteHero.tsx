@@ -13,7 +13,7 @@ const easeApple = [0.21, 0.47, 0.32, 0.98] as const;
 const FALLBACK: Partial<HeroContent> = {
   badge: "Eveniment de business networking",
   title: "ZIUA INVITATULUI",
-  date_text: "29.09.2026",
+  date_text: "06.10.2026",
   city: "Cluj-Napoca",
   description:
     "BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune.",
