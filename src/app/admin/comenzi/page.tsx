@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Loader2, RefreshCw } from "lucide-react";
+import { Loader2, RefreshCw, FileSpreadsheet, Printer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order } from "@/types/db";
 
@@ -23,6 +23,45 @@ const STATUS_STYLE: Record<string, string> = {
   Autorizat: "bg-amber-100 text-amber-700",
   Initiat: "bg-surface text-muted",
 };
+
+const COLUMNS = ["Data", "Eveniment", "Nume", "Email", "Telefon", "CUI", "Sursa", "Suma", "Status", "ID comanda"];
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleString("ro-RO", {
+    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+  });
+}
+
+function toRow(o: Order): string[] {
+  return [
+    formatDate(o.created_at),
+    o.event_slug === "prime" ? "BNI Prime" : "BNI Forte",
+    o.name, o.email, o.phone, o.cui, o.sursa,
+    o.amount ? String(o.amount) : "",
+    o.status,
+    o.order_id,
+  ];
+}
+
+// Order fields come from a public form, so never interpolate them raw.
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string)
+  );
+}
+
+function csvCell(value: string) {
+  return `"${value.replace(/"/g, '""')}"`;
+}
+
+function downloadFile(content: string, filename: string, mime: string) {
+  const url = URL.createObjectURL(new Blob([content], { type: mime }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 export default function ComenziPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -50,6 +89,45 @@ export default function ComenziPage() {
   const paid = orders.filter((o) => o.status !== "Initiat");
   const total = paid.reduce((sum, o) => sum + (o.amount ?? 0), 0);
 
+  const fileLabel = `comenzi-${event}-${status}-${new Date().toISOString().slice(0, 10)}`;
+
+  function exportExcel() {
+    // "sep=" tells Excel the delimiter, so columns split correctly in any
+    // locale; the BOM keeps diacritics intact.
+    const lines = [COLUMNS, ...orders.map(toRow)].map((row) => row.map(csvCell).join(","));
+    downloadFile(`﻿sep=,\r\n${lines.join("\r\n")}`, `${fileLabel}.csv`, "text/csv;charset=utf-8;");
+  }
+
+  function exportPdf() {
+    const head = COLUMNS.map((c) => `<th>${escapeHtml(c)}</th>`).join("");
+    const body = orders
+      .map((o) => `<tr>${toRow(o).map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`)
+      .join("");
+    const win = window.open("", "_blank");
+    if (!win) {
+      alert("Permite ferestrele pop-up pentru a genera PDF-ul.");
+      return;
+    }
+    win.document.write(`<!doctype html><html lang="ro"><head><meta charset="utf-8">
+      <title>${escapeHtml(fileLabel)}</title>
+      <style>
+        body { font-family: system-ui, sans-serif; margin: 24px; color: #111; }
+        h1 { font-size: 18px; margin: 0 0 4px; }
+        p { font-size: 12px; color: #666; margin: 0 0 16px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+        th { background: #f5f5f5; }
+        @page { size: A4 landscape; margin: 12mm; }
+      </style></head><body>
+      <h1>Comenzi BNI</h1>
+      <p>${orders.length} comenzi · ${paid.length} platite · ${total} RON incasat · generat ${escapeHtml(formatDate(new Date().toISOString()))}</p>
+      <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>
+      </body></html>`);
+    win.document.close();
+    win.focus();
+    win.print();
+  }
+
   return (
     <div className="p-8">
       <div className="mb-8 flex items-start justify-between gap-4">
@@ -61,13 +139,31 @@ export default function ComenziPage() {
             formularul fara sa duca plata la capat.
           </p>
         </div>
-        <button
-          onClick={load}
-          className="flex shrink-0 items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-surface"
-        >
-          <RefreshCw className="h-4 w-4" aria-hidden="true" />
-          Reincarca
-        </button>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <button
+            onClick={exportExcel}
+            disabled={orders.length === 0}
+            className="flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-surface disabled:opacity-50"
+          >
+            <FileSpreadsheet className="h-4 w-4" aria-hidden="true" />
+            Excel
+          </button>
+          <button
+            onClick={exportPdf}
+            disabled={orders.length === 0}
+            className="flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-surface disabled:opacity-50"
+          >
+            <Printer className="h-4 w-4" aria-hidden="true" />
+            PDF
+          </button>
+          <button
+            onClick={load}
+            className="flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-surface"
+          >
+            <RefreshCw className="h-4 w-4" aria-hidden="true" />
+            Reincarca
+          </button>
+        </div>
       </div>
 
       <div className="mb-6 flex flex-wrap gap-6">
@@ -157,12 +253,7 @@ export default function ComenziPage() {
               <tbody>
                 {orders.map((o) => (
                   <tr key={o.id} className="border-t border-border align-top">
-                    <td className="whitespace-nowrap px-4 py-3 text-muted">
-                      {new Date(o.created_at).toLocaleString("ro-RO", {
-                        day: "2-digit", month: "2-digit", year: "numeric",
-                        hour: "2-digit", minute: "2-digit",
-                      })}
-                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-muted">{formatDate(o.created_at)}</td>
                     <td className="px-4 py-3 text-muted">{o.event_slug === "prime" ? "Prime" : "Forte"}</td>
                     <td className="px-4 py-3 font-medium text-foreground">{o.name || "—"}</td>
                     <td className="px-4 py-3">
