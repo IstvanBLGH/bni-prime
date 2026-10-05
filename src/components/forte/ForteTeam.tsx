@@ -14,6 +14,12 @@ const FALLBACK_MEMBERS: TeamMember[] = [
 
 const SCROLL_SPEED = 0.6;
 
+// Members often save their site without a scheme; a bare "www.x.ro" href
+// would resolve as a path on this site instead of navigating away.
+function toAbsoluteUrl(url: string) {
+  return /^[a-z][a-z0-9+.-]*:/i.test(url) ? url : `https://${url}`;
+}
+
 export function ForteTeam({ members, description = "Profesioniștii din domenii complementare care formează Power Team-ul acestei ediții." }: { members?: TeamMember[]; description?: string }) {
   const isEmpty = members !== undefined && members.length === 0;
   const list = members && members.length > 0 ? members : (members === undefined ? FALLBACK_MEMBERS : []);
@@ -115,7 +121,8 @@ export function ForteTeam({ members, description = "Profesioniștii din domenii 
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
-            onMouseLeave={onMouseUp}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => { onMouseUp(); setPaused(false); }}
             onTouchStart={() => setPaused(true)}
             onTouchEnd={() => setPaused(false)}
           >
@@ -150,7 +157,7 @@ export function ForteTeam({ members, description = "Profesioniștii din domenii 
                   {member.role && <p className="text-xs font-semibold text-primary">{member.role}</p>}
                   {member.company && <p className="text-xs text-muted">{member.company}</p>}
                   {member.website && (
-                    <a href={member.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-primary">
+                    <a href={toAbsoluteUrl(member.website)} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-primary">
                       <Globe className="h-3 w-3 shrink-0" aria-hidden="true" />
                       <span className="truncate">{member.website.replace(/^https?:\/\//, "")}</span>
                     </a>

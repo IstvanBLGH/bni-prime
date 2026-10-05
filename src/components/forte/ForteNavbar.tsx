@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 const NAV_LINKS = [
   { href: "#about", label: "Despre" },
   { href: "#team", label: "Echipa" },
-  { href: "#agenda", label: "Agendă" },
+  { href: "#agenda", label: "Agenda" },
   { href: "#tickets", label: "Bilete" },
   { href: "#location", label: "Locația" },
   { href: "#faq", label: "FAQ" },

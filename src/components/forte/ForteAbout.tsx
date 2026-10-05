@@ -35,7 +35,7 @@ export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
         <SectionHeading
           kicker="Despre"
           title="Despre BNI Forte și eveniment"
-          description="Cea mai veche comunitate de networking de business din provincie."
+          description="Cea mai veche comunitate de business networking din provincie."
         />
 
         <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-16">

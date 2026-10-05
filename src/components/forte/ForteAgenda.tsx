@@ -29,7 +29,7 @@ export function ForteAgenda({ items }: { items?: AgendaItem[] }) {
     <section id="agenda" className="py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
-          kicker="Agendă"
+          kicker="Agenda"
           title="Programul evenimentului"
           description="o după-masă, câteva ore, multe oportunități"
         />
