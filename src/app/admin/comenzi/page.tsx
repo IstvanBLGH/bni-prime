@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Loader2, RefreshCw, FileSpreadsheet, Printer } from "lucide-react";
+import { Loader2, RefreshCw, FileSpreadsheet, Printer, Plus, X, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order } from "@/types/db";
 
@@ -63,12 +63,129 @@ function downloadFile(content: string, filename: string, mime: string) {
   URL.revokeObjectURL(url);
 }
 
+const EMPTY_FORM = {
+  event_slug: "forte",
+  name: "",
+  email: "",
+  phone: "",
+  cui: "",
+  sursa: "",
+  amount: "",
+  status: "Confirmat",
+  created_at: "",
+  order_id: "",
+};
+
+function AddOrderForm({ onDone, onCancel }: { onDone: () => void; onCancel: () => void }) {
+  const [values, setValues] = useState({ ...EMPTY_FORM });
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  function set(key: string, value: string) {
+    setValues((v) => ({ ...v, [key]: value }));
+  }
+
+  async function save() {
+    setSaving(true);
+    setError(null);
+    const res = await fetch("/api/admin/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      setError(json.error ?? "Nu am putut salva comanda.");
+      setSaving(false);
+      return;
+    }
+    onDone();
+  }
+
+  const field = "rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20";
+  const label = "text-xs font-semibold uppercase tracking-wide text-foreground";
+
+  return (
+    <div className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 p-5">
+      <p className="mb-4 text-sm font-semibold text-foreground">Comanda noua</p>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-event">Eveniment</label>
+          <select id="o-event" className={field} value={values.event_slug} onChange={(e) => set("event_slug", e.target.value)}>
+            <option value="forte">BNI Forte</option>
+            <option value="prime">BNI Prime</option>
+          </select>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-name">Nume complet *</label>
+          <input id="o-name" className={field} value={values.name} onChange={(e) => set("name", e.target.value)} placeholder="Ion Popescu" />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-email">E-mail</label>
+          <input id="o-email" type="email" className={field} value={values.email} onChange={(e) => set("email", e.target.value)} placeholder="ion@exemplu.ro" />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-phone">Telefon</label>
+          <input id="o-phone" type="tel" className={field} value={values.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+40 7XX XXX XXX" />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-cui">CUI</label>
+          <input id="o-cui" className={field} value={values.cui} onChange={(e) => set("cui", e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-sursa">Sursa</label>
+          <input id="o-sursa" className={field} value={values.sursa} onChange={(e) => set("sursa", e.target.value)} placeholder="Facebook, Recomandare..." />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-amount">Suma (RON) *</label>
+          <input id="o-amount" type="number" min="0" className={field} value={values.amount} onChange={(e) => set("amount", e.target.value)} placeholder="100" />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-status">Status</label>
+          <select id="o-status" className={field} value={values.status} onChange={(e) => set("status", e.target.value)}>
+            <option value="Confirmat">Confirmat</option>
+            <option value="Autorizat">Autorizat</option>
+            <option value="Initiat">Initiat (neplatit)</option>
+          </select>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-date">Data comenzii</label>
+          <input id="o-date" type="datetime-local" className={field} value={values.created_at} onChange={(e) => set("created_at", e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
+          <label className={label} htmlFor="o-id">ID comanda</label>
+          <input id="o-id" className={field} value={values.order_id} onChange={(e) => set("order_id", e.target.value)} placeholder="Copiaza-l din Netopia, ex. FORTE-1759... Lasa gol si se genereaza automat." />
+        </div>
+      </div>
+
+      {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>}
+
+      <div className="mt-5 flex gap-3">
+        <button
+          onClick={save}
+          disabled={saving}
+          className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60"
+        >
+          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+          Salveaza
+        </button>
+        <button onClick={onCancel} className="flex items-center gap-2 rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-foreground hover:bg-surface">
+          <X className="h-4 w-4" />
+          Anuleaza
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function ComenziPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [event, setEvent] = useState<string>("toate");
   const [status, setStatus] = useState<string>("toate");
+  const [adding, setAdding] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -140,6 +257,15 @@ export default function ComenziPage() {
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-2">
+          {!adding && (
+            <button
+              onClick={() => setAdding(true)}
+              className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+            >
+              <Plus className="h-4 w-4" aria-hidden="true" />
+              Adauga
+            </button>
+          )}
           <button
             onClick={exportExcel}
             disabled={orders.length === 0}
@@ -165,6 +291,13 @@ export default function ComenziPage() {
           </button>
         </div>
       </div>
+
+      {adding && (
+        <AddOrderForm
+          onDone={() => { setAdding(false); load(); }}
+          onCancel={() => setAdding(false)}
+        />
+      )}
 
       <div className="mb-6 flex flex-wrap gap-6">
         <div className="flex flex-col gap-1.5">
