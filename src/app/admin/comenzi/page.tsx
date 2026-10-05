@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Loader2, RefreshCw, FileSpreadsheet, Printer, Plus, X, Check } from "lucide-react";
+import { Loader2, RefreshCw, FileSpreadsheet, Printer, Plus, X, Check, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Order } from "@/types/db";
 
@@ -76,8 +76,29 @@ const EMPTY_FORM = {
   order_id: "",
 };
 
-function AddOrderForm({ onDone, onCancel }: { onDone: () => void; onCancel: () => void }) {
-  const [values, setValues] = useState({ ...EMPTY_FORM });
+function toDateInput(iso: string) {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function OrderForm({ existing, onDone, onCancel }: { existing?: Order; onDone: () => void; onCancel: () => void }) {
+  const [values, setValues] = useState(() =>
+    existing
+      ? {
+          event_slug: existing.event_slug,
+          name: existing.name,
+          email: existing.email,
+          phone: existing.phone,
+          cui: existing.cui,
+          sursa: existing.sursa,
+          amount: existing.amount != null ? String(existing.amount) : "",
+          status: existing.status,
+          created_at: toDateInput(existing.created_at),
+          order_id: existing.order_id,
+        }
+      : { ...EMPTY_FORM }
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,9 +110,9 @@ function AddOrderForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =
     setSaving(true);
     setError(null);
     const res = await fetch("/api/admin/orders", {
-      method: "POST",
+      method: existing ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+      body: JSON.stringify(existing ? { ...values, id: existing.id } : values),
     });
     const json = await res.json();
     if (!res.ok) {
@@ -107,7 +128,7 @@ function AddOrderForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =
 
   return (
     <div className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 p-5">
-      <p className="mb-4 text-sm font-semibold text-foreground">Comanda noua</p>
+      <p className="mb-4 text-sm font-semibold text-foreground">{existing ? "Modifica comanda" : "Comanda noua"}</p>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col gap-1.5">
@@ -186,6 +207,7 @@ export default function ComenziPage() {
   const [event, setEvent] = useState<string>("toate");
   const [status, setStatus] = useState<string>("toate");
   const [adding, setAdding] = useState(false);
+  const [editing, setEditing] = useState<Order | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -257,7 +279,7 @@ export default function ComenziPage() {
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-2">
-          {!adding && (
+          {!adding && !editing && (
             <button
               onClick={() => setAdding(true)}
               className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
@@ -292,10 +314,12 @@ export default function ComenziPage() {
         </div>
       </div>
 
-      {adding && (
-        <AddOrderForm
-          onDone={() => { setAdding(false); load(); }}
-          onCancel={() => setAdding(false)}
+      {(adding || editing) && (
+        <OrderForm
+          key={editing?.id ?? "nou"}
+          existing={editing ?? undefined}
+          onDone={() => { setAdding(false); setEditing(null); load(); }}
+          onCancel={() => { setAdding(false); setEditing(null); }}
         />
       )}
 
@@ -381,6 +405,7 @@ export default function ComenziPage() {
                   <th className="px-4 py-3">Sursa</th>
                   <th className="px-4 py-3">Suma</th>
                   <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3"><span className="sr-only">Actiuni</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -408,6 +433,15 @@ export default function ComenziPage() {
                       )}>
                         {o.status}
                       </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => { setAdding(false); setEditing(o); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        title="Modifica"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-muted hover:border-primary hover:text-primary"
+                      >
+                        <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
                     </td>
                   </tr>
                 ))}

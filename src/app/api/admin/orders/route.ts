@@ -3,56 +3,97 @@ import { createClient } from "@supabase/supabase-js";
 
 const STATUSES = ["Initiat", "Autorizat", "Confirmat"];
 
-export async function POST(req: NextRequest) {
+function adminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    return NextResponse.json({ error: "Supabase nu este configurat pe server." }, { status: 500 });
-  }
+  return url && key ? createClient(url, key) : null;
+}
 
-  const body = await req.json();
-  const { event_slug, name, email, phone, cui, sursa, amount, status, created_at, order_id } = body;
+type Body = Record<string, string | undefined>;
 
-  if (event_slug !== "prime" && event_slug !== "forte") {
-    return NextResponse.json({ error: "Eveniment invalid." }, { status: 400 });
-  }
-  if (!name?.trim()) {
-    return NextResponse.json({ error: "Numele este obligatoriu." }, { status: 400 });
-  }
-  if (!STATUSES.includes(status)) {
-    return NextResponse.json({ error: "Status invalid." }, { status: 400 });
-  }
+interface OrderFields {
+  event_slug: string;
+  name: string;
+  email: string;
+  phone: string;
+  cui: string;
+  sursa: string;
+  amount: number;
+  status: string;
+  created_at: string;
+  paid_at: string | null;
+}
+
+function validate(body: Body): { error: string; fields?: never } | { error?: never; fields: OrderFields } {
+  const { event_slug, name, status, amount, created_at } = body;
+
+  if (event_slug !== "prime" && event_slug !== "forte") return { error: "Eveniment invalid." };
+  if (!name?.trim()) return { error: "Numele este obligatoriu." };
+  if (!status || !STATUSES.includes(status)) return { error: "Status invalid." };
+
   const parsedAmount = Number(amount);
   if (!Number.isFinite(parsedAmount) || parsedAmount < 0) {
-    return NextResponse.json({ error: "Suma trebuie sa fie un numar pozitiv." }, { status: 400 });
+    return { error: "Suma trebuie sa fie un numar pozitiv." };
   }
 
   const date = created_at ? new Date(created_at) : new Date();
-  if (Number.isNaN(date.getTime())) {
-    return NextResponse.json({ error: "Data este invalida." }, { status: 400 });
-  }
+  if (Number.isNaN(date.getTime())) return { error: "Data este invalida." };
 
-  const supabase = createClient(url, key);
+  return {
+    fields: {
+      event_slug,
+      name: name.trim(),
+      email: body.email?.trim() ?? "",
+      phone: body.phone?.trim() ?? "",
+      cui: body.cui?.trim() ?? "",
+      sursa: body.sursa?.trim() ?? "",
+      amount: parsedAmount,
+      status,
+      created_at: date.toISOString(),
+      paid_at: status === "Initiat" ? null : date.toISOString(),
+    },
+  };
+}
+
+function failure(error: { code?: string; message: string }) {
+  const message = error.code === "23505" ? "Exista deja o comanda cu acest ID." : error.message;
+  return NextResponse.json({ error: message }, { status: 400 });
+}
+
+export async function POST(req: NextRequest) {
+  const supabase = adminClient();
+  if (!supabase) return NextResponse.json({ error: "Supabase nu este configurat pe server." }, { status: 500 });
+
+  const body = (await req.json()) as Body;
+  const { fields, error: invalid } = validate(body);
+  if (invalid || !fields) return NextResponse.json({ error: invalid }, { status: 400 });
+
   const { error } = await supabase.from("orders").insert({
-    order_id: order_id?.trim() || `MANUAL-${Date.now()}`,
-    event_slug,
-    name: name.trim(),
-    email: email?.trim() ?? "",
-    phone: phone?.trim() ?? "",
-    cui: cui?.trim() ?? "",
-    sursa: sursa?.trim() ?? "",
-    amount: parsedAmount,
-    status,
-    created_at: date.toISOString(),
-    paid_at: status === "Initiat" ? null : date.toISOString(),
+    ...fields,
+    order_id: body.order_id?.trim() || `MANUAL-${Date.now()}`,
   });
+  if (error) return failure(error);
 
-  if (error) {
-    const message = error.code === "23505"
-      ? "Exista deja o comanda cu acest ID."
-      : error.message;
-    return NextResponse.json({ error: message }, { status: 400 });
-  }
+  return NextResponse.json({ ok: true });
+}
+
+export async function PATCH(req: NextRequest) {
+  const supabase = adminClient();
+  if (!supabase) return NextResponse.json({ error: "Supabase nu este configurat pe server." }, { status: 500 });
+
+  const body = (await req.json()) as Body;
+  if (!body.id) return NextResponse.json({ error: "Lipseste comanda de modificat." }, { status: 400 });
+
+  const { fields, error: invalid } = validate(body);
+  if (invalid || !fields) return NextResponse.json({ error: invalid }, { status: 400 });
+
+  // order_id ties the row to the Netopia transaction, so it stays editable
+  // but never blank.
+  const orderId = body.order_id?.trim();
+  const payload = orderId ? { ...fields, order_id: orderId } : fields;
+
+  const { error } = await supabase.from("orders").update(payload).eq("id", body.id);
+  if (error) return failure(error);
 
   return NextResponse.json({ ok: true });
 }
