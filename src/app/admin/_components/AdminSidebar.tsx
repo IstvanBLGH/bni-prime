@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   LayoutDashboard, Users, CalendarDays, Ticket, HelpCircle, MessageSquare,
-  LogOut, ChevronDown, ChevronRight, MapPin, Star, Info,
+  LogOut, ChevronDown, ChevronRight, MapPin, Star, Info, ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -105,6 +105,19 @@ export function AdminSidebar() {
         >
           <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
           Dashboard
+        </a>
+
+        <a
+          href="/admin/comenzi"
+          className={cn(
+            "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+            pathname === "/admin/comenzi"
+              ? "bg-primary text-white"
+              : "text-muted hover:bg-surface hover:text-foreground"
+          )}
+        >
+          <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+          Comenzi
         </a>
 
         <NavSection title="BNI Prime" items={PRIME_ITEMS} />
