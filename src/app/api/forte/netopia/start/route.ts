@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Netopia } from "netopia-card";
+import { recordOrder } from "@/lib/orders";
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     const orderID = `FORTE-${Date.now()}`;
+    await recordOrder({ orderId: orderID, eventSlug: "forte", name, email, phone, cui, sursa, amount: price });
 
     const nameParts = (name as string).trim().split(" ");
     const firstName = nameParts[0];

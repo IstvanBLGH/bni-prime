@@ -96,6 +96,21 @@ export interface Testimonial {
   sort_order: number;
 }
 
+export interface Order {
+  id: string;
+  event_slug: EventSlug;
+  order_id: string;
+  name: string;
+  email: string;
+  phone: string;
+  cui: string;
+  sursa: string;
+  amount: number | null;
+  status: "Initiat" | "Autorizat" | "Confirmat";
+  created_at: string;
+  paid_at: string | null;
+}
+
 export interface ContactInfo {
   id: string;
   event_slug: EventSlug;

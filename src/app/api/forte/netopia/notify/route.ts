@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { markOrderPaid } from "@/lib/orders";
 
 async function logToSheets(data: Record<string, unknown>) {
   const url = process.env.FORTE_GOOGLE_SHEETS_WEBHOOK_URL;
@@ -25,6 +26,7 @@ export async function POST(req: NextRequest) {
 
     if (payment.status === 3 || payment.status === 5) {
       const d = order.data ?? {};
+      await markOrderPaid(order.orderID, payment.status === 5 ? "Confirmat" : "Autorizat", payment.amount);
       await logToSheets({
         timestamp: new Date().toISOString(),
         orderID: order.orderID,
