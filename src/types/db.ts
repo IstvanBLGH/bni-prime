@@ -105,6 +105,7 @@ export interface Order {
   phone: string;
   cui: string;
   sursa: string;
+  quantity: number;
   amount: number | null;
   status: "Initiat" | "Autorizat" | "Confirmat";
   created_at: string;

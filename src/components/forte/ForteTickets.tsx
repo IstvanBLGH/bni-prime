@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ShieldCheck, Loader2 } from "lucide-react";
+import { Check, ShieldCheck, Loader2, Plus, Minus } from "lucide-react";
 import { collectBrowserInfo } from "netopia-card";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -37,9 +37,15 @@ const FALLBACK_TICKET: Ticket = {
 
 const CUM_AI_AFLAT = ["Facebook", "Instagram", "Recomandare", "Email", "Altă sursă"];
 
+// Fallback cap when the ticket itself sets no max_quantity.
+const MAX_TICKETS = 10;
+
 function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+
+  const maxQuantity = ticket.max_quantity ?? MAX_TICKETS;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,6 +64,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
           phone: data.get("phone"),
           cui: data.get("cui"),
           sursa: data.get("sursa") || "",
+          quantity,
           browserInfo,
         }),
       });
@@ -84,8 +91,35 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
-          <p className="text-sm font-semibold text-foreground">Bilet {ticket.name} — {ticket.price} RON / persoană</p>
+        <div className="mt-4 flex flex-col gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-sm text-muted">Număr de bilete</span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                disabled={quantity <= 1}
+                aria-label="Scade numărul de bilete"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background text-foreground disabled:opacity-40"
+              >
+                <Minus className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+              <span aria-live="polite" className="w-8 text-center text-sm font-semibold text-foreground">{quantity}</span>
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => Math.min(maxQuantity, q + 1))}
+                disabled={quantity >= maxQuantity}
+                aria-label="Crește numărul de bilete"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background text-foreground disabled:opacity-40"
+              >
+                <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+          <div className="flex items-baseline justify-between gap-4 border-t border-primary/20 pt-3">
+            <span className="text-sm text-muted">{quantity} × {ticket.price} RON</span>
+            <span className="text-base font-bold text-foreground">{quantity * ticket.price} RON</span>
+          </div>
         </div>
 
         <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -124,7 +158,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
             {loading ? (
               <span className="flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" />Se procesează...</span>
             ) : (
-              `Plătește ${ticket.price} lei →`
+              `Plătește ${quantity * ticket.price} lei →`
             )}
           </Button>
 

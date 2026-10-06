@@ -24,7 +24,7 @@ const STATUS_STYLE: Record<string, string> = {
   Initiat: "bg-surface text-muted",
 };
 
-const COLUMNS = ["Data", "Eveniment", "Nume", "Email", "Telefon", "CUI", "Sursa", "Suma", "Status", "ID comanda"];
+const COLUMNS = ["Data", "Eveniment", "Nume", "Email", "Telefon", "CUI", "Sursa", "Bilete", "Suma", "Status", "ID comanda"];
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString("ro-RO", {
@@ -37,6 +37,7 @@ function toRow(o: Order): string[] {
     formatDate(o.created_at),
     o.event_slug === "prime" ? "BNI Prime" : "BNI Forte",
     o.name, o.email, o.phone, o.cui, o.sursa,
+    String(o.quantity ?? 1),
     o.amount ? String(o.amount) : "",
     o.status,
     o.order_id,
@@ -70,6 +71,7 @@ const EMPTY_FORM = {
   phone: "",
   cui: "",
   sursa: "",
+  quantity: "1",
   amount: "",
   status: "Confirmat",
   created_at: "",
@@ -92,6 +94,7 @@ function OrderForm({ existing, onDone, onCancel }: { existing?: Order; onDone: (
           phone: existing.phone,
           cui: existing.cui,
           sursa: existing.sursa,
+          quantity: String(existing.quantity ?? 1),
           amount: existing.amount != null ? String(existing.amount) : "",
           status: existing.status,
           created_at: toDateInput(existing.created_at),
@@ -159,7 +162,11 @@ function OrderForm({ existing, onDone, onCancel }: { existing?: Order; onDone: (
           <input id="o-sursa" className={field} value={values.sursa} onChange={(e) => set("sursa", e.target.value)} placeholder="Facebook, Recomandare..." />
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className={label} htmlFor="o-amount">Suma (RON) *</label>
+          <label className={label} htmlFor="o-qty">Numar bilete *</label>
+          <input id="o-qty" type="number" min="1" className={field} value={values.quantity} onChange={(e) => set("quantity", e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className={label} htmlFor="o-amount">Suma totala (RON) *</label>
           <input id="o-amount" type="number" min="0" className={field} value={values.amount} onChange={(e) => set("amount", e.target.value)} placeholder="100" />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -227,6 +234,7 @@ export default function ComenziPage() {
 
   const paid = orders.filter((o) => o.status !== "Initiat");
   const total = paid.reduce((sum, o) => sum + (o.amount ?? 0), 0);
+  const ticketCount = paid.reduce((sum, o) => sum + (o.quantity ?? 1), 0);
 
   const fileLabel = `comenzi-${event}-${status}-${new Date().toISOString().slice(0, 10)}`;
 
@@ -389,6 +397,9 @@ export default function ComenziPage() {
               Platite: <strong className="text-foreground">{paid.length}</strong>
             </span>
             <span className="text-muted">
+              Bilete vandute: <strong className="text-foreground">{ticketCount}</strong>
+            </span>
+            <span className="text-muted">
               Incasat: <strong className="text-foreground">{total} RON</strong>
             </span>
           </div>
@@ -403,6 +414,7 @@ export default function ComenziPage() {
                   <th className="px-4 py-3">Contact</th>
                   <th className="px-4 py-3">CUI</th>
                   <th className="px-4 py-3">Sursa</th>
+                  <th className="px-4 py-3">Bilete</th>
                   <th className="px-4 py-3">Suma</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3"><span className="sr-only">Actiuni</span></th>
@@ -425,6 +437,7 @@ export default function ComenziPage() {
                     </td>
                     <td className="px-4 py-3 text-muted">{o.cui || "—"}</td>
                     <td className="px-4 py-3 text-muted">{o.sursa || "—"}</td>
+                    <td className="px-4 py-3 font-medium text-foreground">{o.quantity ?? 1}</td>
                     <td className="whitespace-nowrap px-4 py-3 text-foreground">{o.amount ? `${o.amount} RON` : "—"}</td>
                     <td className="px-4 py-3">
                       <span className={cn(

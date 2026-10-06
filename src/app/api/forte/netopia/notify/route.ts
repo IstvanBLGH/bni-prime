@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
         phone: d.phone ?? "",
         cui: d.cui ?? "",
         sursa: d.sursa ?? "",
+        bilete: d.quantity ?? 1,
         amount: payment.amount,
         status: payment.status === 5 ? "Confirmat" : "Autorizat",
       });

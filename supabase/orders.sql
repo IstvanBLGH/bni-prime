@@ -1,5 +1,8 @@
 -- Comenzi / inscrieri la evenimente
 -- Ruleaza in Supabase SQL Editor
+--
+-- Daca tabelul exista deja fara coloana de cantitate:
+--   ALTER TABLE orders ADD COLUMN IF NOT EXISTS quantity INT NOT NULL DEFAULT 1;
 
 CREATE TABLE IF NOT EXISTS orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -10,6 +13,7 @@ CREATE TABLE IF NOT EXISTS orders (
   phone TEXT DEFAULT '',
   cui TEXT DEFAULT '',
   sursa TEXT DEFAULT '',
+  quantity INT NOT NULL DEFAULT 1,
   amount INT,
   status TEXT NOT NULL DEFAULT 'Initiat',
   created_at TIMESTAMPTZ DEFAULT NOW(),

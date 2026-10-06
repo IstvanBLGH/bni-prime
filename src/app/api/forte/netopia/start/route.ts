@@ -7,6 +7,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, phone, cui, sursa, browserInfo } = body;
 
+    // Quantity is client-supplied: clamp it so the charge can't be steered.
+    const quantity = Math.min(Math.max(Math.trunc(Number(body.quantity) || 1), 1), 10);
+
     let price = 100;
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
@@ -28,7 +31,8 @@ export async function POST(req: NextRequest) {
     }
 
     const orderID = `FORTE-${Date.now()}`;
-    await recordOrder({ orderId: orderID, eventSlug: "forte", name, email, phone, cui, sursa, amount: price });
+    const total = price * quantity;
+    await recordOrder({ orderId: orderID, eventSlug: "forte", name, email, phone, cui, sursa, quantity, amount: total });
 
     const nameParts = (name as string).trim().split(" ");
     const firstName = nameParts[0];
@@ -50,9 +54,9 @@ export async function POST(req: NextRequest) {
 
     netopia.setOrderData({
       orderID,
-      amount: price,
+      amount: total,
       currency: "RON",
-      description: `Bilet Ziua Invitatului BNI Forte — ${new Date().toLocaleDateString("ro-RO")}`,
+      description: `${quantity} x Bilet Ziua Invitatului BNI Forte — ${new Date().toLocaleDateString("ro-RO")}`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
@@ -75,18 +79,21 @@ export async function POST(req: NextRequest) {
       phone,
       cui: cui ?? "",
       sursa: sursa ?? "",
+      quantity,
       event: "forte",
     };
 
-    netopia.setProductsData([
-      {
+    // ProductData carries no quantity field, so each ticket is its own line;
+    // that way the lines sum to the charged amount in the Netopia dashboard.
+    netopia.setProductsData(
+      Array.from({ length: quantity }, () => ({
         name: "Bilet Standard — Ziua Invitatului BNI Forte",
         code: "forte-standard",
         category: "Eveniment networking",
         price,
         vat: 19,
-      },
-    ]);
+      }))
+    );
 
     const response = await netopia.startPayment();
     return NextResponse.json(response);

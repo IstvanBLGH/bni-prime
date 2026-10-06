@@ -18,6 +18,7 @@ interface OrderFields {
   phone: string;
   cui: string;
   sursa: string;
+  quantity: number;
   amount: number;
   status: string;
   created_at: string;
@@ -36,6 +37,11 @@ function validate(body: Body): { error: string; fields?: never } | { error?: nev
     return { error: "Suma trebuie sa fie un numar pozitiv." };
   }
 
+  const parsedQuantity = Math.trunc(Number(body.quantity ?? 1));
+  if (!Number.isFinite(parsedQuantity) || parsedQuantity < 1) {
+    return { error: "Numarul de bilete trebuie sa fie cel putin 1." };
+  }
+
   const date = created_at ? new Date(created_at) : new Date();
   if (Number.isNaN(date.getTime())) return { error: "Data este invalida." };
 
@@ -47,6 +53,7 @@ function validate(body: Body): { error: string; fields?: never } | { error?: nev
       phone: body.phone?.trim() ?? "",
       cui: body.cui?.trim() ?? "",
       sursa: body.sursa?.trim() ?? "",
+      quantity: parsedQuantity,
       amount: parsedAmount,
       status,
       created_at: date.toISOString(),

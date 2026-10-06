@@ -7,6 +7,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, phone, cui, sursa, browserInfo } = body;
 
+    // Quantity is client-supplied: clamp it so the charge can't be steered.
+    const quantity = Math.min(Math.max(Math.trunc(Number(body.quantity) || 1), 1), 10);
+
     // Fetch ticket price from Supabase if configured, otherwise use default
     let amount = 150;
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -29,7 +32,8 @@ export async function POST(req: NextRequest) {
     }
 
     const orderID = `PRIME-${Date.now()}`;
-    await recordOrder({ orderId: orderID, eventSlug: "prime", name, email, phone, cui, sursa, amount });
+    const total = amount * quantity;
+    await recordOrder({ orderId: orderID, eventSlug: "prime", name, email, phone, cui, sursa, quantity, amount: total });
     const nameParts = String(name ?? "").trim().split(" ");
     const firstName = nameParts[0] || "Client";
     const lastName = nameParts.slice(1).join(" ") || firstName;
@@ -51,9 +55,9 @@ export async function POST(req: NextRequest) {
 
     netopia.setOrderData({
       orderID,
-      amount,
+      amount: total,
       currency: "RON",
-      description: `Bilet BNI Prime — Ziua Invitatului`,
+      description: `${quantity} x Bilet BNI Prime — Ziua Invitatului`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
@@ -76,17 +80,20 @@ export async function POST(req: NextRequest) {
       phone,
       cui: cui ?? "",
       sursa: sursa ?? "",
+      quantity,
     };
 
-    netopia.setProductsData([
-      {
+    // ProductData carries no quantity field, so each ticket is its own line;
+    // that way the lines sum to the charged amount in the Netopia dashboard.
+    netopia.setProductsData(
+      Array.from({ length: quantity }, () => ({
         name: "Bilet BNI Prime — Ziua Invitatului",
         code: "prime-standard",
         category: "Eveniment networking",
         price: amount,
         vat: 19,
-      },
-    ]);
+      }))
+    );
 
     const response = await netopia.startPayment();
     return NextResponse.json(response);

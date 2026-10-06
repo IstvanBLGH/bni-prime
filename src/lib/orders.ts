@@ -15,6 +15,7 @@ interface NewOrder {
   phone?: string;
   cui?: string;
   sursa?: string;
+  quantity: number;
   amount: number;
 }
 
@@ -30,6 +31,7 @@ export async function recordOrder(order: NewOrder) {
     phone: order.phone ?? "",
     cui: order.cui ?? "",
     sursa: order.sursa ?? "",
+    quantity: order.quantity,
     amount: order.amount,
     status: "Initiat",
   });
