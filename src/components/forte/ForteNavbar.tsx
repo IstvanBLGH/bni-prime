@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { visibleLinks } from "@/lib/sections";
 
 const NAV_LINKS = [
   { href: "#about", label: "Despre" },
@@ -15,7 +16,9 @@ const NAV_LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2, logoOffset = 0 }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number; logoOffset?: number }) {
+export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2, logoOffset = 0, hidden = [] }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number; logoOffset?: number; hidden?: string[] }) {
+  const links = visibleLinks(NAV_LINKS, hidden);
+  const showTickets = !hidden.includes("tickets");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -56,7 +59,7 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoSca
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
+          {links.map((link) => (
             <button
               key={link.href}
               onClick={() => handleNavClick(link.href)}
@@ -68,9 +71,11 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoSca
         </nav>
 
         <div className="hidden md:block">
-          <Button size="sm" asChild>
-            <a href="#tickets">Înscrie-te acum</a>
-          </Button>
+          {showTickets && (
+            <Button size="sm" asChild>
+              <a href="#tickets">Înscrie-te acum</a>
+            </Button>
+          )}
         </div>
 
         <button
@@ -85,7 +90,7 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoSca
       {mobileOpen && (
         <div className="border-t border-border bg-background/98 px-4 pb-6 md:hidden">
           <nav className="mt-4 flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
+            {links.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
@@ -94,11 +99,13 @@ export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoSca
                 {link.label}
               </button>
             ))}
-            <Button className="mt-3 w-full" asChild>
-              <a href="#tickets" onClick={() => setMobileOpen(false)}>
-                Înscrie-te acum
-              </a>
-            </Button>
+            {showTickets && (
+              <Button className="mt-3 w-full" asChild>
+                <a href="#tickets" onClick={() => setMobileOpen(false)}>
+                  Înscrie-te acum
+                </a>
+              </Button>
+            )}
           </nav>
         </div>
       )}

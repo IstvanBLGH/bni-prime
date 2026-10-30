@@ -2,10 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { Netopia } from "netopia-card";
 import { recordOrder } from "@/lib/orders";
 import { getEventSchedule } from "@/lib/event-schedule";
+import { getHiddenSections } from "@/lib/section-settings";
 import { formatWhen } from "@/lib/event-date";
 
 export async function POST(req: NextRequest) {
   try {
+    // Ticket sales are closed while the tickets section is switched off in admin.
+    if ((await getHiddenSections("forte")).includes("tickets")) {
+      return NextResponse.json({ error: "Vânzarea biletelor este închisă momentan." }, { status: 403 });
+    }
+
     const body = await req.json();
     const { name, email, phone, cui, sursa, browserInfo } = body;
 

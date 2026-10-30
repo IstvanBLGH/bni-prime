@@ -3,6 +3,7 @@
 import { Facebook, Mail, Phone } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import type { ContactInfo } from "@/types/db";
+import { visibleLinks } from "@/lib/sections";
 
 const NAV_LINKS = [
   { href: "#about", label: "Despre" },
@@ -22,7 +23,7 @@ const FALLBACK: Partial<ContactInfo> = {
   address: "Str. Grănicerilor, Nr. 3, Mun. Bistrița",
 };
 
-export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0 }: {
+export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0, hidden = [] }: {
   contact?: Partial<ContactInfo> | null;
   logoUrl?: string | null;
   name?: string;
@@ -30,7 +31,9 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
   privacyPath?: string;
   termsPath?: string;
   logoOffset?: number;
+  hidden?: string[];
 }) {
+  const links = visibleLinks(NAV_LINKS, hidden);
   const c = { ...FALLBACK, ...contact };
   const defaultDesc = name === "Prime"
     ? "BNI PRIME este un grup de business networking activ în Bistrița. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Bistrița-Năsăud."
@@ -67,7 +70,7 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
             <div>
               <h3 className="text-sm font-semibold text-foreground">Navigare</h3>
               <ul className="mt-4 flex flex-col gap-3">
-                {NAV_LINKS.map((link) => (
+                {links.map((link) => (
                   <li key={link.href}>
                     <a href={link.href} className="flex h-6 items-center text-sm text-muted transition-colors duration-300 hover:text-primary">
                       {link.label}

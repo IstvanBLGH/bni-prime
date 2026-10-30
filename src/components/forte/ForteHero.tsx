@@ -22,7 +22,7 @@ const FALLBACK: Partial<HeroContent> = {
   image_url: "/images/Banner.jpeg",
 };
 
-export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
+export function ForteHero({ data, hidden = [] }: { data?: Partial<HeroContent> | null; hidden?: string[] }) {
   const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
   // event_date/event_time come from admin; date_text is the older free-text field.
   const date = d.event_date || parseDateText(d.date_text);
@@ -71,18 +71,22 @@ export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
           transition={{ duration: 0.6, delay: 0.7, ease: easeApple }}
           className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
         >
-          <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
-            <a href="#agenda">
-              <MapPin className="h-4 w-4" aria-hidden="true" />
-              Agenda evenimentului
-            </a>
-          </Button>
-          <Button size="lg" asChild className="w-full sm:w-auto">
-            <a href="#tickets">
-              Înscrie-te acum
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </Button>
+          {!hidden.includes("agenda") && (
+            <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
+              <a href="#agenda">
+                <MapPin className="h-4 w-4" aria-hidden="true" />
+                Agenda evenimentului
+              </a>
+            </Button>
+          )}
+          {!hidden.includes("tickets") && (
+            <Button size="lg" asChild className="w-full sm:w-auto">
+              <a href="#tickets">
+                Înscrie-te acum
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </Button>
+          )}
         </motion.div>
       </Container>
 
@@ -119,12 +123,14 @@ export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
                   <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
                     {d.title}{day ? ` · ${day}` : ""}
                   </p>
-                  <Button asChild size="lg" className="mt-1 h-10 px-5 text-sm lg:h-12 lg:px-8 lg:text-base">
-                    <a href="#tickets">
-                      Rezervă-ți locul
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </a>
-                  </Button>
+                  {!hidden.includes("tickets") && (
+                    <Button asChild size="lg" className="mt-1 h-10 px-5 text-sm lg:h-12 lg:px-8 lg:text-base">
+                      <a href="#tickets">
+                        Rezervă-ți locul
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

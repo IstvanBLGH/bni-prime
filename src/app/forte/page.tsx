@@ -11,6 +11,7 @@ import { ForteTestimonials } from "@/components/forte/ForteTestimonials";
 import { ForteFooter } from "@/components/forte/ForteFooter";
 import { EventJsonLd } from "@/components/shared/EventJsonLd";
 import { getEventSchedule } from "@/lib/event-schedule";
+import { getHiddenSections } from "@/lib/section-settings";
 import { formatWhen, resolveSchedule } from "@/lib/event-date";
 
 export const revalidate = 60;
@@ -86,7 +87,8 @@ async function getForteData() {
 }
 
 export default async function FortePage() {
-  const data = await getForteData();
+  const [data, hidden] = await Promise.all([getForteData(), getHiddenSections("forte")]);
+  const show = (key: string) => !hidden.includes(key);
   const schedule = data?.hero ? resolveSchedule("forte", data.hero) : await getEventSchedule("forte");
 
   return (
@@ -101,18 +103,18 @@ export default async function FortePage() {
         organizer="BNI Forte"
         price={data?.tickets?.[0]?.price}
       />
-      <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={58} />
+      <ForteNavbar hidden={hidden} logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={58} />
       <main>
-        <ForteHero data={data?.hero} />
-        <ForteAbout data={data?.about} />
-        <ForteTeam members={data?.team ?? []} description="" />
-        <ForteAgenda items={data?.agenda ?? []} />
-        <ForteTickets tickets={data?.tickets ?? []} eventWhen={formatWhen(schedule)} />
-        <ForteLocation data={data?.location} />
-        <ForteFAQ items={data?.faq ?? []} />
-        <ForteTestimonials items={data?.testimonials ?? []} />
+        {show("hero") && <ForteHero data={data?.hero} hidden={hidden} />}
+        {show("about") && <ForteAbout data={data?.about} />}
+        {show("team") && <ForteTeam members={data?.team ?? []} description="" />}
+        {show("agenda") && <ForteAgenda items={data?.agenda ?? []} />}
+        {show("tickets") && <ForteTickets tickets={data?.tickets ?? []} eventWhen={formatWhen(schedule)} />}
+        {show("location") && <ForteLocation data={data?.location} />}
+        {show("faq") && <ForteFAQ items={data?.faq ?? []} />}
+        {show("testimonials") && <ForteTestimonials items={data?.testimonials ?? []} />}
       </main>
-      <ForteFooter contact={data?.contact} logoUrl="/images/Logo website BNIFORTE.png.png" logoOffset={43} />
+      <ForteFooter hidden={hidden} contact={data?.contact} logoUrl="/images/Logo website BNIFORTE.png.png" logoOffset={43} />
     </>
   );
 }

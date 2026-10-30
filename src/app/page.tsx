@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getEventSchedule } from "@/lib/event-schedule";
+import { getHiddenSections } from "@/lib/section-settings";
 import { formatWhen, resolveSchedule } from "@/lib/event-date";
 import { EventJsonLd } from "@/components/shared/EventJsonLd";
 import type {
@@ -131,6 +132,8 @@ export default async function Home() {
   }
 
   const schedule = resolveSchedule("prime", hero);
+  const hidden = await getHiddenSections("prime");
+  const show = (key: string) => !hidden.includes(key);
 
   return (
     <>
@@ -144,18 +147,18 @@ export default async function Home() {
         organizer="BNI Prime"
         price={tickets?.[0]?.price}
       />
-      <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
+      <ForteNavbar hidden={hidden} logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
       <main>
-        <ForteHero data={hero} />
-        <ForteAbout data={about} />
-        <ForteTeam members={members} />
-        <ForteAgenda items={agendaItems} />
-        <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" eventWhen={formatWhen(schedule)} />
-        <ForteLocation data={location} />
-        <ForteFAQ items={faqItems} />
-        <ForteTestimonials items={testimonials} />
+        {show("hero") && <ForteHero data={hero} hidden={hidden} />}
+        {show("about") && <ForteAbout data={about} />}
+        {show("team") && <ForteTeam members={members} />}
+        {show("agenda") && <ForteAgenda items={agendaItems} />}
+        {show("tickets") && <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" eventWhen={formatWhen(schedule)} />}
+        {show("location") && <ForteLocation data={location} />}
+        {show("faq") && <ForteFAQ items={faqItems} />}
+        {show("testimonials") && <ForteTestimonials items={testimonials} />}
       </main>
-      <ForteFooter contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
+      <ForteFooter hidden={hidden} contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
     </>
   );
 }
