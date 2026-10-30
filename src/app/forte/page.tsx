@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ForteNavbar } from "@/components/forte/ForteNavbar";
 import { ForteHero } from "@/components/forte/ForteHero";
 import { ForteAbout } from "@/components/forte/ForteAbout";
@@ -8,28 +9,35 @@ import { ForteLocation } from "@/components/forte/ForteLocation";
 import { ForteFAQ } from "@/components/forte/ForteFAQ";
 import { ForteTestimonials } from "@/components/forte/ForteTestimonials";
 import { ForteFooter } from "@/components/forte/ForteFooter";
+import { EventJsonLd } from "@/components/shared/EventJsonLd";
+import { getEventSchedule } from "@/lib/event-schedule";
+import { formatWhen, resolveSchedule } from "@/lib/event-date";
 
 export const revalidate = 60;
 
-export const metadata = {
-  title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-  description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 6 octombrie 2026, Cluj-Napoca.",
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const when = formatWhen(await getEventSchedule("forte"), "long");
+  const description = `BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI${when ? `, ${when}` : ""}, Cluj-Napoca.`;
+  return {
     title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-    description: "BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI, 6 octombrie 2026, Cluj-Napoca.",
-    url: "https://bniforte.ro",
-    siteName: "BNI Forte",
-    images: [{ url: "/images/Logo website BNIFORTE.png.png", width: 1080, height: 1080, alt: "BNI Forte" }],
-    locale: "ro_RO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-    description: "BNI FORTE te invita la Ziua Invitatului — business networking, Cluj-Napoca.",
-    images: ["/images/Logo website BNIFORTE.png.png"],
-  },
-};
+    description,
+    openGraph: {
+      title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+      description,
+      url: "https://bniforte.ro",
+      siteName: "BNI Forte",
+      images: [{ url: "/images/Logo website BNIFORTE.png.png", width: 1080, height: 1080, alt: "BNI Forte" }],
+      locale: "ro_RO",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+      description: "BNI FORTE te invita la Ziua Invitatului — business networking, Cluj-Napoca.",
+      images: ["/images/Logo website BNIFORTE.png.png"],
+    },
+  };
+}
 
 async function getForteData() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -79,16 +87,27 @@ async function getForteData() {
 
 export default async function FortePage() {
   const data = await getForteData();
+  const schedule = data?.hero ? resolveSchedule("forte", data.hero) : await getEventSchedule("forte");
 
   return (
     <>
+      <EventJsonLd
+        name="Ziua Invitatului — BNI Forte"
+        schedule={schedule}
+        city={data?.hero?.city || "Cluj-Napoca"}
+        venue={data?.location?.venue_name}
+        address={data?.location?.address}
+        url="https://bniforte.ro"
+        organizer="BNI Forte"
+        price={data?.tickets?.[0]?.price}
+      />
       <ForteNavbar logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={58} />
       <main>
         <ForteHero data={data?.hero} />
         <ForteAbout data={data?.about} />
-        <ForteTeam members={data?.team ?? []} description="Power Team Servicii / Power Team Wellness" />
+        <ForteTeam members={data?.team ?? []} description="" />
         <ForteAgenda items={data?.agenda ?? []} />
-        <ForteTickets tickets={data?.tickets ?? []} />
+        <ForteTickets tickets={data?.tickets ?? []} eventWhen={formatWhen(schedule)} />
         <ForteLocation data={data?.location} />
         <ForteFAQ items={data?.faq ?? []} />
         <ForteTestimonials items={data?.testimonials ?? []} />

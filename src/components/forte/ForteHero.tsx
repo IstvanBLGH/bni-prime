@@ -7,13 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/shared/Container";
 import type { HeroContent } from "@/types/db";
+import { formatShortDate, formatWhen, parseDateText } from "@/lib/event-date";
 
 const easeApple = [0.21, 0.47, 0.32, 0.98] as const;
 
 const FALLBACK: Partial<HeroContent> = {
   badge: "Eveniment de business networking",
   title: "ZIUA INVITATULUI",
-  date_text: "06.10.2026",
+  date_text: "03.11.2026",
+  event_time: "17:00",
   city: "Cluj-Napoca",
   description:
     "BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune.",
@@ -22,6 +24,10 @@ const FALLBACK: Partial<HeroContent> = {
 
 export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
   const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
+  // event_date/event_time come from admin; date_text is the older free-text field.
+  const date = d.event_date || parseDateText(d.date_text);
+  const when = date ? formatWhen({ date, time: d.event_time ?? null }) : d.date_text;
+  const day = date ? formatShortDate(date) : d.date_text;
 
   return (
     <section
@@ -36,7 +42,7 @@ export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
         >
           <Badge variant="secondary" className="gap-1.5 px-4 py-1.5">
             <CalendarDays className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-            {d.date_text} · {d.city}
+            {when ? `${when} · ` : ""}{d.city}
           </Badge>
         </motion.div>
 
@@ -111,7 +117,7 @@ export function ForteHero({ data }: { data?: Partial<HeroContent> | null }) {
                     Organizat de grupul BNI Forte · {d.city}
                   </span>
                   <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
-                    {d.title} · {d.date_text}
+                    {d.title}{day ? ` · ${day}` : ""}
                   </p>
                   <Button asChild size="lg" className="mt-1 h-10 px-5 text-sm lg:h-12 lg:px-8 lg:text-base">
                     <a href="#tickets">

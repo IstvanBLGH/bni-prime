@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Netopia } from "netopia-card";
 import { recordOrder } from "@/lib/orders";
+import { getEventSchedule } from "@/lib/event-schedule";
+import { formatWhen } from "@/lib/event-date";
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,6 +32,9 @@ export async function POST(req: NextRequest) {
       } catch { /* use default */ }
     }
 
+    const when = formatWhen(await getEventSchedule("forte"));
+    const whenSuffix = when ? ` — ${when}` : "";
+
     const orderID = `FORTE-${Date.now()}`;
     const total = price * quantity;
     await recordOrder({ orderId: orderID, eventSlug: "forte", name, email, phone, cui, sursa, quantity, amount: total });
@@ -56,7 +61,7 @@ export async function POST(req: NextRequest) {
       orderID,
       amount: total,
       currency: "RON",
-      description: `${quantity} x Bilet Ziua Invitatului BNI Forte — ${new Date().toLocaleDateString("ro-RO")}`,
+      description: `${quantity} x Bilet Ziua Invitatului BNI Forte${whenSuffix}`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
@@ -87,7 +92,7 @@ export async function POST(req: NextRequest) {
     // that way the lines sum to the charged amount in the Netopia dashboard.
     netopia.setProductsData(
       Array.from({ length: quantity }, () => ({
-        name: "Bilet Standard — Ziua Invitatului BNI Forte",
+        name: `Bilet Standard — Ziua Invitatului BNI Forte${whenSuffix}`,
         code: "forte-standard",
         category: "Eveniment networking",
         price,

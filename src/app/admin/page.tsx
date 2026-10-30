@@ -1,10 +1,16 @@
 import { ArrowRight, Users, CalendarDays, Ticket, HelpCircle } from "lucide-react";
+import { getEventSchedule } from "@/lib/event-schedule";
+import { formatWhen } from "@/lib/event-date";
+import type { EventSlug } from "@/types/db";
 
-const EVENTS = [
+export const dynamic = "force-dynamic";
+
+const EVENTS: { slug: EventSlug; name: string; subtitle: string; city: string; color: string; sections: { label: string; href: string; icon: typeof Users }[] }[] = [
   {
     slug: "prime",
     name: "BNI Prime",
-    subtitle: "Prime Summer · 29 Iulie 2026 · Bistrița",
+    subtitle: "Ziua Invitatului",
+    city: "Bistrița",
     color: "from-red-600 to-red-800",
     sections: [
       { label: "Echipă", href: "/admin/prime/team", icon: Users },
@@ -16,7 +22,8 @@ const EVENTS = [
   {
     slug: "forte",
     name: "BNI Forte",
-    subtitle: "Ziua Invitatului · 6 Octombrie 2026 · Cluj-Napoca",
+    subtitle: "Ziua Invitatului",
+    city: "Cluj-Napoca",
     color: "from-red-700 to-rose-900",
     sections: [
       { label: "Power Team", href: "/admin/forte/team", icon: Users },
@@ -27,7 +34,11 @@ const EVENTS = [
   },
 ];
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const whens = Object.fromEntries(
+    await Promise.all(EVENTS.map(async (ev) => [ev.slug, formatWhen(await getEventSchedule(ev.slug), "long")] as const))
+  );
+
   return (
     <div className="p-8">
       <div className="mb-8">
@@ -40,7 +51,7 @@ export default function AdminDashboard() {
           <div key={ev.slug} className="overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
             <div className={`bg-gradient-to-r ${ev.color} p-6 text-white`}>
               <h2 className="text-xl font-bold">{ev.name}</h2>
-              <p className="mt-1 text-sm text-white/80">{ev.subtitle}</p>
+              <p className="mt-1 text-sm text-white/80">{[ev.subtitle, whens[ev.slug] || "Dată nesetată", ev.city].join(" · ")}</p>
               <div className="mt-4 flex gap-3">
                 <a
                   href={ev.slug === "prime" ? "/" : "/forte"}

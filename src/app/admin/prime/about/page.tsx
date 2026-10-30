@@ -35,14 +35,13 @@ export default function PrimeAboutPage() {
   if (loading) return <div className="flex items-center justify-center p-20"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
 
   const fields = [
-    { key: "group_name", label: "Nume grup", placeholder: "BNI Prime" },
-    { key: "group_description", label: "Descriere grup", type: "textarea", placeholder: "BNI Prime este un grup de networking..." },
-    { key: "event_name", label: "Nume eveniment", placeholder: "Ziua Invitatului" },
-    { key: "event_description", label: "Descriere eveniment", type: "textarea", placeholder: "Ziua Invitatului este evenimentul special..." },
-    { key: "members_count", label: "Număr membri", placeholder: "30" },
-    { key: "referrals_count", label: "Referral-uri generate", placeholder: "1200" },
-    { key: "business_value", label: "Valoare business generată", placeholder: "2.5M RON" },
-    { key: "image_url", label: "URL imagine secțiune", placeholder: "https://..." },
+    { key: "group_title", label: "Titlu grup", placeholder: "BNI PRIME" },
+    { key: "group_body", label: "Descriere grup", type: "textarea", placeholder: "BNI Prime este..." },
+    { key: "group_link", label: "Link extern grup", placeholder: "https://bniromania.ro" },
+    { key: "event_title", label: "Titlu eveniment", placeholder: "ZIUA INVITATULUI" },
+    { key: "event_body", label: "Descriere eveniment", type: "textarea", placeholder: "Ziua Invitatului este..." },
+    { key: "power_team_title", label: "Titlu sectiune Power Team", placeholder: "Ce este un Power Team?" },
+    { key: "power_team_body", label: "Descriere Power Team", type: "textarea", placeholder: "Un Power Team este..." },
   ];
 
   return (
@@ -50,7 +49,7 @@ export default function PrimeAboutPage() {
       <div className="mb-8">
         <p className="text-xs font-semibold uppercase tracking-widest text-muted">BNI Prime</p>
         <h1 className="mt-1 text-2xl font-bold text-foreground">Despre eveniment</h1>
-        <p className="mt-1 text-sm text-muted">Descrierea grupului, a evenimentului și statisticile afișate.</p>
+        <p className="mt-1 text-sm text-muted">Descrierea grupului, a evenimentului si a Power Team-ului.</p>
       </div>
 
       <div className="max-w-xl rounded-2xl border border-border bg-background p-6 flex flex-col gap-5">
@@ -69,12 +68,21 @@ export default function PrimeAboutPage() {
           </div>
         ))}
 
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold uppercase tracking-wide text-foreground">Domenii vizate (cate unul pe rand)</label>
+          <textarea value={((data.domains ?? []) as string[]).join("\n")}
+            onChange={(e) => set("domains", e.target.value.split("\n"))}
+            onBlur={(e) => set("domains", e.target.value.split("\n").map((l) => l.trim()).filter(Boolean))}
+            placeholder={"Dezvoltator imobiliar\nAntrepriză generală în construcții"} rows={6}
+            className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none" />
+        </div>
+
         {error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>}
 
         <button onClick={handleSave} disabled={saving}
           className="flex items-center gap-2 self-start rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60">
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : saved ? <Check className="h-4 w-4" /> : null}
-          {saved ? "Salvat!" : "Salvează"}
+          {saved ? "Salvat!" : "Salveaza"}
         </button>
       </div>
     </div>

@@ -68,6 +68,15 @@ export default function ForteAboutPage() {
           </div>
         ))}
 
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold uppercase tracking-wide text-foreground">Domenii vizate (cate unul pe rand)</label>
+          <textarea value={((data.domains ?? []) as string[]).join("\n")}
+            onChange={(e) => set("domains", e.target.value.split("\n"))}
+            onBlur={(e) => set("domains", e.target.value.split("\n").map((l) => l.trim()).filter(Boolean))}
+            placeholder={"Dezvoltator imobiliar\nAntrepriză generală în construcții"} rows={6}
+            className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none" />
+        </div>
+
         {error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>}
 
         <button onClick={handleSave} disabled={saving}

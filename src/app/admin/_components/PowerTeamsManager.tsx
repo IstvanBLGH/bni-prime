@@ -109,7 +109,7 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
                 type="text"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                placeholder="ex: Power Team Octombrie 2026"
+                placeholder="ex: Power Team Noiembrie 2026"
                 className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>
@@ -119,7 +119,7 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
                 type="text"
                 value={newDate}
                 onChange={(e) => setNewDate(e.target.value)}
-                placeholder="ex: 15.10.2026"
+                placeholder="ex: 03.11.2026"
                 className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>

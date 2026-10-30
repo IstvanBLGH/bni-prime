@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getEventSchedule } from "@/lib/event-schedule";
+import { formatWhen } from "@/lib/event-date";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Termeni și Condiții | BNI Prime",
@@ -40,7 +44,9 @@ const NAV = [
   { href: "#anulare", label: "Politica de Anulare" },
 ];
 
-export default function TermeniSiConditii() {
+export default async function TermeniSiConditii() {
+  const when = formatWhen(await getEventSchedule("prime"), "long");
+
   return (
     <main className="min-h-screen bg-background py-20 md:py-28">
       <div className="mx-auto max-w-3xl px-6">
@@ -79,7 +85,7 @@ export default function TermeniSiConditii() {
               ]} />
             </Sub>
             <Sub title="2. Obiectul contractului">
-              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>BNI PRIME SUMMER</strong>, care va avea loc în data de <strong>29 iulie 2026</strong>, în Bistrița.</p>
+              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>BNI PRIME SUMMER</strong>, care va avea loc {when ? <>în data de <strong>{when}</strong></> : "la data anunțată pe site"}, în Bistrița.</p>
               <p>Biletul reprezintă un serviciu de acces la un eveniment cu dată fixă. Prin completarea formularului de înscriere și efectuarea plății, utilizatorul (denumit în continuare &bdquo;Participantul&rdquo;) acceptă în întregime prezenții Termeni și Condiții.</p>
             </Sub>
             <Sub title="3. Prețuri și modalități de plată">
@@ -214,7 +220,7 @@ export default function TermeniSiConditii() {
           <Section id="anulare" title="Politica de Anulare a Comenzii">
             <Sub title="1. Dreptul legal de retragere">
               <p>Conform art. 16 lit. l) din OUG nr. 34/2014 privind drepturile consumatorilor în cadrul contractelor încheiate cu profesioniștii, dreptul de retragere în termen de 14 zile nu se aplică contractelor de prestări servicii legate de activități de petrecere a timpului liber, dacă contractul prevede o dată sau o perioadă de executare specifică.</p>
-              <p>Întrucât biletul la PRIME SUMMER este un serviciu cu dată fixă (29 iulie 2026), achiziția este, în principiu, definitivă.</p>
+              <p>Întrucât biletul la PRIME SUMMER este un serviciu cu dată fixă{when ? ` (${when})` : ""}, achiziția este, în principiu, definitivă.</p>
             </Sub>
             <Sub title="2. Politica comercială de anulare">
               <Ul items={[

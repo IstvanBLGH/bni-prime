@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+import { getEventSchedule } from "@/lib/event-schedule";
+import { formatWhen, resolveSchedule } from "@/lib/event-date";
+import { EventJsonLd } from "@/components/shared/EventJsonLd";
 import type {
   HeroContent, AboutContent, TeamMember, AgendaItem,
   Ticket, LocationContent, FaqItem, Testimonial, ContactInfo,
@@ -17,31 +21,37 @@ import { ForteFooter } from "@/components/forte/ForteFooter";
 
 export const revalidate = 60;
 
-export const metadata = {
-  title: "Ziua Invitatului — BNI Prime Bistrita",
-  description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const when = formatWhen(await getEventSchedule("prime"), "long");
+  const description = `BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita${when ? `, ${when}` : ""}.`;
+  return {
     title: "Ziua Invitatului — BNI Prime Bistrita",
-    description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
-    url: "https://bniprime.ro",
-    siteName: "BNI Prime",
-    images: [{ url: "/og-image.png", width: 2000, height: 2000, alt: "BNI Prime — Ziua Invitatului" }],
-    locale: "ro_RO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Ziua Invitatului — BNI Prime Bistrita",
-    description: "BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita.",
-    images: ["/og-image.png"],
-  },
-};
+    description,
+    openGraph: {
+      title: "Ziua Invitatului — BNI Prime Bistrita",
+      description,
+      url: "https://bniprime.ro",
+      siteName: "BNI Prime",
+      images: [{ url: "/og-image.png", width: 2000, height: 2000, alt: "BNI Prime — Ziua Invitatului" }],
+      locale: "ro_RO",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Ziua Invitatului — BNI Prime Bistrita",
+      description,
+      images: ["/og-image.png"],
+    },
+  };
+}
 
 // Shown on Prime page when admin hasn't filled in data yet
 const PRIME_HERO: Partial<HeroContent> = {
   badge: "Eveniment de business networking",
   title: "ZIUA INVITATULUI",
   date_text: "",
+  event_date: null,
+  event_time: null,
   city: "Bistrita",
   description: "BNI Prime te invita la Ziua Invitatului - evenimentul de business networking deschis tuturor antreprenorilor si oamenilor de afaceri din regiune.",
   image_url: "/images/hero.jpg",
@@ -120,15 +130,27 @@ export default async function Home() {
     }
   }
 
+  const schedule = resolveSchedule("prime", hero);
+
   return (
     <>
+      <EventJsonLd
+        name="Ziua Invitatului — BNI Prime"
+        schedule={schedule}
+        city={hero.city || "Bistrița"}
+        venue={location.venue_name}
+        address={location.address}
+        url="https://bniprime.ro"
+        organizer="BNI Prime"
+        price={tickets?.[0]?.price}
+      />
       <ForteNavbar logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
       <main>
         <ForteHero data={hero} />
         <ForteAbout data={about} />
         <ForteTeam members={members} />
         <ForteAgenda items={agendaItems} />
-        <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" />
+        <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" eventWhen={formatWhen(schedule)} />
         <ForteLocation data={location} />
         <ForteFAQ items={faqItems} />
         <ForteTestimonials items={testimonials} />

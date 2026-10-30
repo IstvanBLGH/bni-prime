@@ -40,7 +40,7 @@ const CUM_AI_AFLAT = ["Facebook", "Instagram", "Recomandare", "Email", "Altă su
 // Fallback cap when the ticket itself sets no max_quantity.
 const MAX_TICKETS = 10;
 
-function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string }) {
+function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint, eventWhen }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string; eventWhen?: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -87,6 +87,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
         <DialogHeader>
           <DialogTitle>Rezervă-ți locul la Ziua Invitatului</DialogTitle>
           <DialogDescription>
+            {eventWhen && <span className="mb-1 block font-semibold text-foreground">{eventWhen}</span>}
             Completează formularul și plătești securizat cu cardul. Locul este rezervat după confirmarea plății.
           </DialogDescription>
         </DialogHeader>
@@ -172,7 +173,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint }: { op
   );
 }
 
-export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start" }: { tickets?: Ticket[]; paymentEndpoint?: string }) {
+export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start", eventWhen }: { tickets?: Ticket[]; paymentEndpoint?: string; eventWhen?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
   const ticket = tickets && tickets.length > 0 ? tickets[0] : (tickets === undefined ? FALLBACK_TICKET : null);
 
@@ -210,7 +211,7 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
         </div>
       </Container>
 
-      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} paymentEndpoint={paymentEndpoint} />
+      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} paymentEndpoint={paymentEndpoint} eventWhen={eventWhen} />
     </section>
   );
 }

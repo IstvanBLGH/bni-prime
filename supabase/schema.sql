@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS hero_content (
   badge TEXT DEFAULT 'Eveniment de business networking',
   title TEXT,
   date_text TEXT,
+  event_date DATE,
+  event_time TEXT,
   city TEXT,
   description TEXT,
   image_url TEXT,
@@ -133,11 +135,13 @@ INSERT INTO events (slug, name) VALUES
 ON CONFLICT (slug) DO NOTHING;
 
 -- FORTE: Hero
-INSERT INTO hero_content (event_slug, badge, title, date_text, city, description) VALUES (
+INSERT INTO hero_content (event_slug, badge, title, date_text, event_date, event_time, city, description) VALUES (
   'forte',
   'Eveniment de business networking',
   'ZIUA INVITATULUI',
-  '06.10.2026',
+  '03.11.2026',
+  '2026-11-03',
+  '17:00',
   'Cluj-Napoca',
   'BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune, un eveniment la care participanții pot identifica oportunități concrete pentru afacerile lor.'
 ) ON CONFLICT (event_slug) DO NOTHING;
@@ -157,7 +161,7 @@ INSERT INTO about_content (
   'ZIUA INVITATULUI este un eveniment de business networking organizat de grupul BNI FORTE pentru mediul de afaceri din județul Cluj și din regiune. Evenimentul este o oportunitate de a-ți extinde sfera de contacte, de a interacționa cu profesioniști din diverse domenii de activitate și de a construi relații profesionale care pot contribui la dezvoltarea afacerii tale. Fiecare ediție a evenimentului este organizată în jurul unui anumit Power Team, fiind invitați cu prioritate profesioniști din domenii de activitate complementare acestuia.',
   'Ce este un Power Team?',
   'Un Power Team este un grup de profesioniști din domenii de activitate complementare, care se adresează acelorași tipuri de clienți și își pot genera reciproc recomandări și oportunități de afaceri. ZIUA INVITATULUI este, în același timp, o oportunitate pentru invitați de a descoperi modul în care funcționează comunitatea BNI FORTE, de a cunoaște membrii acesteia și de a vedea concret cum networkingul structurat și recomandările de business pot contribui la dezvoltarea unei afaceri.',
-  '["Domeniu 1", "Domeniu 2", "Domeniu 3"]'::jsonb,
+  '["Dezvoltator imobiliar", "Antrepriză generală în construcții", "Facility & Property Management", "Producție industrială", "Retail și francize", "Logistică și distribuție"]'::jsonb,
   '[{"title":"Networking structurat","desc":"cadru pentru dezvoltarea relațiilor de afaceri"},{"title":"Construirea relațiilor","desc":"relații care să permită recomandări"},{"title":"Recomandări","desc":"o ușă deschisă către clientul dorit"}]'::jsonb
 ) ON CONFLICT (event_slug) DO NOTHING;
 

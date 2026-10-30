@@ -16,7 +16,7 @@ const FALLBACK: Partial<AboutContent> = {
   power_team_title: "Ce este un Power Team?",
   power_team_body:
     "Un Power Team este un grup de profesioniști din domenii de activitate complementare, care se adresează acelorași tipuri de clienți și își pot genera reciproc recomandări și oportunități de afaceri.",
-  domains: ["Domeniu 1", "Domeniu 2", "Domeniu 3"],
+  domains: ["Dezvoltator imobiliar", "Antrepriză generală în construcții", "Facility & Property Management", "Producție industrială", "Retail și francize", "Logistică și distribuție"],
   pillars: [
     { title: "Networking structurat", desc: "cadru pentru dezvoltarea relațiilor de afaceri" },
     { title: "Construirea relațiilor", desc: "relații care să permită recomandări" },

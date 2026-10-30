@@ -15,6 +15,8 @@ export interface HeroContent {
   badge: string;
   title: string;
   date_text: string;
+  event_date: string | null;
+  event_time: string | null;
   city: string;
   description: string;
   image_url: string | null;
