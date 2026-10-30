@@ -16,8 +16,8 @@ const NAV_LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2, logoOffset = 0, hidden = [] }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number; logoOffset?: number; hidden?: string[] }) {
-  const links = visibleLinks(NAV_LINKS, hidden);
+export function ForteNavbar({ logoUrl, name = "Forte", zoomLogo = false, logoScale = 2.2, logoOffset = 0, hidden = [], teamLabel }: { logoUrl?: string | null; name?: string; zoomLogo?: boolean; logoScale?: number; logoOffset?: number; hidden?: string[]; teamLabel?: string }) {
+  const links = visibleLinks(NAV_LINKS, hidden).map((l) => (teamLabel && l.href === "#team" ? { ...l, label: teamLabel } : l));
   const showTickets = !hidden.includes("tickets");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);

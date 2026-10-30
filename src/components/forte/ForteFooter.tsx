@@ -23,7 +23,7 @@ const FALLBACK: Partial<ContactInfo> = {
   address: "Str. Grănicerilor, Nr. 3, Mun. Bistrița",
 };
 
-export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0, hidden = [] }: {
+export function ForteFooter({ contact, logoUrl, name = "Forte", description, privacyPath, termsPath, logoOffset = 0, hidden = [], teamLabel }: {
   contact?: Partial<ContactInfo> | null;
   logoUrl?: string | null;
   name?: string;
@@ -32,8 +32,9 @@ export function ForteFooter({ contact, logoUrl, name = "Forte", description, pri
   termsPath?: string;
   logoOffset?: number;
   hidden?: string[];
+  teamLabel?: string;
 }) {
-  const links = visibleLinks(NAV_LINKS, hidden);
+  const links = visibleLinks(NAV_LINKS, hidden).map((l) => (teamLabel && l.href === "#team" ? { ...l, label: teamLabel } : l));
   const c = { ...FALLBACK, ...contact };
   const defaultDesc = name === "Prime"
     ? "BNI PRIME este un grup de business networking activ în Bistrița. Grupul funcționează după filozofia Dăruind vei dobândi și își propune să schimbe modul în care oamenii fac afaceri în județul Bistrița-Năsăud."

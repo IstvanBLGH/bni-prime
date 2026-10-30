@@ -147,18 +147,18 @@ export default async function Home() {
         organizer="BNI Prime"
         price={tickets?.[0]?.price}
       />
-      <ForteNavbar hidden={hidden} logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
+      <ForteNavbar hidden={hidden} teamLabel="Membri" logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
       <main>
-        {show("hero") && <ForteHero data={hero} hidden={hidden} />}
+        {show("hero") && <ForteHero data={hero} hidden={hidden} organizer="Eveniment organizat de BNI Prime - Bistrița" />}
         {show("about") && <ForteAbout data={about} />}
-        {show("team") && <ForteTeam members={members} />}
+        {show("team") && <ForteTeam members={members} kicker="Membri" description="Vino să cunoști profesioniști din diverse domenii de activitate." />}
         {show("agenda") && <ForteAgenda items={agendaItems} />}
         {show("tickets") && <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" eventWhen={formatWhen(schedule)} />}
-        {show("location") && <ForteLocation data={location} />}
+        {show("location") && <ForteLocation data={location} parkingLabel="Parcare gratuită la fața locului" />}
         {show("faq") && <ForteFAQ items={faqItems} />}
         {show("testimonials") && <ForteTestimonials items={testimonials} />}
       </main>
-      <ForteFooter hidden={hidden} contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
+      <ForteFooter hidden={hidden} teamLabel="Membri" contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
     </>
   );
 }

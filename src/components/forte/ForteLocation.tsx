@@ -15,7 +15,7 @@ const FALLBACK: Partial<LocationContent> = {
     "https://maps.google.com/?q=The+Office+Cluj-Napoca+Bulevardul+21+Decembrie+1989+77",
 };
 
-export function ForteLocation({ data }: { data?: Partial<LocationContent> | null }) {
+export function ForteLocation({ data, parkingLabel = "Parcare la fața locului (contra-cost)" }: { data?: Partial<LocationContent> | null; parkingLabel?: string }) {
   const d = { ...FALLBACK, ...data };
 
   return (
@@ -45,7 +45,7 @@ export function ForteLocation({ data }: { data?: Partial<LocationContent> | null
               {d.has_parking && (
                 <div className="flex items-center gap-3">
                   <Car className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                  <p className="text-sm text-foreground">Parcare la fața locului (contra-cost)</p>
+                  <p className="text-sm text-foreground">{parkingLabel}</p>
                 </div>
               )}
             </div>

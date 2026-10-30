@@ -20,7 +20,7 @@ function toAbsoluteUrl(url: string) {
   return /^[a-z][a-z0-9+.-]*:/i.test(url) ? url : `https://${url}`;
 }
 
-export function ForteTeam({ members, description = "Profesioniștii din domenii complementare care formează Power Team-ul acestei ediții." }: { members?: TeamMember[]; description?: string }) {
+export function ForteTeam({ members, kicker = "Echipa", description = "Profesioniștii din domenii complementare care formează Power Team-ul acestei ediții." }: { members?: TeamMember[]; kicker?: string; description?: string }) {
   const isEmpty = members !== undefined && members.length === 0;
   const list = members && members.length > 0 ? members : (members === undefined ? FALLBACK_MEMBERS : []);
   const ITEMS = [...list, ...list, ...list];
@@ -104,7 +104,7 @@ export function ForteTeam({ members, description = "Profesioniștii din domenii 
     <section id="team" className="bg-surface py-16 md:py-24 lg:py-32">
       <Container>
         <SectionHeading
-          kicker="Echipa"
+          kicker={kicker}
           description={description}
         />
 

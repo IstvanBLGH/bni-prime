@@ -22,7 +22,7 @@ const FALLBACK: Partial<HeroContent> = {
   image_url: "/images/Banner.jpeg",
 };
 
-export function ForteHero({ data, hidden = [] }: { data?: Partial<HeroContent> | null; hidden?: string[] }) {
+export function ForteHero({ data, hidden = [], organizer }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string }) {
   const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
   // event_date/event_time come from admin; date_text is the older free-text field.
   const date = d.event_date || parseDateText(d.date_text);
@@ -118,7 +118,7 @@ export function ForteHero({ data, hidden = [] }: { data?: Partial<HeroContent> |
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-10">
                 <div className="inline-flex flex-col items-start gap-2">
                   <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-white/70 lg:text-sm">
-                    Organizat de grupul BNI Forte · {d.city}
+                    {organizer ?? `Organizat de grupul BNI Forte · ${d.city}`}
                   </span>
                   <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
                     {d.title}{day ? ` · ${day}` : ""}
