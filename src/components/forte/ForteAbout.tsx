@@ -38,6 +38,7 @@ export function ForteAbout({
   linkLabel?: string;
 }) {
   const d = { ...FALLBACK, ...data } as typeof FALLBACK;
+  const hasPowerTeam = Boolean(d.power_team_title || d.power_team_body || d.domains?.length);
 
   return (
     <section id="about" className="py-16 md:py-24 lg:py-32">
@@ -73,25 +74,27 @@ export function ForteAbout({
           </div>
         </div>
 
-        {/* Power Team */}
-        <div className="mt-12 rounded-2xl border border-primary/20 bg-surface p-6 md:mt-16 md:p-10">
-          <h3 className="text-lg font-bold tracking-tight text-foreground">{d.power_team_title}</h3>
-          <p className="mt-3 text-base leading-relaxed text-muted">{d.power_team_body}</p>
+        {/* Power Team: hidden when admin left it empty */}
+        {hasPowerTeam && (
+          <div className="mt-12 rounded-2xl border border-primary/20 bg-surface p-6 md:mt-16 md:p-10">
+            {d.power_team_title && <h3 className="text-lg font-bold tracking-tight text-foreground">{d.power_team_title}</h3>}
+            {d.power_team_body && <p className="mt-3 text-base leading-relaxed text-muted">{d.power_team_body}</p>}
 
-          {d.domains && d.domains.length > 0 && (
-            <div className="mt-6">
-              <p className="text-lg font-bold tracking-tight text-primary">Domenii vizate</p>
-              <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {d.domains.map((dom, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-foreground">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-                    <span className="whitespace-pre-line">{dom}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+            {d.domains && d.domains.length > 0 && (
+              <div className="mt-6">
+                <p className="text-lg font-bold tracking-tight text-primary">Domenii vizate</p>
+                <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {d.domains.map((dom, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-foreground">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                      <span className="whitespace-pre-line">{dom}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Pillars */}
         {d.pillars && d.pillars.length > 0 && (
