@@ -38,7 +38,15 @@ function TestimonialCard({ t, active }: { t: Testimonial; active: boolean }) {
   );
 }
 
-export function ForteTestimonials({ items }: { items?: Testimonial[] }) {
+export function ForteTestimonials({
+  items,
+  title = "Ce spun membrii BNI Forte",
+  description = "Experiențele membrilor comunității BNI Forte.",
+}: {
+  items?: Testimonial[];
+  title?: string;
+  description?: string;
+}) {
   const safeItems = items && items.length > 0 ? items : [];
   const ITEMS = [...safeItems, ...safeItems, ...safeItems];
   const [current, setCurrent] = useState(0);
@@ -117,7 +125,7 @@ export function ForteTestimonials({ items }: { items?: Testimonial[] }) {
   return (
     <section id="testimonials" className="py-16 md:py-24 lg:py-32">
       <Container>
-        <SectionHeading kicker="Testimoniale" title="Ce spun membrii BNI Forte" description="Experiențele membrilor comunității BNI Forte." />
+        <SectionHeading kicker="Testimoniale" title={title} description={description} />
       </Container>
 
       <div className="relative mt-12 md:mt-16">

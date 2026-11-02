@@ -22,7 +22,7 @@ const FALLBACK: Partial<HeroContent> = {
   image_url: "/images/Banner.jpeg",
 };
 
-export function ForteHero({ data, hidden = [], organizer }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string }) {
+export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte" }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string; brand?: string }) {
   const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
   // event_date/event_time come from admin; date_text is the older free-text field.
   const date = d.event_date || parseDateText(d.date_text);
@@ -103,7 +103,7 @@ export function ForteHero({ data, hidden = [], organizer }: { data?: Partial<Her
               {d.image_url ? (
                 <Image
                   src={d.image_url}
-                  alt={`BNI Forte — ${d.title}`}
+                  alt={`${brand} — ${d.title}`}
                   fill
                   priority
                   sizes="(min-width: 1280px) 1216px, 100vw"
@@ -111,7 +111,7 @@ export function ForteHero({ data, hidden = [], organizer }: { data?: Partial<Her
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 via-surface to-primary/5">
-                  <span className="text-6xl font-black italic text-primary/20 md:text-9xl">FORTE</span>
+                  <span className="text-6xl font-black italic text-primary/20 md:text-9xl">{brand.replace("BNI ", "").toUpperCase()}</span>
                 </div>
               )}
               <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />

@@ -24,12 +24,12 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const when = formatWhen(await getEventSchedule("prime"), "long");
-  const description = `BNI Prime te invita la Ziua Invitatului — evenimentul de business networking din Bistrita${when ? `, ${when}` : ""}.`;
+  const description = `BNI Prime te invită la Ziua Invitatului — evenimentul de business networking din Bistrița${when ? `, ${when}` : ""}.`;
   return {
-    title: "Ziua Invitatului — BNI Prime Bistrita",
+    title: "Ziua Invitatului — BNI Prime Bistrița",
     description,
     openGraph: {
-      title: "Ziua Invitatului — BNI Prime Bistrita",
+      title: "Ziua Invitatului — BNI Prime Bistrița",
       description,
       url: "https://bniprime.ro",
       siteName: "BNI Prime",
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Ziua Invitatului — BNI Prime Bistrita",
+      title: "Ziua Invitatului — BNI Prime Bistrița",
       description,
       images: ["/og-image.png"],
     },
@@ -53,29 +53,29 @@ const PRIME_HERO: Partial<HeroContent> = {
   date_text: "",
   event_date: null,
   event_time: null,
-  city: "Bistrita",
-  description: "BNI Prime te invita la Ziua Invitatului - evenimentul de business networking deschis tuturor antreprenorilor si oamenilor de afaceri din regiune.",
+  city: "Bistrița",
+  description: "BNI Prime te invită la Ziua Invitatului - evenimentul de business networking deschis tuturor antreprenorilor și oamenilor de afaceri din regiune.",
   image_url: "/images/hero.jpg",
 };
 
 const PRIME_ABOUT: Partial<AboutContent> = {
   group_title: "BNI PRIME",
-  group_body: "BNI Prime este un grup de business networking activ in Bistrita.",
+  group_body: "BNI Prime este un grup de business networking activ în Bistrița.",
   group_link: "https://bniromania.ro",
   event_title: "ZIUA INVITATULUI",
-  event_body: "Ziua Invitatului este evenimentul deschis publicului, organizat de grupul BNI Prime. O oportunitate de a cunoaste profesionisti din diverse domenii si de a construi relatii de afaceri.",
+  event_body: "Ziua Invitatului este evenimentul deschis publicului, organizat de grupul BNI Prime. O oportunitate de a cunoaște profesioniști din diverse domenii și de a construi relații de afaceri.",
   power_team_title: "Ce este un Power Team?",
-  power_team_body: "Un Power Team este un grup de profesionisti din domenii complementare care pot genera reciproc recomandari si oportunitati de afaceri.",
+  power_team_body: "Un Power Team este un grup de profesioniști din domenii complementare care pot genera reciproc recomandări și oportunități de afaceri.",
   pillars: [
-    { title: "Networking structurat", desc: "cadru pentru dezvoltarea relatiilor de afaceri" },
-    { title: "Construirea relatiilor", desc: "relatii care sa permita recomandari" },
-    { title: "Recomandari", desc: "o usa deschisa catre clientul dorit" },
+    { title: "Networking structurat", desc: "cadru pentru dezvoltarea relațiilor de afaceri" },
+    { title: "Construirea relațiilor", desc: "relații care să permită recomandări" },
+    { title: "Recomandări", desc: "o ușă deschisă către clientul dorit" },
   ],
 };
 
 const PRIME_LOCATION: Partial<LocationContent> = {
-  venue_name: "Locatia evenimentului",
-  address: "Bistrita",
+  venue_name: "Locația evenimentului",
+  address: "Bistrița",
   description: "Evenimentul organizat de grupul BNI Prime.",
   has_parking: true,
   maps_link: "",
@@ -149,14 +149,14 @@ export default async function Home() {
       />
       <ForteNavbar hidden={hidden} teamLabel="Membri" logoUrl="/images/Logo website BNIPRIME.png" name="Prime" zoomLogo logoOffset={26} />
       <main>
-        {show("hero") && <ForteHero data={hero} hidden={hidden} organizer="Eveniment organizat de BNI Prime - Bistrița" />}
-        {show("about") && <ForteAbout data={about} />}
+        {show("hero") && <ForteHero data={hero} hidden={hidden} brand="BNI Prime" organizer="Eveniment organizat de BNI Prime - Bistrița" />}
+        {show("about") && <ForteAbout data={about} title="Despre BNI Prime și eveniment" description="Comunitatea de business networking din Bistrița." linkLabel="Vezi site-ul BNI Prime" />}
         {show("team") && <ForteTeam members={members} kicker="Membri" description="Vino să cunoști profesioniști din diverse domenii de activitate." />}
         {show("agenda") && <ForteAgenda items={agendaItems} />}
         {show("tickets") && <ForteTickets tickets={tickets} paymentEndpoint="/api/netopia/start" eventWhen={formatWhen(schedule)} />}
         {show("location") && <ForteLocation data={location} parkingLabel="Parcare gratuită la fața locului" />}
         {show("faq") && <ForteFAQ items={faqItems} />}
-        {show("testimonials") && <ForteTestimonials items={testimonials} />}
+        {show("testimonials") && <ForteTestimonials items={testimonials} title="Ce spun membrii BNI Prime" description="Experiențele membrilor comunității BNI Prime." />}
       </main>
       <ForteFooter hidden={hidden} teamLabel="Membri" contact={contact} name="Prime" logoUrl="/images/Logo website BNIPRIME.png" logoOffset={26} privacyPath="/politica-de-confidentialitate" termsPath="/termeni-si-conditii" />
     </>

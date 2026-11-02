@@ -26,7 +26,17 @@ const FALLBACK: Partial<AboutContent> = {
 
 const PILLAR_ICONS = [Network, Users, Handshake];
 
-export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
+export function ForteAbout({
+  data,
+  title = "Despre BNI Forte și eveniment",
+  description = "Cea mai veche comunitate de business networking din provincie.",
+  linkLabel = "Vezi site-ul BNI Forte",
+}: {
+  data?: Partial<AboutContent> | null;
+  title?: string;
+  description?: string;
+  linkLabel?: string;
+}) {
   const d = { ...FALLBACK, ...data } as typeof FALLBACK;
 
   return (
@@ -34,8 +44,8 @@ export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
       <Container>
         <SectionHeading
           kicker="Despre"
-          title="Despre BNI Forte și eveniment"
-          description="Cea mai veche comunitate de business networking din provincie."
+          title={title}
+          description={description}
         />
 
         <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-16">
@@ -50,7 +60,7 @@ export function ForteAbout({ data }: { data?: Partial<AboutContent> | null }) {
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
               >
-                Vezi site-ul BNI Forte
+                {linkLabel}
                 <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
               </a>
             )}
