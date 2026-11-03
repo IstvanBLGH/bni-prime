@@ -91,7 +91,8 @@ export async function POST(req: NextRequest) {
       phone,
       cui: cui ?? "",
       sursa: sursa ?? "",
-      quantity,
+      // Netopia rejects non-string values in order.data with "Validation error".
+      quantity: String(quantity),
     };
 
     // ProductData carries no quantity field, so each ticket is its own line;
