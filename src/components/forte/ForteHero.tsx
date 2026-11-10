@@ -18,10 +18,10 @@ const FALLBACK: Partial<HeroContent> = {
   event_time: "17:30",
   city: "Cluj-Napoca",
   description: "",
-  image_url: "/images/Banner.jpeg",
+  image_url: "/images/christmas-party-banner.jpg",
 };
 
-export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte" }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string; brand?: string }) {
+export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte", poster = false }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string; brand?: string; poster?: boolean }) {
   const d = { ...FALLBACK, ...data, image_url: data?.image_url ?? FALLBACK.image_url };
   // event_date/event_time come from admin; date_text is the older free-text field.
   const date = d.event_date || parseDateText(d.date_text);
@@ -100,7 +100,10 @@ export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte" }:
       >
         <Container>
           <div className="relative">
-            <div className="relative aspect-square overflow-hidden rounded-3xl shadow-2xl ring-2 ring-primary/40 lg:aspect-[64/27] lg:rounded-2xl">
+            {/* poster: the image carries its own text, so show it whole with no overlay */}
+            <div className={poster
+              ? "relative aspect-[16/9] overflow-hidden rounded-2xl shadow-2xl ring-2 ring-primary/40"
+              : "relative aspect-square overflow-hidden rounded-3xl shadow-2xl ring-2 ring-primary/40 lg:aspect-[64/27] lg:rounded-2xl"}>
               {d.image_url ? (
                 <Image
                   src={d.image_url}
@@ -115,26 +118,40 @@ export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte" }:
                   <span className="text-6xl font-black italic text-primary/20 md:text-9xl">{brand.replace("BNI ", "").toUpperCase()}</span>
                 </div>
               )}
-              <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-10">
-                <div className="inline-flex flex-col items-start gap-2">
-                  <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-white/70 lg:text-sm">
-                    {organizer ?? `Organizat de grupul BNI Forte · ${d.city}`}
-                  </span>
-                  <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
-                    {d.title}{day ? ` · ${day}` : ""}
-                  </p>
-                  {!hidden.includes("tickets") && (
-                    <Button asChild size="lg" className="mt-1 h-10 px-5 text-sm lg:h-12 lg:px-8 lg:text-base">
-                      <a href="#tickets">
-                        Rezervă-ți locul
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </a>
-                    </Button>
-                  )}
+              {!poster && (
+                <>
+                <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-10">
+                  <div className="inline-flex flex-col items-start gap-2">
+                    <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-white/70 lg:text-sm">
+                      {organizer ?? `Organizat de grupul BNI Forte · ${d.city}`}
+                    </span>
+                    <p className="text-lg font-bold tracking-tight text-white sm:text-xl lg:text-3xl">
+                      {d.title}{day ? ` · ${day}` : ""}
+                    </p>
+                    {!hidden.includes("tickets") && (
+                      <Button asChild size="lg" className="mt-1 h-10 px-5 text-sm lg:h-12 lg:px-8 lg:text-base">
+                        <a href="#tickets">
+                          Rezervă-ți locul
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
+                </>
+              )}
             </div>
+            {poster && !hidden.includes("tickets") && (
+              <div className="mt-6 flex justify-center">
+                <Button asChild size="lg" className="h-12 px-8 text-base">
+                  <a href="#tickets">
+                    Rezervă-ți locul
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </Button>
+              </div>
+            )}
           </div>
         </Container>
       </motion.div>

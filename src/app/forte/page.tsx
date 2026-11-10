@@ -105,7 +105,7 @@ export default async function FortePage() {
       />
       <ForteNavbar hidden={hidden} logoUrl="/images/Logo website BNIFORTE.png.png" zoomLogo logoScale={1.5} logoOffset={58} />
       <main>
-        {show("hero") && <ForteHero data={data?.hero} hidden={hidden} organizer="Eveniment organizat de grupul BNI Forte" />}
+        {show("hero") && <ForteHero poster data={data?.hero} hidden={hidden} organizer="Eveniment organizat de grupul BNI Forte" />}
         {show("about") && <ForteAbout data={data?.about} />}
         {show("team") && <ForteTeam members={data?.team ?? []} description="" />}
         {show("agenda") && <ForteAgenda items={data?.agenda ?? []} />}
