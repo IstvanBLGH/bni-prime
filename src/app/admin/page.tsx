@@ -22,7 +22,7 @@ const EVENTS: { slug: EventSlug; name: string; subtitle: string; city: string; c
   {
     slug: "forte",
     name: "BNI Forte",
-    subtitle: "Ziua Invitatului",
+    subtitle: "Christmas Party",
     city: "Cluj-Napoca",
     color: "from-red-700 to-rose-900",
     sections: [

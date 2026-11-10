@@ -5,7 +5,7 @@ export default function ForteTestimonialsPage() {
     <AdminPageShell
       breadcrumb="BNI Forte"
       title="Testimoniale"
-      description="Testimoniale ale membrilor BNI Forte afișate pe pagina Ziua Invitatului."
+      description="Testimoniale ale membrilor BNI Forte afișate pe pagina Christmas Party."
       table="testimonials"
       eventSlug="forte"
       orderBy="sort_order"

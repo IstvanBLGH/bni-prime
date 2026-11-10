@@ -13,12 +13,11 @@ const easeApple = [0.21, 0.47, 0.32, 0.98] as const;
 
 const FALLBACK: Partial<HeroContent> = {
   badge: "Eveniment de business networking",
-  title: "ZIUA INVITATULUI",
-  date_text: "03.11.2026",
-  event_time: "17:00",
+  title: "CHRISTMAS PARTY",
+  date_text: "11.12.2026",
+  event_time: "17:30",
   city: "Cluj-Napoca",
-  description:
-    "BNI FORTE te invită la evenimentul de business networking ZIUA INVITATULUI, un eveniment ce aduce la aceeași masă membri BNI și oameni de afaceri din regiune.",
+  description: "",
   image_url: "/images/Banner.jpeg",
 };
 
@@ -56,14 +55,16 @@ export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte" }:
           {d.title}
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: easeApple }}
-          className="max-w-2xl text-base leading-relaxed text-muted md:text-lg"
-        >
-          {d.description}
-        </motion.p>
+        {d.description && (
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: easeApple }}
+            className="max-w-2xl text-base leading-relaxed text-muted md:text-lg"
+          >
+            {d.description}
+          </motion.p>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

@@ -5,7 +5,7 @@ export default function ForteFaqPage() {
     <AdminPageShell
       breadcrumb="BNI Forte"
       title="Întrebări frecvente (FAQ)"
-      description="Întrebări și răspunsuri pentru pagina Ziua Invitatului."
+      description="Întrebări și răspunsuri pentru pagina Christmas Party."
       table="faq_items"
       eventSlug="forte"
       orderBy="sort_order"

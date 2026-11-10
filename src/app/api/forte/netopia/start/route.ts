@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     // Quantity is client-supplied: clamp it so the charge can't be steered.
     const quantity = Math.min(Math.max(Math.trunc(Number(body.quantity) || 1), 1), 10);
 
-    let price = 100;
+    let price = 350;
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const { createClient } = await import("@supabase/supabase-js");
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       orderID,
       amount: total,
       currency: "RON",
-      description: `${quantity} x Bilet Ziua Invitatului BNI Forte${whenSuffix}`,
+      description: `${quantity} x Bilet Christmas Party BNI Forte${whenSuffix}`,
       dateTime: new Date().toISOString(),
       billing: {
         email,
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
     // that way the lines sum to the charged amount in the Netopia dashboard.
     netopia.setProductsData(
       Array.from({ length: quantity }, () => ({
-        name: `Bilet Standard — Ziua Invitatului BNI Forte${whenSuffix}`,
+        name: `Bilet Christmas Party BNI Forte${whenSuffix}`,
         code: "forte-standard",
         category: "Eveniment networking",
         price,

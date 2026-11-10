@@ -7,7 +7,7 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Termeni și Condiții | BNI Forte",
-  description: "Termeni și condiții, politica GDPR, politica de livrare și politica de anulare pentru evenimentul Ziua Invitatului BNI Forte.",
+  description: "Termeni și condiții, politica GDPR, politica de livrare și politica de anulare pentru evenimentul Christmas Party BNI Forte.",
   robots: { index: false, follow: false },
 };
 
@@ -57,7 +57,7 @@ export default async function ForteTermeniSiConditii() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
           Termeni, Condiții și Politici
         </h1>
-        <p className="mt-3 text-sm text-muted">BIG DESIGN TM S.R.L. · CUI 39578361 · bilete eveniment ZIUA INVITATULUI — BNI FORTE</p>
+        <p className="mt-3 text-sm text-muted">BIG DESIGN TM S.R.L. · CUI 39578361 · bilete eveniment CHRISTMAS PARTY — BNI FORTE</p>
 
         {/* Navigare rapidă */}
         <nav className="mt-8 flex flex-wrap gap-2">
@@ -85,7 +85,7 @@ export default async function ForteTermeniSiConditii() {
               ]} />
             </Sub>
             <Sub title="2. Obiectul contractului">
-              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>ZIUA INVITATULUI</strong>, organizat de grupul BNI FORTE, care va avea loc {when ? <>în data de <strong>{when}</strong></> : "la data anunțată pe site"}, în Cluj-Napoca.</p>
+              <p>Prin intermediul acestui site, BIG DESIGN TM S.R.L. (denumită în continuare &bdquo;Organizatorul&rdquo;) comercializează bilete de acces la evenimentul <strong>CHRISTMAS PARTY</strong>, organizat de grupul BNI FORTE, care va avea loc {when ? <>în data de <strong>{when}</strong></> : "la data anunțată pe site"}, în Cluj-Napoca.</p>
               <p>Biletul reprezintă un serviciu de acces la un eveniment cu dată fixă. Prin completarea formularului de înscriere și efectuarea plății, utilizatorul (denumit în continuare &bdquo;Participantul&rdquo;) acceptă în întregime prezenții Termeni și Condiții.</p>
             </Sub>
             <Sub title="3. Prețuri și modalități de plată">
@@ -186,7 +186,7 @@ export default async function ForteTermeniSiConditii() {
           {/* POLITICA DE LIVRARE */}
           <Section id="livrare" title="Politica de Livrare a Comenzii">
             <Sub title="1. Tipul produsului">
-              <p>BIG DESIGN TM S.R.L. comercializează exclusiv bilete electronice de acces la evenimentul ZIUA INVITATULUI — BNI FORTE. Nu se livrează produse fizice prin curier sau poștă.</p>
+              <p>BIG DESIGN TM S.R.L. comercializează exclusiv bilete electronice de acces la evenimentul CHRISTMAS PARTY — BNI FORTE. Nu se livrează produse fizice prin curier sau poștă.</p>
             </Sub>
             <Sub title="2. Modalitatea de livrare">
               <p>Biletul și factura fiscală sunt transmise exclusiv electronic, prin email, la adresa indicată în formularul de înscriere.</p>
@@ -219,7 +219,7 @@ export default async function ForteTermeniSiConditii() {
           <Section id="anulare" title="Politica de Anulare a Comenzii">
             <Sub title="1. Dreptul legal de retragere">
               <p>Conform art. 16 lit. l) din OUG nr. 34/2014 privind drepturile consumatorilor în cadrul contractelor încheiate cu profesioniștii, dreptul de retragere în termen de 14 zile nu se aplică contractelor de prestări servicii legate de activități de petrecere a timpului liber, dacă contractul prevede o dată sau o perioadă de executare specifică.</p>
-              <p>Întrucât biletul la ZIUA INVITATULUI este un serviciu cu dată fixă{when ? ` (${when})` : ""}, achiziția este, în principiu, definitivă.</p>
+              <p>Întrucât biletul la CHRISTMAS PARTY este un serviciu cu dată fixă{when ? ` (${when})` : ""}, achiziția este, în principiu, definitivă.</p>
             </Sub>
             <Sub title="2. Politica comercială de anulare">
               <Ul items={[

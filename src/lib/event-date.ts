@@ -15,7 +15,7 @@ interface ScheduleSource {
 // Used only when the database has no date for the event yet.
 export const FALLBACK_SCHEDULE: Record<EventSlug, EventSchedule> = {
   prime: { date: null, time: null },
-  forte: { date: "2026-11-03", time: "17:00" },
+  forte: { date: "2026-12-11", time: "17:30" },
 };
 
 const MONTHS = [

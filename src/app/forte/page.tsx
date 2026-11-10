@@ -18,12 +18,12 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const when = formatWhen(await getEventSchedule("forte"), "long");
-  const description = `BNI FORTE te invita la evenimentul de business networking ZIUA INVITATULUI${when ? `, ${when}` : ""}, Cluj-Napoca.`;
+  const description = `BNI FORTE te invită la Christmas Party${when ? `, ${when}` : ""}, Cluj-Napoca. Aniversăm 10 ani de BNI FORTE alături de comunitatea BNI din regiune.`;
   return {
-    title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+    title: "Christmas Party — BNI Forte Cluj-Napoca",
     description,
     openGraph: {
-      title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
+      title: "Christmas Party — BNI Forte Cluj-Napoca",
       description,
       url: "https://bniforte.ro",
       siteName: "BNI Forte",
@@ -33,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Ziua Invitatului — BNI Forte Cluj-Napoca",
-      description: "BNI FORTE te invita la Ziua Invitatului — business networking, Cluj-Napoca.",
+      title: "Christmas Party — BNI Forte Cluj-Napoca",
+      description: "BNI FORTE te invită la Christmas Party — 10 ani de BNI FORTE, Cluj-Napoca.",
       images: ["/images/Logo website BNIFORTE.png.png"],
     },
   };
@@ -94,7 +94,7 @@ export default async function FortePage() {
   return (
     <>
       <EventJsonLd
-        name="Ziua Invitatului — BNI Forte"
+        name="Christmas Party — BNI Forte"
         schedule={schedule}
         city={data?.hero?.city || "Cluj-Napoca"}
         venue={data?.location?.venue_name}
@@ -109,7 +109,7 @@ export default async function FortePage() {
         {show("about") && <ForteAbout data={data?.about} />}
         {show("team") && <ForteTeam members={data?.team ?? []} description="" />}
         {show("agenda") && <ForteAgenda items={data?.agenda ?? []} />}
-        {show("tickets") && <ForteTickets tickets={data?.tickets ?? []} eventWhen={formatWhen(schedule)} />}
+        {show("tickets") && <ForteTickets eventName="Christmas Party" tickets={data?.tickets ?? []} eventWhen={formatWhen(schedule)} />}
         {show("location") && <ForteLocation data={data?.location} />}
         {show("faq") && <ForteFAQ items={data?.faq ?? []} />}
         {show("testimonials") && <ForteTestimonials items={data?.testimonials ?? []} />}

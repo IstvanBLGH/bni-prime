@@ -20,15 +20,20 @@ const FALLBACK_TICKET: Ticket = {
   event_slug: "forte",
   name: "Standard",
   label: "1 bilet",
-  price: 100,
-  description: "Acces la evenimentul de networking BNI FORTE Ziua Invitatului.",
+  price: 350,
+  description: "Acces la Christmas Party BNI FORTE.",
   features: [
+    "# Acces și Networking",
     "Acces la eveniment",
     "Ecusonul de participant",
     "Sesiuni de speed networking",
-    "Orientare BNI pentru invitați",
     "Networking deschis",
-    "E-mail cu concluzii post-eveniment",
+    "# All Inclusive",
+    "Finger-food",
+    "Candy-bar",
+    "Soft drinks",
+    "Coffee",
+    "Wine & Prosecco",
   ],
   is_available: true,
   max_quantity: null,
@@ -40,7 +45,7 @@ const CUM_AI_AFLAT = ["Facebook", "Instagram", "Recomandare", "Email", "Altă su
 // Fallback cap when the ticket itself sets no max_quantity.
 const MAX_TICKETS = 10;
 
-function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint, eventWhen }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string; eventWhen?: string }) {
+function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint, eventWhen, eventName }: { open: boolean; onOpenChange: (v: boolean) => void; ticket: Ticket; paymentEndpoint: string; eventWhen?: string; eventName: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -85,7 +90,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint, eventW
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="px-7 py-8 sm:px-10">
         <DialogHeader>
-          <DialogTitle>Rezervă-ți locul la Ziua Invitatului</DialogTitle>
+          <DialogTitle>Rezervă-ți locul la {eventName}</DialogTitle>
           <DialogDescription>
             {eventWhen && <span className="mb-1 block font-semibold text-foreground">{eventWhen}</span>}
             Completează formularul și plătești securizat cu cardul. Locul este rezervat după confirmarea plății.
@@ -173,7 +178,7 @@ function RegistrationModal({ open, onOpenChange, ticket, paymentEndpoint, eventW
   );
 }
 
-export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start", eventWhen }: { tickets?: Ticket[]; paymentEndpoint?: string; eventWhen?: string }) {
+export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/start", eventWhen, eventName = "Ziua Invitatului" }: { tickets?: Ticket[]; paymentEndpoint?: string; eventWhen?: string; eventName?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
   const ticket = tickets && tickets.length > 0 ? tickets[0] : (tickets === undefined ? FALLBACK_TICKET : null);
 
@@ -193,13 +198,20 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
               <span className="text-sm text-muted">/ persoană</span>
             </div>
 
+            {/* A feature starting with "# " is a group heading, e.g. "# All Inclusive". */}
             <ul className="mt-6 flex flex-col gap-2.5">
-              {ticket.features.map((feature) => (
-                <li key={feature} className="flex items-start gap-2.5 text-sm font-medium text-foreground">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                  <span>{feature}</span>
-                </li>
-              ))}
+              {ticket.features.map((feature, i) =>
+                feature.startsWith("# ") ? (
+                  <li key={`${i}-${feature}`} className={i > 0 ? "mt-3 text-xs font-bold uppercase tracking-wide text-primary" : "text-xs font-bold uppercase tracking-wide text-primary"}>
+                    {feature.slice(2)}
+                  </li>
+                ) : (
+                  <li key={`${i}-${feature}`} className="flex items-start gap-2.5 text-sm font-medium text-foreground">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                    <span>{feature}</span>
+                  </li>
+                )
+              )}
             </ul>
 
             <div className="mt-auto pt-6">
@@ -211,7 +223,7 @@ export function ForteTickets({ tickets, paymentEndpoint = "/api/forte/netopia/st
         </div>
       </Container>
 
-      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} paymentEndpoint={paymentEndpoint} eventWhen={eventWhen} />
+      <RegistrationModal open={modalOpen} onOpenChange={setModalOpen} ticket={ticket} paymentEndpoint={paymentEndpoint} eventWhen={eventWhen} eventName={eventName} />
     </section>
   );
 }

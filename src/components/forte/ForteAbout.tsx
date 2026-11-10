@@ -8,14 +8,14 @@ import type { AboutContent } from "@/types/db";
 const FALLBACK: Partial<AboutContent> = {
   group_title: "BNI FORTE",
   group_body:
-    "BNI FORTE este cel mai vechi grup BNI de business networking din provincie și va aniversa, în luna decembrie, 10 ani de activitate. BNI FORTE își dorește să contribuie la schimbarea modului în care oamenii fac afaceri în Cluj-Napoca și în județ.",
+    "De 10 ani, BNI FORTE aduce împreună antreprenori care cred în puterea colaborării și în relațiile construite pe încredere. Sub filosofia „Dăruind vei dobândi”, am crescut o comunitate în care recomandările deschid oportunități, iar oamenii se sprijină reciproc în dezvoltarea afacerilor. Anul acesta, aniversarea noastră devine un prilej de sărbătoare pentru întreaga comunitate BNI din regiune. Îi aducem alături pe cei care au contribuit la povestea FORTE și pe cei cu care vom scrie următoarele capitole.",
   group_link: "https://bniromania.ro",
-  event_title: "ZIUA INVITATULUI",
+  event_title: "CHRISTMAS PARTY",
   event_body:
-    "ZIUA INVITATULUI este un eveniment de business networking organizat de grupul BNI FORTE pentru mediul de afaceri din județul Cluj și din regiune. Evenimentul este o oportunitate de a-ți extinde sfera de contacte, de a interacționa cu profesioniști din diverse domenii de activitate și de a construi relații profesionale care pot contribui la dezvoltarea afacerii tale.",
-  power_team_title: "Ce este un Power Team?",
+    "BNI FORTE te invită să încheiem anul împreună, într-o seară dedicată oamenilor și relațiilor care dau valoare comunității noastre. Christmas Party reunește membri BNI din regiune și invitații lor, într-o atmosferă festivă, cu muzică, voie bună, speed-networking și timp pentru conversații. Ne revedem cu partenerii, cunoaștem oameni din alte grupuri și sărbătorim împreună reușitele anului. Iar această întâlnire are o semnificație aparte: aniversăm 10 ani de BNI FORTE, alături de comunitatea din care facem parte.\n\nVino să sărbătorim și să ne cunoaștem mai bine!",
+  power_team_title: "Ce este BNI?",
   power_team_body:
-    "Un Power Team este un grup de profesioniști din domenii de activitate complementare, care se adresează acelorași tipuri de clienți și își pot genera reciproc recomandări și oportunități de afaceri.",
+    "BNI este o organizație internațională de business networking care îi ajută pe antreprenori și profesioniști să își dezvolte afacerile prin recomandări și relații de încredere. Membrii se întâlnesc regulat, își cunosc activitatea și identifică oportunități de colaborare, devenind o sursă de sprijin și conexiuni pentru ceilalți. La baza BNI stă filosofia „Dăruind vei dobândi”: atunci când îi ajuți pe ceilalți să reușească, construiești relații care contribuie și la propria dezvoltare. Evenimentele regionale aduc această comunitate împreună și deschid oportunitatea de a cunoaște oameni și de a construi parteneriate dincolo de propriul grup.",
   domains: ["Dezvoltator imobiliar", "Antrepriză generală în construcții", "Facility & Property Management", "Producție industrială", "Retail și francize", "Logistică și distribuție"],
   pillars: [
     { title: "Networking structurat", desc: "cadru pentru dezvoltarea relațiilor de afaceri" },
@@ -53,7 +53,7 @@ export function ForteAbout({
           {/* BNI Forte group */}
           <div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">{d.group_title}</h3>
-            <p className="mt-3 text-base leading-relaxed text-muted">{d.group_body}</p>
+            <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-muted">{d.group_body}</p>
             {d.group_link && (
               <a
                 href={d.group_link}
@@ -70,7 +70,7 @@ export function ForteAbout({
           {/* Event */}
           <div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">{d.event_title}</h3>
-            <p className="mt-3 text-base leading-relaxed text-muted">{d.event_body}</p>
+            <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-muted">{d.event_body}</p>
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export function ForteAbout({
         {hasPowerTeam && (
           <div className="mt-12 rounded-2xl border border-primary/20 bg-surface p-6 md:mt-16 md:p-10">
             {d.power_team_title && <h3 className="text-lg font-bold tracking-tight text-foreground">{d.power_team_title}</h3>}
-            {d.power_team_body && <p className="mt-3 text-base leading-relaxed text-muted">{d.power_team_body}</p>}
+            {d.power_team_body && <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-muted">{d.power_team_body}</p>}
 
             {d.domains && d.domains.length > 0 && (
               <div className="mt-6">

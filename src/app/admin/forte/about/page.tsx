@@ -38,8 +38,8 @@ export default function ForteAboutPage() {
     { key: "group_title", label: "Titlu grup", placeholder: "BNI FORTE" },
     { key: "group_body", label: "Descriere grup", type: "textarea", placeholder: "BNI Forte este..." },
     { key: "group_link", label: "Link extern grup", placeholder: "https://bniromania.ro" },
-    { key: "event_title", label: "Titlu eveniment", placeholder: "ZIUA INVITATULUI" },
-    { key: "event_body", label: "Descriere eveniment", type: "textarea", placeholder: "Ziua Invitatului este..." },
+    { key: "event_title", label: "Titlu eveniment", placeholder: "CHRISTMAS PARTY" },
+    { key: "event_body", label: "Descriere eveniment", type: "textarea", placeholder: "BNI FORTE te invită..." },
     { key: "power_team_title", label: "Titlu sectiune Power Team", placeholder: "Ce este un Power Team?" },
     { key: "power_team_body", label: "Descriere Power Team", type: "textarea", placeholder: "Un Power Team este..." },
   ];

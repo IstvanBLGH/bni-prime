@@ -4,8 +4,8 @@ export default function ForteAgendaPage() {
   return (
     <AdminPageShell
       breadcrumb="BNI Forte"
-      title="Agendă — Ziua Invitatului"
-      description="Programul evenimentului Ziua Invitatului BNI Forte."
+      title="Agendă — Christmas Party"
+      description="Programul evenimentului Christmas Party BNI Forte."
       table="agenda_items"
       eventSlug="forte"
       orderBy="sort_order"

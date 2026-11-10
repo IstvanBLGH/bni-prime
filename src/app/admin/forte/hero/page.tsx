@@ -44,7 +44,7 @@ export default function ForteHeroPage() {
   if (loading) return <div className="flex items-center justify-center p-20"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
 
   const fields = [
-    { key: "title", label: "Titlu eveniment", placeholder: "ZIUA INVITATULUI" },
+    { key: "title", label: "Titlu eveniment", placeholder: "CHRISTMAS PARTY" },
     { key: "badge", label: "Badge", placeholder: "Eveniment de business networking" },
     { key: "city", label: "Oras", placeholder: "Cluj-Napoca" },
     { key: "description", label: "Descriere", type: "textarea", placeholder: "BNI Forte te invita..." },

@@ -5,7 +5,7 @@ export default function ForteTicketsPage() {
     <AdminPageShell
       breadcrumb="BNI Forte"
       title="Bilet & Preț"
-      description="Gestionează biletul pentru Ziua Invitatului. Prețul se actualizează și pe site instantaneu."
+      description="Gestionează biletul pentru Christmas Party. Prețul se actualizează și pe site instantaneu."
       table="tickets"
       eventSlug="forte"
       orderBy="sort_order"
