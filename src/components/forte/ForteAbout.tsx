@@ -16,7 +16,7 @@ const FALLBACK: Partial<AboutContent> = {
   power_team_title: "Ce este BNI?",
   power_team_body:
     "BNI este o organizație internațională de business networking care îi ajută pe antreprenori și profesioniști să își dezvolte afacerile prin recomandări și relații de încredere. Membrii se întâlnesc regulat, își cunosc activitatea și identifică oportunități de colaborare, devenind o sursă de sprijin și conexiuni pentru ceilalți. La baza BNI stă filosofia „Dăruind vei dobândi”: atunci când îi ajuți pe ceilalți să reușească, construiești relații care contribuie și la propria dezvoltare. Evenimentele regionale aduc această comunitate împreună și deschid oportunitatea de a cunoaște oameni și de a construi parteneriate dincolo de propriul grup.",
-  domains: ["Dezvoltator imobiliar", "Antrepriză generală în construcții", "Facility & Property Management", "Producție industrială", "Retail și francize", "Logistică și distribuție"],
+  domains: [],
   pillars: [
     { title: "Networking structurat", desc: "cadru pentru dezvoltarea relațiilor de afaceri" },
     { title: "Construirea relațiilor", desc: "relații care să permită recomandări" },

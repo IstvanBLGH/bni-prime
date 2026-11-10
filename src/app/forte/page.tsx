@@ -12,6 +12,8 @@ import { ForteFooter } from "@/components/forte/ForteFooter";
 import { EventJsonLd } from "@/components/shared/EventJsonLd";
 import { getEventSchedule } from "@/lib/event-schedule";
 import { getHiddenSections } from "@/lib/section-settings";
+import { sortByTeamOrder } from "@/lib/team-members";
+import type { TeamMember } from "@/types/db";
 import { formatWhen, resolveSchedule } from "@/lib/event-date";
 
 export const revalidate = 60;
@@ -49,11 +51,11 @@ async function getForteData() {
     const { createClient } = await import("@/lib/supabase/server");
     const supabase = await createClient();
 
-    let activeTeamId: string | null = null;
+    let activeTeamIds: string[] = [];
     try {
       const { data } = await supabase
-        .from("power_teams").select("id").eq("event_slug", "forte").eq("is_active", true).single();
-      activeTeamId = data?.id ?? null;
+        .from("power_teams").select("id").eq("event_slug", "forte").eq("is_active", true).order("sort_order");
+      activeTeamIds = (data ?? []).map((t) => t.id as string);
     } catch { /* table not yet created */ }
 
     const [
@@ -69,8 +71,8 @@ async function getForteData() {
     ] = await Promise.all([
       supabase.from("hero_content").select("*").eq("event_slug", "forte").single(),
       supabase.from("about_content").select("*").eq("event_slug", "forte").single(),
-      activeTeamId
-        ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).eq("is_active", true).order("sort_order")
+      activeTeamIds.length > 0
+        ? supabase.from("team_members").select("*").in("power_team_id", activeTeamIds).eq("is_active", true).order("sort_order")
         : supabase.from("team_members").select("*").eq("event_slug", "forte").eq("is_active", true).order("sort_order"),
       supabase.from("agenda_items").select("*").eq("event_slug", "forte").order("sort_order"),
       supabase.from("tickets").select("*").eq("event_slug", "forte").eq("is_available", true).order("sort_order"),
@@ -80,7 +82,7 @@ async function getForteData() {
       supabase.from("contact_info").select("*").eq("event_slug", "forte").single(),
     ]);
 
-    return { hero, about, team, agenda, tickets, location, faq, testimonials, contact };
+    return { hero, about, team: sortByTeamOrder(team as TeamMember[] | null, activeTeamIds), agenda, tickets, location, faq, testimonials, contact };
   } catch {
     return null;
   }

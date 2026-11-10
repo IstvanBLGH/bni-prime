@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getEventSchedule } from "@/lib/event-schedule";
 import { getHiddenSections } from "@/lib/section-settings";
+import { sortByTeamOrder } from "@/lib/team-members";
 import { formatWhen, resolveSchedule } from "@/lib/event-date";
 import { EventJsonLd } from "@/components/shared/EventJsonLd";
 import type {
@@ -95,18 +96,18 @@ export default async function Home() {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     try {
       const supabase = await createClient();
-      let activeTeamId: string | null = null;
+      let activeTeamIds: string[] = [];
       try {
         const { data } = await supabase
-          .from("power_teams").select("id").eq("event_slug", "prime").eq("is_active", true).single();
-        activeTeamId = data?.id ?? null;
+          .from("power_teams").select("id").eq("event_slug", "prime").eq("is_active", true).order("sort_order");
+        activeTeamIds = (data ?? []).map((t) => t.id as string);
       } catch { /* table not yet created */ }
 
       const [h, ab, m, a, t, l, f, te, c] = await Promise.all([
         supabase.from("hero_content").select("*").eq("event_slug", "prime").single(),
         supabase.from("about_content").select("*").eq("event_slug", "prime").single(),
-        activeTeamId
-          ? supabase.from("team_members").select("*").eq("power_team_id", activeTeamId).eq("is_active", true).order("sort_order")
+        activeTeamIds.length > 0
+          ? supabase.from("team_members").select("*").in("power_team_id", activeTeamIds).eq("is_active", true).order("sort_order")
           : supabase.from("team_members").select("*").eq("event_slug", "prime").eq("is_active", true).order("sort_order"),
         supabase.from("agenda_items").select("*").eq("event_slug", "prime").order("sort_order"),
         supabase.from("tickets").select("*").eq("event_slug", "prime").order("sort_order"),
@@ -120,7 +121,7 @@ export default async function Home() {
       if (ab.data) about = { ...PRIME_ABOUT, ...ab.data };
       if (l.data) location = { ...PRIME_LOCATION, ...l.data };
       // Arrays: explicit [] = "Supabase checked, no data" → components hide section
-      members = (m.data as TeamMember[]) ?? [];
+      members = sortByTeamOrder(m.data as TeamMember[] | null, activeTeamIds);
       agendaItems = (a.data as AgendaItem[]) ?? [];
       tickets = (t.data as Ticket[]) ?? [];
       faqItems = (f.data as FaqItem[]) ?? [];

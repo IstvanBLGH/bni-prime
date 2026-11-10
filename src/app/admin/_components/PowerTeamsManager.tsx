@@ -20,7 +20,8 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
   const [newName, setNewName] = useState("");
   const [newDate, setNewDate] = useState("");
   const [saving, setSaving] = useState(false);
-  const [activatingId, setActivatingId] = useState<string | null>(null);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [bulkSaving, setBulkSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -55,12 +56,20 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
     load();
   }
 
-  async function handleActivate(id: string) {
-    setActivatingId(id);
+  // Several power teams can be shown on the site at once; their members are listed together.
+  async function handleToggle(team: PowerTeam) {
+    setTogglingId(team.id);
     const supabase = createClient();
-    await supabase.from("power_teams").update({ is_active: false }).eq("event_slug", eventSlug);
-    await supabase.from("power_teams").update({ is_active: true }).eq("id", id);
-    setActivatingId(null);
+    await supabase.from("power_teams").update({ is_active: !team.is_active }).eq("id", team.id);
+    setTogglingId(null);
+    load();
+  }
+
+  async function handleSetAll(active: boolean) {
+    setBulkSaving(true);
+    const supabase = createClient();
+    await supabase.from("power_teams").update({ is_active: active }).eq("event_slug", eventSlug);
+    setBulkSaving(false);
     load();
   }
 
@@ -85,7 +94,7 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
           <p className="text-xs font-semibold uppercase tracking-widest text-muted">{label}</p>
           <h1 className="mt-1 text-2xl font-bold text-foreground">Power Teams</h1>
           <p className="mt-1 text-sm text-muted">
-            Gestioneaza grupurile de membri. Seteaza care apare activ pe pagina, apoi editeaza membrii fiecaruia.
+            Gestioneaza grupurile de membri. Bifeaza unul sau mai multe Power Team-uri: membrii tuturor celor bifate apar impreuna pe pagina.
           </p>
         </div>
         {!adding && (
@@ -144,6 +153,29 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
         </div>
       )}
 
+      {teams.length > 1 && (
+        <div className="mb-4 flex flex-wrap items-center gap-3 text-sm">
+          <span className="text-muted">
+            {teams.filter((t) => t.is_active).length} din {teams.length} afisate pe site
+          </span>
+          <button
+            onClick={() => handleSetAll(true)}
+            disabled={bulkSaving}
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted hover:border-primary hover:text-primary disabled:opacity-50"
+          >
+            Selecteaza toate
+          </button>
+          <button
+            onClick={() => handleSetAll(false)}
+            disabled={bulkSaving}
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted hover:border-primary hover:text-primary disabled:opacity-50"
+          >
+            Deselecteaza toate
+          </button>
+          {bulkSaving && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
+        </div>
+      )}
+
       <div className="flex flex-col gap-3">
         {teams.length === 0 && (
           <div className="rounded-2xl border border-dashed border-border bg-background py-12 text-center text-sm text-muted">
@@ -155,6 +187,20 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
             key={team.id}
             className={`flex items-center gap-4 rounded-2xl border bg-background px-5 py-4 ${team.is_active ? "border-primary ring-2 ring-primary/20" : "border-border"}`}
           >
+            <label className="flex shrink-0 cursor-pointer items-center" title="Afiseaza pe site">
+              {togglingId === team.id ? (
+                <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              ) : (
+                <input
+                  type="checkbox"
+                  checked={team.is_active}
+                  onChange={() => handleToggle(team)}
+                  disabled={bulkSaving}
+                  className="h-4 w-4 accent-primary"
+                  aria-label={`Afiseaza ${team.name} pe site`}
+                />
+              )}
+            </label>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 {team.is_active && (
@@ -170,16 +216,6 @@ export function PowerTeamsManager({ eventSlug, label }: { eventSlug: "prime" | "
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
-              {!team.is_active && (
-                <button
-                  onClick={() => handleActivate(team.id)}
-                  disabled={activatingId === team.id}
-                  className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted hover:border-primary hover:text-primary disabled:opacity-50"
-                >
-                  {activatingId === team.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
-                  Activeaza
-                </button>
-              )}
               <a
                 href={`/admin/${eventSlug}/team/${team.id}`}
                 className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted hover:border-primary hover:text-primary"

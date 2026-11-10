@@ -47,6 +47,7 @@ export interface TeamMember {
   photo_url: string;
   sort_order: number;
   is_active?: boolean;
+  power_team_id?: string | null;
 }
 
 export interface AgendaItem {

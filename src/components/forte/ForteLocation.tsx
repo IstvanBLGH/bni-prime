@@ -6,13 +6,13 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import type { LocationContent } from "@/types/db";
 
 const FALLBACK: Partial<LocationContent> = {
-  venue_name: "The Office",
-  address: "B-dul 21 Decembrie 1989, Nr. 77, Mun. Cluj-Napoca",
+  venue_name: "Miyabi Space – Exclusiv Events",
+  address: "Bulevardul Muncii 217-219, Cluj-Napoca",
   description:
-    "Evenimentul organizat de grupul BNI Forte are loc la The Office din Cluj-Napoca, locația unde se desfășoară și întâlnirile săptămânale ale grupului.",
-  has_parking: true,
-  maps_link:
-    "https://maps.google.com/?q=The+Office+Cluj-Napoca+Bulevardul+21+Decembrie+1989+77",
+    "Christmas Party BNI FORTE are loc la Miyabi Space – Exclusiv Events, pe Bulevardul Muncii 217-219, în Cluj-Napoca.",
+  has_parking: false,
+  maps_link: "https://maps.google.com/?q=Miyabi+Space+Bulevardul+Muncii+217-219+Cluj-Napoca",
+  maps_embed_url: "https://maps.google.com/maps?q=Miyabi+Space+Bulevardul+Muncii+217-219+Cluj-Napoca&output=embed",
 };
 
 export function ForteLocation({ data, parkingLabel = "Parcare la fața locului (contra-cost)" }: { data?: Partial<LocationContent> | null; parkingLabel?: string }) {
