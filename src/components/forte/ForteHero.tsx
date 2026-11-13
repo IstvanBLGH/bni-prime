@@ -18,7 +18,7 @@ const FALLBACK: Partial<HeroContent> = {
   event_time: "17:30",
   city: "Cluj-Napoca",
   description: "",
-  image_url: "/images/christmas-party-banner.jpg",
+  image_url: "/images/christmas-party-banner-1730.jpg",
 };
 
 export function ForteHero({ data, hidden = [], organizer, brand = "BNI Forte", poster = false }: { data?: Partial<HeroContent> | null; hidden?: string[]; organizer?: string; brand?: string; poster?: boolean }) {
